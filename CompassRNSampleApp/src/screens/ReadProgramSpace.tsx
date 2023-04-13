@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {
   ErrorResultType,
   getReadProgramSpace,
+  getRegistrationData,
+  GetRegistrationDataResultType,
   ReadProgramSpaceResultType,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
@@ -12,20 +14,37 @@ import { buttonLabels, readProgramScreenStrings } from '../assets/strings';
 import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
-const RID: string = '1fa97fd3b394609528520301d04860c4d53e620b';
 
 const ReadProgramSpace = () => {
-  // const { rID } = route?.params;
   const [readCardError, setReadCardError] = useState('');
+  const [rID, setRID] = useState('');
   const [isReadProgramSpaceLoading, setIsReadProgramSpaceLoading] =
     useState(false);
+
+  const handleReadRegistrationData = () => {
+    setIsReadProgramSpaceLoading(true);
+    getRegistrationData({
+      reliantGUID: RELIANT_APP_GUID,
+      programGUID: PROGRAM_GUID,
+    })
+      .then((res: GetRegistrationDataResultType) => {
+        console.log(JSON.stringify(res, null, 2));
+        setRID(res.rID);
+        handleReadProgramSpace();
+      })
+      .catch((e: ErrorResultType) => {
+        console.log(JSON.stringify(e, null, 2));
+        setReadCardError(e.message);
+        setIsReadProgramSpaceLoading(false);
+      });
+  };
 
   const handleReadProgramSpace = () => {
     setIsReadProgramSpaceLoading(true);
     getReadProgramSpace({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
-      rID: RID,
+      rID: rID,
       decryptData: false,
     })
       .then((res: ReadProgramSpaceResultType) => {
@@ -54,7 +73,7 @@ const ReadProgramSpace = () => {
         <Text style={styles.error}>{readCardError}</Text>
         <CustomButton
           isLoading={isReadProgramSpaceLoading}
-          onPress={handleReadProgramSpace}
+          onPress={handleReadRegistrationData}
           label={buttonLabels.READ_CARD}
           customStyles={styles.readProgramSpaceButton}
           labelStyles={styles.readProgramSpaceButtonLabel}

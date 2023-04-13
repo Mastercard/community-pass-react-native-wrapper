@@ -128,6 +128,7 @@ export interface GetRegistrationDataParamType {
 export interface GetRegistrationDataResultType {
   isRegisteredInProgram: boolean;
   authMethods: string[];
+  rID: string;
 }
 
 export interface SaveBiometricConsentParamType {

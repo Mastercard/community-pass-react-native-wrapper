@@ -3,7 +3,9 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {
   ErrorResultType,
   getWriteProgramSpace,
+  getRegistrationData,
   WriteProgramSpaceResultType,
+  GetRegistrationDataResultType,
   SharedSpaceDataSchema,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
@@ -14,22 +16,38 @@ import { themeColors } from '../assets/colors';
 import data from '../../data/sharedSpaceData.json';
 
 const { width: WIDTH } = Dimensions.get('screen');
-const RID: string = '1fa97fd3b394609528520301d04860c4d53e620b';
-
 const sharedSpaceData: SharedSpaceDataSchema = data;
 
 const WriteProgramSpace = () => {
-  //   const { rID } = route?.params;
   const [readCardError, setReadCardError] = useState('');
   const [isWriteProgramSpaceLoading, setIsWriteProgramSpaceLoading] =
     useState(false);
+  const [rID, setRID] = useState('');
+
+  const handleReadRegistrationData = () => {
+    setIsWriteProgramSpaceLoading(true);
+    getRegistrationData({
+      reliantGUID: RELIANT_APP_GUID,
+      programGUID: PROGRAM_GUID,
+    })
+      .then((res: GetRegistrationDataResultType) => {
+        console.log(JSON.stringify(res, null, 2));
+        setRID(res.rID);
+        handleWriteProgramSpace();
+      })
+      .catch((e: ErrorResultType) => {
+        console.log(JSON.stringify(e, null, 2));
+        setReadCardError(e.message);
+        setIsWriteProgramSpaceLoading(false);
+      });
+  };
 
   const handleWriteProgramSpace = () => {
     setIsWriteProgramSpaceLoading(true);
     getWriteProgramSpace({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
-      rID: RID,
+      rID: rID,
       programSpaceData: JSON.stringify(sharedSpaceData),
       encryptData: false,
     })
@@ -59,7 +77,7 @@ const WriteProgramSpace = () => {
         <Text style={styles.error}>{readCardError}</Text>
         <CustomButton
           isLoading={isWriteProgramSpaceLoading}
-          onPress={handleWriteProgramSpace}
+          onPress={handleReadRegistrationData}
           label={buttonLabels.WRITE_CARD}
           customStyles={styles.writeProgramSpaceButton}
           labelStyles={styles.writeProgramSpaceButtonLabel}
