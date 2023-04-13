@@ -16,6 +16,7 @@
     <activity android:name=".ui.WriteProfileCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
     <activity android:name=".ui.ReadProgramSpaceCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
     <activity android:name=".ui.WriteProgramSpaceCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
+    <activity android:name=".ui.GetRegistrationDataCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
   </application>
 
 </manifest>
