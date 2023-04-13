@@ -18,6 +18,9 @@ import EnterIdentificationNumber from './screens/EnterIdentificationNumber';
 import WriteSuccessful from './screens/WriteSuccessful';
 import { screens, screenTitles } from './assets/strings';
 import { themeColors } from './assets/colors';
+import ProgramSpace from './screens/ProgramSpace';
+import ReadProgramSpace from './screens/ReadProgramSpace';
+import WriteProgramSpace from './screens/WriteProgramSpace';
 
 const Stack = createStackNavigator();
 
@@ -102,6 +105,27 @@ export default function App() {
             headerTitle: screenTitles.WRITE_SUCCESSFUL,
           }}
           component={WriteSuccessful}
+        />
+        <Stack.Screen
+          name={screens.PROGRAM_SPACE}
+          options={{
+            headerTitle: screenTitles.PROGRAM_SPACE,
+          }}
+          component={ProgramSpace}
+        />
+        <Stack.Screen
+          name={screens.READ_PROGRAM_SPACE}
+          options={{
+            headerTitle: screenTitles.READ_PROGRAM_SPACE,
+          }}
+          component={ReadProgramSpace}
+        />
+        <Stack.Screen
+          name={screens.WRITE_PROGRAM_SPACE}
+          options={{
+            headerTitle: screenTitles.WRITE_PROGRAM_SPACE,
+          }}
+          component={WriteProgramSpace}
         />
       </Stack.Navigator>
     </NavigationContainer>

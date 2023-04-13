@@ -1,0 +1,118 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import {
+  ErrorResultType,
+  getWriteProgramSpace,
+  WriteProgramSpaceResultType,
+  SharedSpaceDataSchema,
+} from 'community-pass-react-native-wrapper';
+import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
+
+import CustomButton from './components/CustomButton';
+import { buttonLabels, writeProgramScreenStrings } from '../assets/strings';
+import { themeColors } from '../assets/colors';
+import data from '../../data/sharedSpaceData.json';
+
+const { width: WIDTH } = Dimensions.get('screen');
+const RID: string = '1fa97fd3b394609528520301d04860c4d53e620b';
+
+const sharedSpaceData: SharedSpaceDataSchema = data;
+
+const WriteProgramSpace = () => {
+  //   const { rID } = route?.params;
+  const [readCardError, setReadCardError] = useState('');
+  const [isWriteProgramSpaceLoading, setIsWriteProgramSpaceLoading] =
+    useState(false);
+
+  const handleWriteProgramSpace = () => {
+    setIsWriteProgramSpaceLoading(true);
+    getWriteProgramSpace({
+      reliantGUID: RELIANT_APP_GUID,
+      programGUID: PROGRAM_GUID,
+      rID: RID,
+      programSpaceData: JSON.stringify(sharedSpaceData),
+      encryptData: false,
+    })
+      .then((res: WriteProgramSpaceResultType) => {
+        setIsWriteProgramSpaceLoading(false);
+        setReadCardError('');
+        console.log(res);
+      })
+      .catch((e: ErrorResultType) => {
+        console.log(JSON.stringify(e, null, 2));
+        setReadCardError(e.message);
+        setIsWriteProgramSpaceLoading(false);
+      });
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
+        <View style={styles.infoWrapper}>
+          <Text style={styles.title}>
+            {writeProgramScreenStrings.SCREEN_TITLE}
+          </Text>
+          <Text style={styles.description}>
+            {writeProgramScreenStrings.SCREEN_DESCRIPTION}
+          </Text>
+        </View>
+        <Text style={styles.error}>{readCardError}</Text>
+        <CustomButton
+          isLoading={isWriteProgramSpaceLoading}
+          onPress={handleWriteProgramSpace}
+          label={buttonLabels.WRITE_CARD}
+          customStyles={styles.writeProgramSpaceButton}
+          labelStyles={styles.writeProgramSpaceButtonLabel}
+          indicatorColor={themeColors.white}
+        />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: WIDTH,
+    padding: 20,
+    backgroundColor: themeColors.white,
+  },
+  error: {
+    color: themeColors.mastercardRed,
+    marginVertical: 10,
+    textAlign: 'left',
+    width: '100%',
+  },
+  innerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonWrapper: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  writeProgramSpaceButton: {
+    minWidth: '100%',
+  },
+  writeProgramSpaceButtonLabel: {
+    color: themeColors.white,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 20,
+    color: themeColors.black,
+    marginBottom: 20,
+  },
+  description: {
+    fontSize: 14,
+    color: themeColors.black,
+  },
+  infoWrapper: {
+    width: '100%',
+  },
+});
+
+export default WriteProgramSpace;

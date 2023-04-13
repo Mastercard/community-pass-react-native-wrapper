@@ -16,6 +16,7 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.DATA
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.ERROR_CODE
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.ERROR_MESSAGE
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.RELIANT_APP_GUID
+import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
 import timber.log.Timber
 
 abstract class CompassApiHandlerActivity<T : Any> : CompassKernelUIController.CompassKernelActivity() {
@@ -34,6 +35,7 @@ abstract class CompassApiHandlerActivity<T : Any> : CompassKernelUIController.Co
     protected fun getNonIntentCompassApiResults(value: T?) {
         when(value){
             is ConsentResponse -> successFinishActivity(value)
+            is ReadProgramSpaceDataResponse -> successFinishActivity(value)
             is String -> successFinishActivity(value)
             else -> errorFoundFinishActivity(0, "Unknown error")
         }
@@ -47,6 +49,7 @@ abstract class CompassApiHandlerActivity<T : Any> : CompassKernelUIController.Co
         val intent = Intent().apply {
             when (data) {
               is ConsentResponse -> putExtra(DATA, data)
+              is ReadProgramSpaceDataResponse -> putExtra(DATA, data)
               is String -> putExtra(DATA, data)
               is Parcelable -> putExtra(DATA, data)
             }

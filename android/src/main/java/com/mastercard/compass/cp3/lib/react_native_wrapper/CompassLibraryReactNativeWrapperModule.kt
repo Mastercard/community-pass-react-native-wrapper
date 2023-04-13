@@ -5,12 +5,14 @@ import android.content.Intent
 import com.facebook.react.BuildConfig
 import com.facebook.react.bridge.*
 import com.mastercard.compass.cp3.lib.react_native_wrapper.route.*
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCryptoService
 import timber.log.Timber
 
 class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),
   ActivityEventListener {
   lateinit var promise: Promise;
   private var helperObject = CompassKernelUIController.CompassHelper(reactApplicationContext);
+  private var defaultCryptoService = DefaultCryptoService(helperObject)
 
   private val consumerDeviceApiRoute: ConsumerDeviceAPIRoute by lazy {
     ConsumerDeviceAPIRoute(reactContext, currentActivity)
@@ -26,6 +28,12 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
   private val biometricConsentAPIRoute: BiometricConsentAPIRoute by lazy {
     BiometricConsentAPIRoute(reactContext, currentActivity)
+  }
+  private val readProgramSpaceAPIRoute: ReadProgramSpaceAPIRoute by lazy {
+    ReadProgramSpaceAPIRoute(reactContext, currentActivity, helperObject, defaultCryptoService)
+  }
+  private val writeProgramSpaceAPIRoute: WriteProgramSpaceAPIRoute by lazy {
+    WriteProgramSpaceAPIRoute(reactContext, currentActivity)
   }
 
   override fun getName(): String {
@@ -69,12 +77,26 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
 
   @ReactMethod
-  fun getRegisterUserWithBiometrics(RegisterUserWithBiometricsParams: ReadableMap, promise: Promise) {
+  fun getRegisterUserWithBiometrics(RegisterUserWithBiometricsParams: ReadableMap, promise: Promise){
     this.promise = promise
 
     registerUserWithBiometricsAPIRoute.startRegisterUserWithBiometricsIntent(
       RegisterUserWithBiometricsParams
     );
+  }
+
+  @ReactMethod
+  fun getReadProgramSpace(ReadProgramSpaceParams: ReadableMap, promise: Promise) {
+    this.promise = promise
+
+    readProgramSpaceAPIRoute.startReadProgramSpaceIntent(ReadProgramSpaceParams)
+  }
+
+  @ReactMethod
+  fun getWriteProgramSpace(WriteProgramSpaceParams: ReadableMap, promise:Promise){
+    this.promise = promise
+
+    writeProgramSpaceAPIRoute.startWriteProgramSpaceIntent(WriteProgramSpaceParams)
   }
 
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
@@ -84,13 +106,14 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       in ConsumerDevicePasscodeAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in RegisterUserWithBiometricsAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in RegisterBasicUserAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in ReadProgramSpaceAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in WriteProgramSpaceAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
     }
   }
 
   override fun onNewIntent(p0: Intent?) {
 
   }
-
 
   private fun handleApiRouteResponse(
     requestCode: Int,
@@ -103,6 +126,8 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       ConsumerDevicePasscodeAPIRoute.WRITE_PASSCODE_REQUEST_CODE -> consumerDevicePasscodeAPIRoute.handleWritePasscodeIntentResponse(resultCode, data, this.promise)
       RegisterUserWithBiometricsAPIRoute.REGISTER_BIOMETRICS_REQUEST_CODE -> registerUserWithBiometricsAPIRoute.handleRegisterUserWithBiometricsIntentResponse(resultCode, data, this.promise)
       RegisterBasicUserAPIRoute.REGISTER_BASIC_USER_REQUEST_CODE -> registerBasicUserAPIRoute.handleRegisterBasicUserIntentResponse(resultCode, data, this.promise)
+      ReadProgramSpaceAPIRoute.READ_PROGRAM_SPACE_REQUEST_CODE -> readProgramSpaceAPIRoute.handleReadProgramSPaceIntentResponse(resultCode, data, this.promise)
+      WriteProgramSpaceAPIRoute.WRITE_PROGRAM_SPACE_REQUEST_CODE -> writeProgramSpaceAPIRoute.handleWriteProgramSpaceIntentResponse(resultCode, data, this.promise)
     }
   }
 }
