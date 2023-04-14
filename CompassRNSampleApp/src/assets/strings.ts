@@ -88,7 +88,7 @@ export const programSpaceScreenStrings = {
   ACTION: 'Action',
   READ_PROGRAM_SPACE_TITLE: 'Read Program Space',
   READ_PROGRAM_SPACE_DESCRIPTION:
-    'enroll a user using either biometrics or passcode',
+    'Read card and fetch data stored in the program space',
   WRITE_PROGRAM_SPACE_TITLE: 'Write Program Space',
   WRITE_PROGRAM_SPACE_DESCRIPTION: 'Sync data between the POI and the Card',
 };
