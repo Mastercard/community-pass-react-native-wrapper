@@ -69,14 +69,14 @@ This phase will include all user setup actions that facilitate the onboarding of
 
 This phase will include all actions and activities that enable you to conduct a life transaction using Community Pass. These actions provides safe and secure interactions between an acceptor and end-users in both online and off-line environments:
 
-⬜ Action: Authenticate Biometric Registered User on Program using Form Factor-Card
+✅ Action: Authenticate Biometric Registered User on Program using Form Factor-Card
 
       getRegistrationDataActivityIntent()
           ✅ Implement method
           ✅ Add example
       getUserVerificationActivityIntent()
-          ⬜ Implement method
-          ⬜ Add example
+          ✅ Implement method
+          ✅ Add example
 
 ✅ Action: Authenticate Passcode Registered User on Program using Form Factor-Card
 

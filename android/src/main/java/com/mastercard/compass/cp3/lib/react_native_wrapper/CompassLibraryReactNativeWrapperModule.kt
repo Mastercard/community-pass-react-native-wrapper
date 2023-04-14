@@ -10,7 +10,7 @@ import timber.log.Timber
 
 class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),
   ActivityEventListener {
-  lateinit var promise: Promise;
+  private lateinit var promise: Promise;
   private var helperObject = CompassKernelUIController.CompassHelper(reactApplicationContext);
   private var defaultCryptoService = DefaultCryptoService(helperObject)
 
@@ -35,11 +35,14 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   private val writeProgramSpaceAPIRoute: WriteProgramSpaceAPIRoute by lazy {
     WriteProgramSpaceAPIRoute(reactContext, currentActivity)
   }
-  private val getRegistrationDataAPIRoute by lazy {
-    GetRegistrationDataAPIRoute(reactContext, currentActivity)
+  private val retrieveRegistrationDataAPIRoute by lazy {
+    RetrieveRegistrationDataAPIRoute(reactContext, currentActivity)
   }
   private val getVerifyPasscodeAPIRoute by lazy {
     GetVerifyPasscodeAPIRoute(reactContext, currentActivity)
+  }
+  private val userVerificationAPIRoute by lazy {
+    UserVerificationAPIRoute(reactContext, currentActivity, helperObject)
   }
   override fun getName(): String {
       return "CompassLibraryReactNativeWrapper"
@@ -105,15 +108,21 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
 
   @ReactMethod
-  fun getRegistrationData(getRegistrationDataParams: ReadableMap, promise: Promise){
+  fun getRegistrationData(RegistrationDataParams: ReadableMap, promise: Promise){
     this.promise = promise
-    getRegistrationDataAPIRoute.startGetRegistrationIntent(getRegistrationDataParams)
+    retrieveRegistrationDataAPIRoute.startGetRegistrationIntent(RegistrationDataParams)
   }
 
   @ReactMethod
-  fun getVerifyPasscode(getVerifyPasscodeParams: ReadableMap, promise: Promise){
+  fun getVerifyPasscode(VerifyPasscodeParams: ReadableMap, promise: Promise){
     this.promise = promise
-    getVerifyPasscodeAPIRoute.startGetVerifyPasscodeIntent(getVerifyPasscodeParams)
+    getVerifyPasscodeAPIRoute.startGetVerifyPasscodeIntent(VerifyPasscodeParams)
+  }
+
+  @ReactMethod
+  fun getUserVerification(UserVerificationParams: ReadableMap, promise: Promise){
+    this.promise = promise
+    userVerificationAPIRoute.startGetUserVerificationIntent(UserVerificationParams)
   }
 
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,8 +134,9 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       in RegisterBasicUserAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in ReadProgramSpaceAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in WriteProgramSpaceAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
-      in GetRegistrationDataAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in RetrieveRegistrationDataAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in GetVerifyPasscodeAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in UserVerificationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
     }
   }
 
@@ -147,8 +157,9 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       RegisterBasicUserAPIRoute.REGISTER_BASIC_USER_REQUEST_CODE -> registerBasicUserAPIRoute.handleRegisterBasicUserIntentResponse(resultCode, data, this.promise)
       ReadProgramSpaceAPIRoute.READ_PROGRAM_SPACE_REQUEST_CODE -> readProgramSpaceAPIRoute.handleReadProgramSPaceIntentResponse(resultCode, data, this.promise)
       WriteProgramSpaceAPIRoute.WRITE_PROGRAM_SPACE_REQUEST_CODE -> writeProgramSpaceAPIRoute.handleWriteProgramSpaceIntentResponse(resultCode, data, this.promise)
-      GetRegistrationDataAPIRoute.GET_REGISTRATION_DATA_REQUEST_CODE -> getRegistrationDataAPIRoute.handleGetRegistrationDataIntentResponse(resultCode, data, this.promise)
+      RetrieveRegistrationDataAPIRoute.GET_REGISTRATION_DATA_REQUEST_CODE -> retrieveRegistrationDataAPIRoute.handleGetRegistrationDataIntentResponse(resultCode, data, this.promise)
       GetVerifyPasscodeAPIRoute.GET_VERIFY_PASSCODE_REQUEST_CODE -> getVerifyPasscodeAPIRoute.handleGetVerifyPasscodeIntentResponse(resultCode, data, this.promise)
+      UserVerificationAPIRoute.GET_USER_VERIFICATION_REQUEST_CODE -> userVerificationAPIRoute.handleGetUserVerificationIntentResponse(resultCode, data, promise)
     }
   }
 }

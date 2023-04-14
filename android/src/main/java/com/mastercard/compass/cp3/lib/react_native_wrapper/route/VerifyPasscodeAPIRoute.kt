@@ -8,7 +8,7 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.mastercard.compass.cp3.lib.react_native_wrapper.R
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.GetVerifyPasscodeCompassApiHandlerActivity
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.VerifyPasscodeCompassApiHandlerActivity
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.card.VerifyPasscodeResponse
@@ -22,13 +22,13 @@ class GetVerifyPasscodeAPIRoute(private val context: ReactApplicationContext, pr
     private const val TAG = "GetVerifyPasscodeAPIRoute"
   }
 
-  fun startGetVerifyPasscodeIntent(getVerifyPasscodeParams: ReadableMap){
+  fun startGetVerifyPasscodeIntent(VerifyPasscodeParams: ReadableMap){
 
-    val passcode: String = getVerifyPasscodeParams.getString("passcode")!!
-    val programGUID: String = getVerifyPasscodeParams.getString("programGUID")!!
-    val reliantGUID: String = getVerifyPasscodeParams.getString("reliantGUID")!!
+    val passcode: String = VerifyPasscodeParams.getString("passcode")!!
+    val programGUID: String = VerifyPasscodeParams.getString("programGUID")!!
+    val reliantGUID: String = VerifyPasscodeParams.getString("reliantGUID")!!
 
-    val intent = Intent(context, GetVerifyPasscodeCompassApiHandlerActivity::class.java).apply {
+    val intent = Intent(context, VerifyPasscodeCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PASSCODE, passcode)
       putExtra(Key.PROGRAM_GUID, programGUID)
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)

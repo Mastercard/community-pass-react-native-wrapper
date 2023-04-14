@@ -16,8 +16,9 @@
     <activity android:name=".ui.WriteProfileCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
     <activity android:name=".ui.ReadProgramSpaceCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
     <activity android:name=".ui.WriteProgramSpaceCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
-    <activity android:name=".ui.GetRegistrationDataCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
-    <activity android:name=".ui.GetVerifyPasscodeCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
+    <activity android:name=".ui.RegistrationDataCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
+    <activity android:name=".ui.VerifyPasscodeCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
+    <activity android:name=".ui.UserVerificationCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
   </application>
 
 </manifest>
