@@ -50,6 +50,21 @@ This phase will include all user setup actions that facilitate the onboarding of
           ⬜ Implement method
           ⬜ Add example
 
+✅ Action: Read and Write User Data on the Multi Wallet Card
+
+      getDataSchema()
+          ✅ Implement method
+          ✅ Add example
+      getWriteProgramSpaceActivityIntent()
+          ✅ Implement method
+          ✅ Add example
+      getReadProgramSpaceActivityIntent()
+          ✅ Implement method
+          ✅ Add example
+      exchangeKey()
+          ✅ Implement method
+          ✅ Add example
+
 ## 2. Transaction Phase
 
 This phase will include all actions and activities that enable you to conduct a life transaction using Community Pass. These actions provides safe and secure interactions between an acceptor and end-users in both online and off-line environments:
@@ -57,8 +72,8 @@ This phase will include all actions and activities that enable you to conduct a 
 ⬜ Action: Authenticate Biometric Registered User on Program using Form Factor-Card
 
       getRegistrationDataActivityIntent()
-          ⬜ Implement method
-          ⬜ Add example
+          ✅ Implement method
+          ✅ Add example
       getUserVerificationActivityIntent()
           ⬜ Implement method
           ⬜ Add example
@@ -66,8 +81,8 @@ This phase will include all actions and activities that enable you to conduct a 
 ⬜ Action: Authenticate Passcode Registered User on Program using Form Factor-Card
 
       getRegistrationDataActivityIntent()
-          ⬜ Implement method
-          ⬜ Add example
+          ✅ Implement method
+          ✅ Add example
       getVerifyPasscodeActivityIntent()
           ⬜ Implement method
           ⬜ Add example
@@ -91,8 +106,8 @@ This phase demonstrates actions and activities that enable you to manage any act
 ⬜ Action: Add Biometric Details to Passcode Authenticated User and Update Card
 
       getRegistrationDataActivityIntent()
-          ⬜ Implement method
-          ⬜ Add example
+          ✅ Implement method
+          ✅ Add example
       saveBiometricConsent()
           ✅ Implement method
           ✅ Add example

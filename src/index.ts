@@ -113,19 +113,19 @@ export function getWriteProgramSpace({
 export function getRegistrationData({
   reliantGUID,
   programGUID,
-}: GetRegistrationDataParamType) {
+}: RegistrationDataParamType) {
   return CompassLibraryReactNativeWrapper.getRegistrationData({
     reliantGUID,
     programGUID,
   });
 }
 
-export interface GetRegistrationDataParamType {
+export interface RegistrationDataParamType {
   reliantGUID: string;
   programGUID: string;
 }
 
-export interface GetRegistrationDataResultType {
+export interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
   authMethods: string[];
   rID: string;
