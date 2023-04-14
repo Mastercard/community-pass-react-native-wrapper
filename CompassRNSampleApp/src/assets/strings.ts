@@ -27,6 +27,7 @@ export const screens = {
   PROGRAM_SPACE: 'ProgramSpace',
   READ_PROGRAM_SPACE: 'ReadProgramSpace',
   WRITE_PROGRAM_SPACE: 'WriteProgramSpace',
+  PROGRAM_SPACE_DATA_DETAILS: 'ProgaramSpaceDataDetails',
 };
 
 export const screenTitles = {
@@ -45,6 +46,7 @@ export const screenTitles = {
   PROGRAM_SPACE: 'Program Space',
   READ_PROGRAM_SPACE: 'Read Program Space',
   WRITE_PROGRAM_SPACE: 'Write Program Space',
+  PROGRAM_SPACE_DATA_DETAILS: 'Program Space Data',
 };
 
 export const homeScreenStrings = {
@@ -151,6 +153,9 @@ export const readProgramScreenStrings = {
 export const writeProgramScreenStrings = {
   SCREEN_TITLE: 'Part 2: Write Program Space',
   SCREEN_DESCRIPTION: 'This step calls the getWriteProgramSpace API method',
+  ALERT_TITLE: 'Write Successfull',
+  ALERT_DESCRIPTION: 'Data has been successfully written to program space.',
+  ALERT_ACCEPT_BUTTON: 'OK',
 };
 
 export const genericErrorMessages = {

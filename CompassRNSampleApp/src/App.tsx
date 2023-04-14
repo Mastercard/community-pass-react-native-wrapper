@@ -21,6 +21,7 @@ import { themeColors } from './assets/colors';
 import ProgramSpace from './screens/ProgramSpace';
 import ReadProgramSpace from './screens/ReadProgramSpace';
 import WriteProgramSpace from './screens/WriteProgramSpace';
+import ProgramSpaceDataDetails from './screens/ProgramSpaceDataDetails';
 
 const Stack = createStackNavigator();
 
@@ -126,6 +127,13 @@ export default function App() {
             headerTitle: screenTitles.WRITE_PROGRAM_SPACE,
           }}
           component={WriteProgramSpace}
+        />
+        <Stack.Screen
+          name={screens.PROGRAM_SPACE_DATA_DETAILS}
+          options={{
+            headerTitle: screenTitles.PROGRAM_SPACE_DATA_DETAILS,
+          }}
+          component={ProgramSpaceDataDetails}
         />
       </Stack.Navigator>
     </NavigationContainer>
