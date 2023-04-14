@@ -5,7 +5,7 @@ import {
   getWriteProgramSpace,
   getRegistrationData,
   WriteProgramSpaceResultType,
-  GetRegistrationDataResultType,
+  RegistrationDataResultType,
   SharedSpaceDataSchema,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
@@ -30,7 +30,7 @@ const WriteProgramSpace = () => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
     })
-      .then((res: GetRegistrationDataResultType) => {
+      .then((res: RegistrationDataResultType) => {
         console.log(JSON.stringify(res, null, 2));
         setRID(res.rID);
         handleWriteProgramSpace();
