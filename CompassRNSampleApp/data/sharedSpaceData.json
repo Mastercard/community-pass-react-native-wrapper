@@ -1,54 +1,54 @@
 {
   "collectionInfo": {
     "fifthCollection": {
-      "amount": 3000.0,
-      "amountPerGram": 200.0,
+      "amount": 1900.0,
+      "amountPerGram": 400.0,
       "id": "5",
-      "produceId": "128",
+      "produceId": "975",
       "produceName": "Maize",
       "timeStamp": 1681382463864,
       "weightInGrams": 1500
     },
     "firstCollection": {
-      "amount": 3000.0,
-      "amountPerGram": 200.0,
+      "amount": 1200.0,
+      "amountPerGram": 300.0,
       "id": "1",
-      "produceId": "128",
-      "produceName": "Maize",
+      "produceId": "316",
+      "produceName": "Beans",
       "timeStamp": 1681382463864,
-      "weightInGrams": 1500
+      "weightInGrams": 3676
     },
     "fourthCollection": {
       "amount": 3000.0,
-      "amountPerGram": 200.0,
+      "amountPerGram": 100.0,
       "id": "4",
-      "produceId": "128",
-      "produceName": "Maize",
+      "produceId": "425",
+      "produceName": "Peas",
       "timeStamp": 1681382463864,
-      "weightInGrams": 1500
+      "weightInGrams": 2199
     },
-    "lastAmountPaidOut": 500.0,
+    "lastAmountPaidOut": 700.0,
     "lastPayoutTimeStamp": 1681382463863,
     "noOfPaidCollections": 2,
     "secondCollection": {
-      "amount": 3000.0,
+      "amount": 4556.0,
       "amountPerGram": 200.0,
       "id": "2",
-      "produceId": "128",
-      "produceName": "Maize",
+      "produceId": "432",
+      "produceName": "Oats",
       "timeStamp": 1681382463864,
-      "weightInGrams": 1500
+      "weightInGrams": 1000
     },
     "thirdCollection": {
-      "amount": 3000.0,
-      "amountPerGram": 200.0,
+      "amount": 1400.0,
+      "amountPerGram": 600.0,
       "id": "3",
-      "produceId": "128",
-      "produceName": "Maize",
+      "produceId": "534",
+      "produceName": "Potatoes",
       "timeStamp": 1681382463864,
-      "weightInGrams": 1500
+      "weightInGrams": 1300
     },
-    "totalAmountPaid": 1000.0
+    "totalAmountPaid": 6000.0
   },
   "user": {
     "address": "Street 123",
