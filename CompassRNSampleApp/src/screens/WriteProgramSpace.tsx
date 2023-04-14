@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
 import {
   ErrorResultType,
   getWriteProgramSpace,
@@ -11,15 +11,19 @@ import {
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
 import CustomButton from './components/CustomButton';
-import { buttonLabels, writeProgramScreenStrings } from '../assets/strings';
+import {
+  buttonLabels,
+  screens,
+  writeProgramScreenStrings,
+} from '../assets/strings';
 import { themeColors } from '../assets/colors';
 import data from '../../data/sharedSpaceData.json';
 
 const { width: WIDTH } = Dimensions.get('screen');
 const sharedSpaceData: SharedSpaceDataSchema = data;
 
-const WriteProgramSpace = () => {
-  const [readCardError, setReadCardError] = useState('');
+const WriteProgramSpace = ({ navigation }: any) => {
+  const [readCardError, setWriteCardError] = useState('');
   const [isWriteProgramSpaceLoading, setIsWriteProgramSpaceLoading] =
     useState(false);
   const [rID, setRID] = useState('');
@@ -37,9 +41,15 @@ const WriteProgramSpace = () => {
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));
-        setReadCardError(e.message);
+        setWriteCardError(e.message);
         setIsWriteProgramSpaceLoading(false);
       });
+  };
+
+  const handleProceed = () => {
+    setWriteCardError('');
+    setIsWriteProgramSpaceLoading(false);
+    navigation.navigate(screens.HOME);
   };
 
   const handleWriteProgramSpace = () => {
@@ -53,12 +63,27 @@ const WriteProgramSpace = () => {
     })
       .then((res: WriteProgramSpaceResultType) => {
         setIsWriteProgramSpaceLoading(false);
-        setReadCardError('');
+        setWriteCardError('');
         console.log(res);
+        Alert.alert(
+          writeProgramScreenStrings.ALERT_TITLE,
+          writeProgramScreenStrings.ALERT_DESCRIPTION,
+          [
+            {
+              text: writeProgramScreenStrings.ALERT_ACCEPT_BUTTON,
+              onPress: () => handleProceed(),
+              style: 'default',
+            },
+          ],
+          {
+            cancelable: true,
+            onDismiss: () => null,
+          }
+        );
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));
-        setReadCardError(e.message);
+        setWriteCardError(e.message);
         setIsWriteProgramSpaceLoading(false);
       });
   };

@@ -10,12 +10,16 @@ import {
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
 import CustomButton from './components/CustomButton';
-import { buttonLabels, readProgramScreenStrings } from '../assets/strings';
+import {
+  buttonLabels,
+  readProgramScreenStrings,
+  screens,
+} from '../assets/strings';
 import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
 
-const ReadProgramSpace = () => {
+const ReadProgramSpace = ({ navigation }: any) => {
   const [readCardError, setReadCardError] = useState('');
   const [rID, setRID] = useState('');
   const [isReadProgramSpaceLoading, setIsReadProgramSpaceLoading] =
@@ -51,6 +55,9 @@ const ReadProgramSpace = () => {
         setIsReadProgramSpaceLoading(false);
         setReadCardError('');
         console.log(JSON.parse(res.programSpaceData));
+        navigation.navigate(screens.PROGRAM_SPACE_DATA_DETAILS, {
+          programSpaceData: res.programSpaceData,
+        });
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));
