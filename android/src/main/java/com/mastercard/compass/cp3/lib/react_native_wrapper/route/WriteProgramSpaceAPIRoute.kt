@@ -26,6 +26,7 @@ class WriteProgramSpaceAPIRoute(
     val REQUEST_CODE_RANGE = 1000 until 1100
 
     const val WRITE_PROGRAM_SPACE_REQUEST_CODE = 901
+    const val TAG = "WriteProgramSpaceAPIRoute"
   }
 
   fun startWriteProgramSpaceIntent(
@@ -39,8 +40,8 @@ class WriteProgramSpaceAPIRoute(
 
     Timber.d("reliantGUID: $reliantGUID")
     Timber.d("programGUID: $programGUID")
-    Timber.d("rID: {$rID}")
-    Timber.tag("programSpaceData").d(encryptData.toString())
+    Timber.d("rID: $rID")
+    Timber.tag(TAG).d(encryptData.toString())
 
     val intent = Intent(context, WriteProgramSpaceCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)
@@ -61,10 +62,10 @@ class WriteProgramSpaceAPIRoute(
     when (resultCode) {
       Activity.RESULT_OK -> {
         val resultMap = Arguments.createMap()
-        val response = data?.extras?.get(Constants.EXTRA_DATA) as WriteProgramSpaceDataResponse
+        val response: WriteProgramSpaceDataResponse = data?.extras?.get(Key.DATA) as WriteProgramSpaceDataResponse
 
-        Timber.tag("programSpaceData").d(response.toString())
-        resultMap.putBoolean("isSuccess", true)
+        Timber.tag(TAG).d(response.toString())
+        resultMap.putBoolean("isSuccess", response.isSuccess)
         promise.resolve(resultMap);
       }
       Activity.RESULT_CANCELED -> {

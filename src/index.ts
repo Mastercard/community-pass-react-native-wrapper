@@ -207,7 +207,7 @@ export interface ErrorResultType {
 }
 
 export interface ReadProgramSpaceResultType {
-  programSpaceData: String | null;
+  programSpaceData: string;
 }
 
 export interface WriteProgramSpaceResultType {

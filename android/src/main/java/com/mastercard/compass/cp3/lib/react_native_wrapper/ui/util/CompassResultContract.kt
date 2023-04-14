@@ -3,6 +3,7 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContract
 import com.mastercard.compass.base.Constants
 
@@ -13,6 +14,7 @@ class CompassResultContract<T> : ActivityResultContract<Intent, CompassIntentRes
         return when(resultCode){
             Activity.RESULT_OK -> {
                 val response = intent?.extras?.get(Constants.EXTRA_DATA)
+                Log.d("CompassContractResult", response.toString())
                 @Suppress("UNCHECKED_CAST")
                 return CompassIntentResponse.Success(response as T)
             }
