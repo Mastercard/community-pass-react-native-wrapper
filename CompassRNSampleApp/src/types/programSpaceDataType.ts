@@ -1,19 +1,17 @@
-export interface ProgramSpaceRequest {
+export interface SharedSpaceDataSchema {
   collectionInfo: CollectionInfo;
   user: User;
-  version: number;
-}
-
-export interface ProgramSpaceResponse {
-  collectionInfo: ResponseCollectionInfo;
-  user: ResponseUser;
 }
 
 interface CollectionInfo {
-  collections: Collection[];
+  fifthCollection: Collection;
+  firstCollection: Collection;
+  fourthCollection: Collection;
   lastAmountPaidOut: number;
   lastPayoutTimeStamp: number;
   noOfPaidCollections: number;
+  secondCollection: Collection;
+  thirdCollection: Collection;
   totalAmountPaid: number;
 }
 
@@ -28,36 +26,6 @@ interface Collection {
 }
 
 interface User {
-  address: string;
-  age: number;
-  firstName: string;
-  id: string;
-  lastName: string;
-}
-
-interface ResponseCollectionInfo {
-  fifthCollection: ResponseCollection;
-  firstCollection: ResponseCollection;
-  fourthCollection: ResponseCollection;
-  lastAmountPaidOut: number;
-  lastPayoutTimeStamp: number;
-  noOfPaidCollections: number;
-  secondCollection: ResponseCollection;
-  thirdCollection: ResponseCollection;
-  totalAmountPaid: number;
-}
-
-interface ResponseCollection {
-  amount: number;
-  amountPerGram: number;
-  id: string;
-  produceId: string;
-  produceName: string;
-  timeStamp: number;
-  weightInGrams: number;
-}
-
-interface ResponseUser {
   address: string;
   age: number;
   consentId: string;
