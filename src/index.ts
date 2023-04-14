@@ -118,8 +118,6 @@ export function getRegistrationData({
     reliantGUID,
     programGUID,
   });
-    programGUID,
-  });
 }
 
 export function getVerifyPasscode({
