@@ -46,6 +46,7 @@ class GetRegistrationDataAPIRoute(private val context: ReactApplicationContext, 
         val methods = response.authMethods.authType.map { it.name }
         resultMap.apply {
           putBoolean("isRegisteredInProgram", response.isRegisteredInProgram)
+          putString("rID", response.rId)
           putArray("authMethods", Arguments.fromList(methods))
         }
         promise.resolve(resultMap);

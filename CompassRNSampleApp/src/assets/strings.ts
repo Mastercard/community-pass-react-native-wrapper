@@ -7,6 +7,8 @@ export const buttonLabels = {
   WRITE_PROFILE: 'Write profile on Card',
   WRITE_PASSCODE: 'Write Passcode on Card',
   GO_HOME: 'Go Home',
+  READ_CARD: 'Read Card',
+  WRITE_CARD: 'Write Card',
 };
 
 export const screens = {
@@ -22,7 +24,10 @@ export const screens = {
   USER_DATA_FORM: 'UserDataForm',
   ENTER_IDENTIFICATION_NUMBER: 'EnterIdentificationNumber',
   WRITE_SUCCESSFUL: 'WriteSuccessful',
-  SHARED_SPACE: 'SharedSpace',
+  PROGRAM_SPACE: 'ProgramSpace',
+  READ_PROGRAM_SPACE: 'ReadProgramSpace',
+  WRITE_PROGRAM_SPACE: 'WriteProgramSpace',
+  PROGRAM_SPACE_DATA_DETAILS: 'ProgaramSpaceDataDetails',
 };
 
 export const screenTitles = {
@@ -38,7 +43,10 @@ export const screenTitles = {
   USER_DATA_FORM: 'User Data Form',
   ENTER_IDENTIFICATION_NUMBER: 'Enter Identification Number',
   WRITE_SUCCESSFUL: 'Registration Successful',
-  SHARED_SPACE: 'Shared Space',
+  PROGRAM_SPACE: 'Program Space',
+  READ_PROGRAM_SPACE: 'Read Program Space',
+  WRITE_PROGRAM_SPACE: 'Write Program Space',
+  PROGRAM_SPACE_DATA_DETAILS: 'Program Space Data',
 };
 
 export const homeScreenStrings = {
@@ -74,6 +82,15 @@ export const preTransactionsScreenStrings = {
   USE_SHARED_SPACE_TITLE: 'Use the Shared Space',
   USE_SHARED_SPACE_DESCRIPTION: 'Sync data between the POI and the Card',
   TOAST_MESSAGE: 'have not yet been implemented.',
+};
+
+export const programSpaceScreenStrings = {
+  ACTION: 'Action',
+  READ_PROGRAM_SPACE_TITLE: 'Read Program Space',
+  READ_PROGRAM_SPACE_DESCRIPTION:
+    'Read card and fetch data stored in the program space',
+  WRITE_PROGRAM_SPACE_TITLE: 'Write Program Space',
+  WRITE_PROGRAM_SPACE_DESCRIPTION: 'Sync data between the POI and the Card',
 };
 
 export const registerBasicUserScreenStrings = {
@@ -126,6 +143,19 @@ export const writeSuccessfulScreenStrings = {
   SCREEN_TITLE: 'User registration was successful!',
   CONSUMER_DEVICE_NUMBER: 'Consumer Device Number: ',
   RID: 'rID: ',
+};
+
+export const readProgramScreenStrings = {
+  SCREEN_TITLE: 'Part 2: Read Program Space',
+  SCREEN_DESCRIPTION: 'This step calls the getReadProgramSpace API method',
+};
+
+export const writeProgramScreenStrings = {
+  SCREEN_TITLE: 'Part 2: Write Program Space',
+  SCREEN_DESCRIPTION: 'This step calls the getWriteProgramSpace API method',
+  ALERT_TITLE: 'Write Successfull',
+  ALERT_DESCRIPTION: 'Data has been successfully written to program space.',
+  ALERT_ACCEPT_BUTTON: 'OK',
 };
 
 export const genericErrorMessages = {

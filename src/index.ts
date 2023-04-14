@@ -80,6 +80,36 @@ export function getRegisterUserWithBiometrics({
   });
 }
 
+export function getReadProgramSpace({
+  reliantGUID,
+  programGUID,
+  rID,
+  decryptData,
+}: ReadProgramSpaceParamType) {
+  return CompassLibraryReactNativeWrapper.getReadProgramSpace({
+    reliantGUID,
+    programGUID,
+    rID,
+    decryptData,
+  });
+}
+
+export function getWriteProgramSpace({
+  reliantGUID,
+  programGUID,
+  rID,
+  programSpaceData,
+  encryptData,
+}: WriteProgramSpaceParamType) {
+  return CompassLibraryReactNativeWrapper.getWriteProgramSpace({
+    reliantGUID,
+    programGUID,
+    rID,
+    programSpaceData,
+    encryptData,
+  });
+}
+
 export function getRegistrationData({
   reliantGUID,
   programGUID,
@@ -122,6 +152,7 @@ export interface RegistrationDataParamType {
 export interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
   authMethods: string[];
+  rID: string;
 }
 
 export interface SaveBiometricConsentParamType {
@@ -155,6 +186,21 @@ export interface RegisterUserWithBiometricsParamType {
   consentID: string;
 }
 
+export interface WriteProgramSpaceParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  programSpaceData: string;
+  encryptData: boolean;
+}
+
+export interface ReadProgramSpaceParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  decryptData: boolean;
+}
+
 export interface SaveBiometricConsentResultType {
   consentID: string;
   responseStatus: string;
@@ -182,4 +228,51 @@ export interface WritePasscodeResultType {
 export interface ErrorResultType {
   code: string;
   message: string;
+}
+
+export interface ReadProgramSpaceResultType {
+  programSpaceData: string;
+}
+
+export interface WriteProgramSpaceResultType {
+  isSuccess: boolean;
+}
+
+export interface SharedSpaceDataSchema {
+  collectionInfo: CollectionInfo;
+  user: User;
+}
+
+interface CollectionInfo {
+  fifthCollection: Collection;
+  firstCollection: Collection;
+  fourthCollection: Collection;
+  lastAmountPaidOut: number;
+  lastPayoutTimeStamp: number;
+  noOfPaidCollections: number;
+  secondCollection: Collection;
+  thirdCollection: Collection;
+  totalAmountPaid: number;
+}
+
+interface Collection {
+  amount: number;
+  amountPerGram: number;
+  id: string;
+  produceId: string;
+  produceName: string;
+  timeStamp: number;
+  weightInGrams: number;
+}
+
+interface User {
+  address: string;
+  age: number;
+  consentId: string;
+  consumerDeviceId: string;
+  firstName: string;
+  identifier: string;
+  lastName: string;
+  mobileNumber: string;
+  rId: string;
 }
