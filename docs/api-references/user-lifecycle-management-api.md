@@ -269,28 +269,28 @@ This API is used to verify that the Passcode provided by the user is the same as
 **Input Parameters**
 | **Parameter** | **Type** | **Description** |
 |---------------|----------|------------------------------------------------------|
-| getVerfiyPasscodeRequest | GetVerifyPasscodeParamType | An object that contains the passcode, programGUID and reliantGUID |
+| getVerfiyPasscodeRequest | VerifyPasscodeParamType | An object that contains the passcode, programGUID and reliantGUID |
 
 **Response Parameters**
 | **Parameter** | **Type** | **Description** |
 |-----------------|-----------------|----------------------------------------------------------|
-| getVerifyPasscodeResponse | Promise<`GetVerifyPasscodeResultType`> | A promise that resolves to an object containing either the rId, counter value indicating the remaining passcode verification attempts and a boolean field (status) indicating whether the user is authenticated, or an error field. |
+| getVerifyPasscodeResponse | Promise<`VerifyPasscodeResultType`> | A promise that resolves to an object containing either the rId, counter value indicating the remaining passcode verification attempts and a boolean field (status) indicating whether the user is authenticated, or an error field. |
 
 **Type Aliases**
 
 ```ts
-// GetVerifyPasscodeParamType
-interface GetVerifyPasscodeParamType {
+// VerifyPasscodeParamType
+interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
   reliantGUID: string;
 }
 
-// GetVerifyPasscodeResultType
-export interface GetVerifyPasscodeResultType {
+// VerifyPasscodeResultType
+export interface VerifyPasscodeResultType {
   status: boolean;
-  rId: string;
-  counter: number;
+  rID: string;
+  retryCount: number;
 }
 ```
 
@@ -298,18 +298,18 @@ export interface GetVerifyPasscodeResultType {
 
 In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
 
-| **Error Code**                                | **Description**                                         |
-| --------------------------------------------- | ------------------------------------------------------- |
-| ERROR_CODE_CARD_NOT_ACTIVE	                | The card is not in ACTIVE state |
-| ERROR_CODE_CARD_BLACKLISTED	                | Card is blacklisted |
-| ERROR_CODE_PROGRAM_GUID_NOT_MATCH	                | Program GUID does not match on the card            |
-| ERROR_CODE_CARD_CONNECTION_ERROR	                | Card was moved or removed during read/write operation |
-| ERROR_CODE_PIN_BLOCKED		                | Card has a blocked PIN |
-| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT			                | Application data not written on the card for this application
- | ERROR_CODE_CARD_OPERATION_ABORTED				                | Card operation terminated before card 
- | ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR	 | Specified Program does not support QR form factor | ERROR_CODE_FORM_FACTOR_BLACKLISTED	 | Specified FormFactor is blacklisted
-| ERROR_CODE_INVALID_CP_USER_PROFILE | Invalid Cp User Profile
-| ERROR_CODE_QR_PASSCODE_VERIFICATION_BLOCKED	 | This device has reached the maximum failed passcode attempts. Kindly reset your Passcode
+| **Error Code**                                     | **Description**                                                                          |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------- | ----------------------------------- |
+| ERROR_CODE_CARD_NOT_ACTIVE                         | The card is not in ACTIVE state                                                          |
+| ERROR_CODE_CARD_BLACKLISTED                        | Card is blacklisted                                                                      |
+| ERROR_CODE_PROGRAM_GUID_NOT_MATCH                  | Program GUID does not match on the card                                                  |
+| ERROR_CODE_CARD_CONNECTION_ERROR                   | Card was moved or removed during read/write operation                                    |
+| ERROR_CODE_PIN_BLOCKED                             | Card has a blocked PIN                                                                   |
+| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT            | Application data not written on the card for this application                            |
+| ERROR_CODE_CARD_OPERATION_ABORTED                  | Card operation terminated before card                                                    |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR | Specified Program does not support QR form factor                                        | ERROR_CODE_FORM_FACTOR_BLACKLISTED | Specified FormFactor is blacklisted |
+| ERROR_CODE_INVALID_CP_USER_PROFILE                 | Invalid Cp User Profile                                                                  |
+| ERROR_CODE_QR_PASSCODE_VERIFICATION_BLOCKED        | This device has reached the maximum failed passcode attempts. Kindly reset your Passcode |
 
 ### 3.2 getUserVerification
 
@@ -323,25 +323,26 @@ This API is used to start the user verification process using the biometric data
 **Input Parameters**
 | **Parameter** | **Type** | **Description** |
 |---------------|----------|------------------------------------------------------|
-| getUserVerificationRequest | GetUserVerificationParamType | An object that contains the programGUID and reliantGUID |
+| getUserVerificationRequest | UserVerificationParamType | An object that contains the programGUID and reliantGUID |
 
 **Response Parameters**
 | **Parameter** | **Type** | **Description** |
 |-----------------|-----------------|----------------------------------------------------------|
-| getUserVerificationResponse | Promise<`GetUserVerificationResultType`> | A promise that resolves to an object containing either the bioToken (for successful authentication), or an error field. |
+| getUserVerificationResponse | Promise<`UserVerificationResultType`> | A promise that resolves to an object containing either the bioToken (for successful authentication), or an error field. |
 
 **Type Aliases**
 
 ```ts
-// GetUserVerificationParamType
-interface GetUserVerificationParamType {
+// UserVerificationParamType
+interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
 }
 
-// GetUserVerificationResultType
-interface GetUserVerificationResultType {
-  bioToken: string;
+// UserVerificationResultType
+interface UserVerificationResultType {
+  isMatchFound: string;
+  rID: string;
 }
 ```
 
@@ -349,20 +350,18 @@ interface GetUserVerificationResultType {
 
 In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
 
-| **Error Code**                                | **Description**                                         |
-| --------------------------------------------- | ------------------------------------------------------- |
-| ERROR_CODE_PROGRAM_NOT_SUPPORTED		                | Specified Program GUID is not supported by CP Kernel |
-| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_BIOMETRIC		                | Specified Program GUID does not support Biometric Capture
-| ERROR_CODE_CARD_EMPTY_HASHES	                | Hashes saved on the card are empty
-| ERROR_CODE_CARD_INACTIVE		                | Card is in inactive state 
-| ERROR_CODE_AUTH_METHOD_NOT_SUPPORTED			                | Authentication method (Biometric/Passcode) used for verification is not yet setup on card.
-| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR				                | Specified Program does not support QR form factor
-| ERROR_CODE_FORM_FACTOR_BLACKLISTED					                | Specified FormFactor is blacklisted
-| ERROR_CODE_INVALID_CP_USER_PROFILE		 | Invalid Cp User Profile
-| ERROR_CODE_CP_USER_PROFILE_EMPTY_HASHES		 | Biometric data is not present on the Cp user profile.
-| ERROR_CODE_INVALID_CP_USER_PROFILE | Invalid Cp User Profile
-| ERROR_CODE_QR_PASSCODE_VERIFICATION_BLOCKED	 | This device has reached the maximum failed passcode attempts. Kindly reset your Passcode
-
-
+| **Error Code**                                     | **Description**                                                                            |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| ERROR_CODE_PROGRAM_NOT_SUPPORTED                   | Specified Program GUID is not supported by CP Kernel                                       |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_BIOMETRIC      | Specified Program GUID does not support Biometric Capture                                  |
+| ERROR_CODE_CARD_EMPTY_HASHES                       | Hashes saved on the card are empty                                                         |
+| ERROR_CODE_CARD_INACTIVE                           | Card is in inactive state                                                                  |
+| ERROR_CODE_AUTH_METHOD_NOT_SUPPORTED               | Authentication method (Biometric/Passcode) used for verification is not yet setup on card. |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR | Specified Program does not support QR form factor                                          |
+| ERROR_CODE_FORM_FACTOR_BLACKLISTED                 | Specified FormFactor is blacklisted                                                        |
+| ERROR_CODE_INVALID_CP_USER_PROFILE                 | Invalid Cp User Profile                                                                    |
+| ERROR_CODE_CP_USER_PROFILE_EMPTY_HASHES            | Biometric data is not present on the Cp user profile.                                      |
+| ERROR_CODE_INVALID_CP_USER_PROFILE                 | Invalid Cp User Profile                                                                    |
+| ERROR_CODE_QR_PASSCODE_VERIFICATION_BLOCKED        | This device has reached the maximum failed passcode attempts. Kindly reset your Passcode   |
 
 [Return to API reference](README.md)

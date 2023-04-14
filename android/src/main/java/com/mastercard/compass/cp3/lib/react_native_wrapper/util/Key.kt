@@ -11,8 +11,8 @@ object Key {
     const val CONSENT_ID = "CONSENT_ID"
     const val CONSUMER_CONSENT_VALUE = "CONSUMER_CONSENT_VALUE"
     const val OVERWRITE_CARD = "OVERWRITE_CARD"
-
+    const val PROGRAM_SPACE_DATA = "PROGRAM_SPACE_DATA"
+    const val ENCRYPT_DATA = "ENCRYPT_DATA"
     const val ERROR_CODE = "ERROR_CODE"
     const val ERROR_MESSAGE = "ERROR_MESSAGE"
-
 }

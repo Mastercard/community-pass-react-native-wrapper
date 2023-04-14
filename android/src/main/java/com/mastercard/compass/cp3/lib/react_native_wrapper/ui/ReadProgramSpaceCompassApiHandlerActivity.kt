@@ -1,0 +1,16 @@
+package com.mastercard.compass.cp3.lib.react_native_wrapper.ui
+
+import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
+import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
+
+class ReadProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<ReadProgramSpaceDataResponse>() {
+  override suspend fun callCompassApi() {
+    val programGUID: String = intent.getStringExtra(Key.PROGRAM_GUID)!!
+    val reliantGUID: String = intent.getStringExtra(Key.RELIANT_APP_GUID)!!
+    val rID: String = intent.getStringExtra(Key.RID)!!
+
+    val intent = compassKernelServiceInstance.getReadProgramSpaceActivityIntent(programGUID, rID, reliantGUID)
+
+    compassApiActivityResult.launch(intent)
+  }
+}

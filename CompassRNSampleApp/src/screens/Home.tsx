@@ -38,7 +38,7 @@ const Home = ({ navigation }: any) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => showToast(screenTitles.TRANSACTIONS)}
+        onPress={() => navigation.navigate(screens.TRANSACTIONS)}
       >
         <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
         <Text style={styles.cardTitle}>{homeScreenStrings.TRANSACTIONS}</Text>

@@ -1,37 +1,37 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { preTransactionsScreenStrings, screens } from '../assets/strings';
+import { programSpaceScreenStrings, screens } from '../assets/strings';
 import { themeColors } from '../assets/colors';
 
-const PreTransactions = ({ navigation }: any) => {
+const ProgramSpace = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate(screens.SAVE_BIOMETRIC_CONSENT)}
+        onPress={() => navigation.navigate(screens.READ_PROGRAM_SPACE)}
       >
         <Text style={styles.sectionLabel}>
-          {preTransactionsScreenStrings.ACTION}
+          {programSpaceScreenStrings.ACTION}
         </Text>
         <Text style={styles.cardTitle}>
-          {preTransactionsScreenStrings.ENROLL_A_NEW_USER_TITLE}
+          {programSpaceScreenStrings.READ_PROGRAM_SPACE_TITLE}
         </Text>
         <Text style={styles.cardDescription}>
-          {preTransactionsScreenStrings.ENROLL_A_NEW_USER_DESCRIPTION}
+          {programSpaceScreenStrings.READ_PROGRAM_SPACE_DESCRIPTION}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate(screens.PROGRAM_SPACE)}
+        onPress={() => navigation.navigate(screens.WRITE_PROGRAM_SPACE)}
       >
         <Text style={styles.sectionLabel}>
-          {preTransactionsScreenStrings.ACTION}
+          {programSpaceScreenStrings.ACTION}
         </Text>
         <Text style={styles.cardTitle}>
-          {preTransactionsScreenStrings.USE_SHARED_SPACE_TITLE}
+          {programSpaceScreenStrings.WRITE_PROGRAM_SPACE_TITLE}
         </Text>
         <Text style={styles.cardDescription}>
-          {preTransactionsScreenStrings.USE_SHARED_SPACE_DESCRIPTION}
+          {programSpaceScreenStrings.WRITE_PROGRAM_SPACE_DESCRIPTION}
         </Text>
       </TouchableOpacity>
     </View>
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PreTransactions;
+export default ProgramSpace;

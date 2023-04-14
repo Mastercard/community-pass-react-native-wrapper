@@ -8,25 +8,25 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.mastercard.compass.cp3.lib.react_native_wrapper.R
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.GetRegistrationDataCompassApiHandlerActivity
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.RegistrationDataCompassApiHandlerActivity
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.card.RegistrationStatusData
 
 
-class GetRegistrationDataAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
+class RetrieveRegistrationDataAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
   companion object {
     val REQUEST_CODE_RANGE = 700 until 800
 
     const val GET_REGISTRATION_DATA_REQUEST_CODE = 700
-    private const val TAG = "GetRegistrationDataAPIRoute"
+    private const val TAG = "RetrieveRegistrationDataAPIRoute"
   }
 
   fun startGetRegistrationIntent(getRegistrationDataParams: ReadableMap){
     val reliantGUID: String = getRegistrationDataParams.getString("reliantGUID")!!
     val programGUID: String = getRegistrationDataParams.getString("programGUID")!!
 
-    val intent = Intent(context, GetRegistrationDataCompassApiHandlerActivity::class.java).apply {
+    val intent = Intent(context, RegistrationDataCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PROGRAM_GUID, programGUID)
       putExtra(Key.RELIANT_APP_GUID, reliantGUID )
     }
@@ -46,6 +46,7 @@ class GetRegistrationDataAPIRoute(private val context: ReactApplicationContext, 
         val methods = response.authMethods.authType.map { it.name }
         resultMap.apply {
           putBoolean("isRegisteredInProgram", response.isRegisteredInProgram)
+          putString("rID", response.rId)
           putArray("authMethods", Arguments.fromList(methods))
         }
         promise.resolve(resultMap);

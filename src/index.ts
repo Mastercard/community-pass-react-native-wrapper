@@ -80,65 +80,99 @@ export function getRegisterUserWithBiometrics({
   });
 }
 
+export function getReadProgramSpace({
+  reliantGUID,
+  programGUID,
+  rID,
+  decryptData,
+}: ReadProgramSpaceParamType) {
+  return CompassLibraryReactNativeWrapper.getReadProgramSpace({
+    reliantGUID,
+    programGUID,
+    rID,
+    decryptData,
+  });
+}
+
+export function getWriteProgramSpace({
+  reliantGUID,
+  programGUID,
+  rID,
+  programSpaceData,
+  encryptData,
+}: WriteProgramSpaceParamType) {
+  return CompassLibraryReactNativeWrapper.getWriteProgramSpace({
+    reliantGUID,
+    programGUID,
+    rID,
+    programSpaceData,
+    encryptData,
+  });
+}
+
 export function getRegistrationData({
   reliantGUID,
   programGUID,
-}: GetRegistrationDataParamType) {
+}: RegistrationDataParamType) {
   return CompassLibraryReactNativeWrapper.getRegistrationData({
     reliantGUID,
-    programGUID
-  })
+    programGUID,
+  });
 }
 
 export function getVerifyPasscode({
   passcode,
-  programGUID, reliantGUID
-}: GetVerifyPasscodeParamType) {
+  programGUID,
+  reliantGUID,
+}: VerifyPasscodeParamType) {
   return CompassLibraryReactNativeWrapper.getVerifyPasscode({
     passcode,
-    programGUID, reliantGUID
-  })
+    programGUID,
+    reliantGUID,
+  });
 }
 
 export function getUserVerification({
   reliantGUID,
   programGUID,
-}: GetUserVerificationParamType) {
+}: UserVerificationParamType) {
   return CompassLibraryReactNativeWrapper.getUserVerification({
     reliantGUID,
-    programGUID
-  })
+    programGUID,
+  });
 }
 
-export interface GetUserVerificationParamType {
+export interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
 }
 
-export interface GetUserVerificationResultType {
-  bioToken: string;
+export interface UserVerificationResultType {
+  isMatchFound: string;
+  rID: string;
 }
 
-export interface GetVerifyPasscodeParamType {
+export interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
   reliantGUID: string;
 }
 
-export interface GetVerifyPasscodeResultType {
+export interface VerifyPasscodeResultType {
   status: boolean;
-  rId: string;
-  counter: number;
+  rID: string;
+  retryCount: number;
 }
 
-export interface GetRegistrationDataParamType {
+export interface RegistrationDataParamType {
   reliantGUID: string;
   programGUID: string;
 }
 
-export interface GetRegistrationDataResultType {
+export interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
   authMethods: string[];
+  rID: string;
 }
 
 export interface SaveBiometricConsentParamType {
@@ -172,6 +206,21 @@ export interface RegisterUserWithBiometricsParamType {
   consentID: string;
 }
 
+export interface WriteProgramSpaceParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  programSpaceData: string;
+  encryptData: boolean;
+}
+
+export interface ReadProgramSpaceParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  decryptData: boolean;
+}
+
 export interface SaveBiometricConsentResultType {
   consentID: string;
   responseStatus: string;
@@ -199,4 +248,12 @@ export interface WritePasscodeResultType {
 export interface ErrorResultType {
   code: string;
   message: string;
+}
+
+export interface ReadProgramSpaceResultType {
+  programSpaceData: string;
+}
+
+export interface WriteProgramSpaceResultType {
+  isSuccess: boolean;
 }

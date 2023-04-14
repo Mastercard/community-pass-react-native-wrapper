@@ -7,6 +7,8 @@ export const buttonLabels = {
   WRITE_PROFILE: 'Write profile on Card',
   WRITE_PASSCODE: 'Write Passcode on Card',
   GO_HOME: 'Go Home',
+  READ_CARD: 'Read Card',
+  WRITE_CARD: 'Write Card',
 };
 
 export const screens = {
@@ -22,7 +24,15 @@ export const screens = {
   USER_DATA_FORM: 'UserDataForm',
   ENTER_IDENTIFICATION_NUMBER: 'EnterIdentificationNumber',
   WRITE_SUCCESSFUL: 'WriteSuccessful',
-  SHARED_SPACE: 'SharedSpace',
+  PROGRAM_SPACE: 'ProgramSpace',
+  READ_PROGRAM_SPACE: 'ReadProgramSpace',
+  WRITE_PROGRAM_SPACE: 'WriteProgramSpace',
+  PROGRAM_SPACE_DATA_DETAILS: 'ProgaramSpaceDataDetails',
+  TRANSCATIONS: 'Transactions',
+  PROVIDE_A_SERVICE: 'ProvideService',
+  RETRIEVE_REGISTRATION_DATA: 'RetrieveRegistrationData',
+  AUTHENICATE_PASSCODE_USER: 'AuthenticatePasscodeUser',
+  AUTHENTICATE_BIOMETRIC_USER: 'AuthenticateBiometricUser',
 };
 
 export const screenTitles = {
@@ -38,7 +48,15 @@ export const screenTitles = {
   USER_DATA_FORM: 'User Data Form',
   ENTER_IDENTIFICATION_NUMBER: 'Enter Identification Number',
   WRITE_SUCCESSFUL: 'Registration Successful',
-  SHARED_SPACE: 'Shared Space',
+  PROGRAM_SPACE: 'Program Space',
+  READ_PROGRAM_SPACE: 'Read Program Space',
+  WRITE_PROGRAM_SPACE: 'Write Program Space',
+  PROGRAM_SPACE_DATA_DETAILS: 'Program Space Data',
+  TRANSCATIONS: 'Transactions',
+  PROVIDE_A_SERVICE: 'Provide a Service',
+  RETRIEVE_REGISTRATION_DATA: 'Retrieve Registration Data',
+  AUTHENICATE_PASSCODE_USER: 'Verify Passcode User',
+  AUTHENTICATE_BIOMETRIC_USER: 'Verify Biometric User',
 };
 
 export const homeScreenStrings = {
@@ -74,6 +92,25 @@ export const preTransactionsScreenStrings = {
   USE_SHARED_SPACE_TITLE: 'Use the Shared Space',
   USE_SHARED_SPACE_DESCRIPTION: 'Sync data between the POI and the Card',
   TOAST_MESSAGE: 'have not yet been implemented.',
+};
+export const transactionsScreenStrings = {
+  ACTION: 'Action',
+  AUTHENTICATE_USER_ON_PROGRAM:
+    'Authenticate and Check User Registration on Program',
+  AUTHENTICATE_USER_ON_PROGRAM_DESCRIPTION:
+    'Authenticate and check if user is registered on a program using biometrics or passcode',
+  PROVIDE_A_SERVICE_TITLE: 'Provide a Service',
+  PROVIDE_A_SERVICE_DESCRIPTION: 'Provide a service and update the Card',
+  TOAST_MESSAGE: 'have not yet been implemented.',
+};
+
+export const programSpaceScreenStrings = {
+  ACTION: 'Action',
+  READ_PROGRAM_SPACE_TITLE: 'Read Program Space',
+  READ_PROGRAM_SPACE_DESCRIPTION:
+    'Read card and fetch data stored in the program space',
+  WRITE_PROGRAM_SPACE_TITLE: 'Write Program Space',
+  WRITE_PROGRAM_SPACE_DESCRIPTION: 'Sync data between the POI and the Card',
 };
 
 export const registerBasicUserScreenStrings = {
@@ -128,9 +165,51 @@ export const writeSuccessfulScreenStrings = {
   RID: 'rID: ',
 };
 
+export const readProgramScreenStrings = {
+  SCREEN_TITLE: 'Part 2: Read Program Space',
+  SCREEN_DESCRIPTION: 'This step calls the getReadProgramSpace API method',
+};
+
+export const retrieveRegistrationDataScreenStrings = {
+  SCREEN_TITLE: 'Part 1: Registration Data Check',
+  SCREEN_DESCRIPTION:
+    'This step calls the getRegistrationData API method which reads the card and checks if the sample user is registered in the program and if they have Passcode or Biometric Authentication',
+};
+
+export const writeProgramScreenStrings = {
+  SCREEN_TITLE: 'Part 2: Write Program Space',
+  SCREEN_DESCRIPTION: 'This step calls the getWriteProgramSpace API method',
+  ALERT_TITLE: 'Write Successful',
+  ALERT_DESCRIPTION: 'Data has been successfully written to program space.',
+  ALERT_ACCEPT_BUTTON: 'OK',
+};
+
+export const authenticateBiometricUserStrings = {
+  SCREEN_TITLE: 'Part 2: Verify Biometric User',
+  SCREEN_DESCRIPTION: 'This step calls the getUserVerification API method',
+  MATCH_FOUND_ALERT_TITLE: 'Verification Successful',
+  MATCH_NOT_FOUND_ALERT_TITLE: 'Verification Not Successful',
+  ALERT_MATCH_NOT_FOUND_DESCRIPTION: 'User has not been found on the program',
+  ALERT_MATCH_FOUND_DESCRIPTION:
+    'User has been verified successfully on the program',
+  ALERT_ACCEPT_BUTTON: 'OK',
+};
+
+export const authenticatePasscodeUserStrings = {
+  SCREEN_TITLE: 'Part 2: Verify Basic User',
+  SCREEN_DESCRIPTION: 'This step calls the getVerifyPasscode API method',
+  MATCH_FOUND_ALERT_TITLE: 'Verification Successful',
+  MATCH_NOT_FOUND_ALERT_TITLE: 'Verification Not Successful',
+  ALERT_MATCH_NOT_FOUND_DESCRIPTION: 'User has not been found on the program',
+  ALERT_MATCH_FOUND_DESCRIPTION:
+    'User has been verified successfully on the program',
+  ALERT_ACCEPT_BUTTON: 'OK',
+  ALERT_TRY_AGRAIN: 'Try Again',
+};
+
 export const genericErrorMessages = {
   TOAST_MESSAGE_PLURAL: 'have not yet been implemented.',
-  TOAST_MESSAGE_SINGULAR: 'have not yet been implemented.',
+  TOAST_MESSAGE_SINGULAR: 'has not yet been implemented.',
   INVALID_ID_ERROR_MESSAGE: 'Please input a valid identification number',
   INVALID_PASSCODE: 'Please input a 6 digit passcode',
 };
