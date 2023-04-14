@@ -22,6 +22,10 @@ import ProgramSpace from './screens/ProgramSpace';
 import ReadProgramSpace from './screens/ReadProgramSpace';
 import WriteProgramSpace from './screens/WriteProgramSpace';
 import ProgramSpaceDataDetails from './screens/ProgramSpaceDataDetails';
+import Transactions from './screens/Transactions';
+import RetrieveRegistrationData from './screens/RetrieveRegistrationData';
+import AuthenticateBiometricUser from './screens/AuthenticateBiometricUser';
+import AuthenticatePasscodeUser from './screens/AuthenticatePasscodeUser';
 
 const Stack = createStackNavigator();
 
@@ -134,6 +138,34 @@ export default function App() {
             headerTitle: screenTitles.PROGRAM_SPACE_DATA_DETAILS,
           }}
           component={ProgramSpaceDataDetails}
+        />
+        <Stack.Screen
+          name={screens.TRANSCATIONS}
+          options={{
+            headerTitle: screenTitles.TRANSCATIONS,
+          }}
+          component={Transactions}
+        />
+        <Stack.Screen
+          name={screens.RETRIEVE_REGISTRATION_DATA}
+          options={{
+            headerTitle: screenTitles.RETRIEVE_REGISTRATION_DATA,
+          }}
+          component={RetrieveRegistrationData}
+        />
+        <Stack.Screen
+          name={screens.AUTHENTICATE_BIOMETRIC_USER}
+          options={{
+            headerTitle: screenTitles.AUTHENTICATE_BIOMETRIC_USER,
+          }}
+          component={AuthenticateBiometricUser}
+        />
+        <Stack.Screen
+          name={screens.AUTHENICATE_PASSCODE_USER}
+          options={{
+            headerTitle: screenTitles.AUTHENICATE_PASSCODE_USER,
+          }}
+          component={AuthenticatePasscodeUser}
         />
       </Stack.Navigator>
     </NavigationContainer>

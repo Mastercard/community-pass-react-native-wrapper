@@ -148,16 +148,8 @@ export interface UserVerificationParamType {
 }
 
 export interface UserVerificationResultType {
-  bioToken: string;
-}
-
-export interface UserVerificationParamType {
-  reliantGUID: string;
-  programGUID: string;
-}
-
-export interface UserVerificationResultType {
-  bioToken: string;
+  isMatchFound: string;
+  rID: string;
 }
 
 export interface VerifyPasscodeParamType {
@@ -168,8 +160,8 @@ export interface VerifyPasscodeParamType {
 
 export interface VerifyPasscodeResultType {
   status: boolean;
-  rId: string;
-  counter: number;
+  rID: string;
+  retryCount: number;
 }
 
 export interface RegistrationDataParamType {

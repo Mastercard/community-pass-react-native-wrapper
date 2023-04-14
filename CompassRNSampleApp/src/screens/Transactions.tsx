@@ -2,22 +2,23 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
+  TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
 import {
-  genericErrorMessages,
-  homeScreenStrings,
-  screenTitles,
+  transactionsScreenStrings,
   screens,
+  genericErrorMessages,
+  screenTitles,
 } from '../assets/strings';
 import { themeColors } from '../assets/colors';
+import { NAVIGATION_OPTIONS } from '../../utils/enums';
 
-const Home = ({ navigation }: any) => {
+const Transactions = ({ navigation }: any) => {
   const showToast = (message: string) => {
     ToastAndroid.show(
-      `${message} ${genericErrorMessages.TOAST_MESSAGE_PLURAL}`,
+      `${message} ${genericErrorMessages.TOAST_MESSAGE_SINGULAR}`,
       ToastAndroid.SHORT
     );
   };
@@ -26,36 +27,34 @@ const Home = ({ navigation }: any) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate(screens.PRE_TRANSACTIONS)}
+        onPress={() =>
+          navigation.navigate(screens.RETRIEVE_REGISTRATION_DATA, {
+            navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_BIOMETRIC_USER,
+          })
+        }
       >
-        <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
+        <Text style={styles.sectionLabel}>
+          {transactionsScreenStrings.ACTION}
+        </Text>
         <Text style={styles.cardTitle}>
-          {homeScreenStrings.PRE_TRANSACTIONS}
+          {transactionsScreenStrings.AUTHENTICATE_USER_ON_PROGRAM}
         </Text>
         <Text style={styles.cardDescription}>
-          {homeScreenStrings.PRE_TRANSACTTIONS_DESCRIPTION}
+          {transactionsScreenStrings.AUTHENTICATE_USER_ON_PROGRAM_DESCRIPTION}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate(screens.TRANSACTIONS)}
+        onPress={() => showToast(screenTitles.PROVIDE_A_SERVICE)}
       >
-        <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
-        <Text style={styles.cardTitle}>{homeScreenStrings.TRANSACTIONS}</Text>
-        <Text style={styles.cardDescription}>
-          {homeScreenStrings.TRANSACTTIONS_DESCRIPTION}
+        <Text style={styles.sectionLabel}>
+          {transactionsScreenStrings.ACTION}
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => showToast(screenTitles.ADMIN_TRANSACTIONS)}
-      >
-        <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
         <Text style={styles.cardTitle}>
-          {homeScreenStrings.ADMIN_TRANSACTIONS}
+          {transactionsScreenStrings.PROVIDE_A_SERVICE_TITLE}
         </Text>
         <Text style={styles.cardDescription}>
-          {homeScreenStrings.ADMIN_TRANSACTTIONS_DESCRIPTION}
+          {transactionsScreenStrings.PROVIDE_A_SERVICE_DESCRIPTION}
         </Text>
       </TouchableOpacity>
     </View>
@@ -92,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Transactions;

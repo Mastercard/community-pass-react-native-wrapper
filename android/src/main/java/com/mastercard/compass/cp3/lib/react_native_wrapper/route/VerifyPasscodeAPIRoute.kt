@@ -12,6 +12,7 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.VerifyPasscodeComp
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.card.VerifyPasscodeResponse
+import timber.log.Timber
 
 
 class GetVerifyPasscodeAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
@@ -45,18 +46,20 @@ class GetVerifyPasscodeAPIRoute(private val context: ReactApplicationContext, pr
     when (resultCode) {
       Activity.RESULT_OK -> {
         val resultMap = Arguments.createMap()
-        val response = data?.extras?.getParcelable<VerifyPasscodeResponse>(Key.DATA)
+        val response: VerifyPasscodeResponse = data?.extras?.get(Key.DATA) as VerifyPasscodeResponse
+        Timber.tag(TAG).e(response.toString())
         resultMap.apply {
-          putBoolean("status", response?.status!!)
-          putString("rId", response.rid)
-          putInt("counter", response.counter!!.retryCount)
+          putBoolean("status", response.status)
+          putString("rID", response.rid)
+          putInt("retryCount", response.counter?.retryCount ?: 0)
         }
         promise.resolve(resultMap);
       }
       Activity.RESULT_CANCELED -> {
         val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-        val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: context.getString(R.string.error_unknown)
-        Log.e(TAG, "Error $code Message $message")
+        val message =
+          data?.getStringExtra(Key.ERROR_MESSAGE) ?: context.getString(R.string.error_unknown)
+        Timber.tag(TAG).e("Error  $code  Message $message")
         promise.reject(code, Throwable(message))
       }
     }

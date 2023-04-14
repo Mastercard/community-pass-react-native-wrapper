@@ -1,57 +1,46 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
 import {
+  getUserVerification,
   ErrorResultType,
-  getWriteProgramSpace,
-  WriteProgramSpaceResultType,
+  UserVerificationResultType,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
 import CustomButton from './components/CustomButton';
 import {
   buttonLabels,
+  authenticateBiometricUserStrings,
   screens,
-  writeProgramScreenStrings,
 } from '../assets/strings';
 import { themeColors } from '../assets/colors';
-import data from '../../data/sharedSpaceData.json';
-import type { SharedSpaceDataSchema } from '../types/programSpaceDataType';
 
 const { width: WIDTH } = Dimensions.get('screen');
-const sharedSpaceData: SharedSpaceDataSchema = data;
 
-const WriteProgramSpace = ({ route, navigation }: any) => {
-  const { rID } = route?.params;
-  const [readCardError, setWriteCardError] = useState('');
-  const [isWriteProgramSpaceLoading, setIsWriteProgramSpaceLoading] =
-    useState(false);
+const AuthenticateBiometricUser = ({ navigation }: any) => {
+  const [readCardError, setReadCardError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleProceed = () => {
-    setWriteCardError('');
-    setIsWriteProgramSpaceLoading(false);
-    navigation.navigate(screens.HOME);
-  };
-
-  const handleWriteProgramSpace = () => {
-    setIsWriteProgramSpaceLoading(true);
-    getWriteProgramSpace({
+  const handleVerifyBiometricUser = () => {
+    setLoading(true);
+    getUserVerification({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
-      rID: rID,
-      programSpaceData: JSON.stringify(sharedSpaceData),
-      encryptData: true,
     })
-      .then((res: WriteProgramSpaceResultType) => {
-        setIsWriteProgramSpaceLoading(false);
-        setWriteCardError('');
-        console.log(res);
+      .then((res: UserVerificationResultType) => {
+        console.log(JSON.stringify(res, null, 2));
+        setLoading(false);
         Alert.alert(
-          writeProgramScreenStrings.ALERT_TITLE,
-          writeProgramScreenStrings.ALERT_DESCRIPTION,
+          res.isMatchFound
+            ? authenticateBiometricUserStrings.MATCH_FOUND_ALERT_TITLE
+            : authenticateBiometricUserStrings.MATCH_NOT_FOUND_ALERT_TITLE,
+          res.isMatchFound
+            ? authenticateBiometricUserStrings.ALERT_MATCH_FOUND_DESCRIPTION
+            : authenticateBiometricUserStrings.ALERT_MATCH_NOT_FOUND_DESCRIPTION,
           [
             {
-              text: writeProgramScreenStrings.ALERT_ACCEPT_BUTTON,
-              onPress: () => handleProceed(),
+              text: authenticateBiometricUserStrings.ALERT_ACCEPT_BUTTON,
+              onPress: () => navigation.navigate(screens.HOME),
               style: 'default',
             },
           ],
@@ -63,8 +52,8 @@ const WriteProgramSpace = ({ route, navigation }: any) => {
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));
-        setWriteCardError(e.message);
-        setIsWriteProgramSpaceLoading(false);
+        setReadCardError(e.message);
+        setLoading(false);
       });
   };
 
@@ -73,19 +62,19 @@ const WriteProgramSpace = ({ route, navigation }: any) => {
       <View style={styles.innerContainer}>
         <View style={styles.infoWrapper}>
           <Text style={styles.title}>
-            {writeProgramScreenStrings.SCREEN_TITLE}
+            {authenticateBiometricUserStrings.SCREEN_TITLE}
           </Text>
           <Text style={styles.description}>
-            {writeProgramScreenStrings.SCREEN_DESCRIPTION}
+            {authenticateBiometricUserStrings.SCREEN_DESCRIPTION}
           </Text>
         </View>
         <Text style={styles.error}>{readCardError}</Text>
         <CustomButton
-          isLoading={isWriteProgramSpaceLoading}
-          onPress={handleWriteProgramSpace}
-          label={buttonLabels.WRITE_CARD}
-          customStyles={styles.writeProgramSpaceButton}
-          labelStyles={styles.writeProgramSpaceButtonLabel}
+          isLoading={loading}
+          onPress={handleVerifyBiometricUser}
+          label={buttonLabels.READ_CARD}
+          customStyles={styles.readProgramSpaceButton}
+          labelStyles={styles.readProgramSpaceButtonLabel}
           indicatorColor={themeColors.white}
         />
       </View>
@@ -117,10 +106,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  writeProgramSpaceButton: {
+  readProgramSpaceButton: {
     minWidth: '100%',
   },
-  writeProgramSpaceButtonLabel: {
+  readProgramSpaceButtonLabel: {
     color: themeColors.white,
     textAlign: 'center',
   },
@@ -138,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WriteProgramSpace;
+export default AuthenticateBiometricUser;
