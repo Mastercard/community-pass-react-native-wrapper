@@ -49,7 +49,7 @@ const WriteProgramSpace = () => {
       programGUID: PROGRAM_GUID,
       rID: rID,
       programSpaceData: JSON.stringify(sharedSpaceData),
-      encryptData: false,
+      encryptData: true,
     })
       .then((res: WriteProgramSpaceResultType) => {
         setIsWriteProgramSpaceLoading(false);

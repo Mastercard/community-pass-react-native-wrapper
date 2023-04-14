@@ -16,10 +16,15 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCrypto
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpace
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
+import com.mastercard.compass.jwt.JwtConstants
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jwts
 import timber.log.Timber
 import java.security.InvalidKeyException
 import java.security.PrivateKey
+import java.security.PublicKey
+import java.security.SignatureException
 import java.util.*
 
 class ReadProgramSpaceAPIRoute(
@@ -29,11 +34,13 @@ class ReadProgramSpaceAPIRoute(
   private val cryptoService: DefaultCryptoService?
 ) {
   private var decryptData: Boolean = false
+  val kernelPublicKey: PublicKey? = helperObject.getKernelJWTPublicKey()
 
   companion object {
     val REQUEST_CODE_RANGE = 900 until 1000
 
     const val READ_PROGRAM_SPACE_REQUEST_CODE = 900
+    const val TAG = "ReadProgramSpaceAPIRoute"
   }
 
   fun startReadProgramSpaceIntent(
@@ -44,9 +51,10 @@ class ReadProgramSpaceAPIRoute(
     val rID: String = ReadProgramSpaceParams.getString("rID")!!
     decryptData = ReadProgramSpaceParams.getBoolean("decryptData")
 
-    Timber.d("reliantGUID: {$reliantGUID}")
-    Timber.d("programGUID: {$programGUID}")
-    Timber.d("rID: {$rID}")
+    Timber.d("reliantGUID: $reliantGUID")
+    Timber.d("programGUID: $programGUID")
+    Timber.d("rID: $rID")
+    Timber.d("decryptData: $decryptData")
 
     val intent = Intent(context, ReadProgramSpaceCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)
@@ -57,6 +65,21 @@ class ReadProgramSpaceAPIRoute(
     currentActivity?.startActivityForResult(intent, READ_PROGRAM_SPACE_REQUEST_CODE)
   }
 
+  private fun parseJWT(jwt: String): String? {
+    try {
+      val data =
+        Jwts.parserBuilder().setSigningKey(kernelPublicKey).build().parseClaimsJws(jwt).body
+      return data[JwtConstants.JWT_PAYLOAD].toString()
+    } catch (e: SignatureException) {
+      Timber.tag(TAG).e(e, "parseJWT: Failed to validate JWT")
+    } catch (e: ExpiredJwtException) {
+      Timber.tag(TAG).e(e, "parseJWT: JWT expired")
+    } catch (e: Exception) {
+      Timber.tag(TAG).e(e, "parseJWT: Claims passed from Kernel are empty, null or invalid")
+    }
+    return  ""
+  }
+
   fun handleReadProgramSPaceIntentResponse(
     resultCode: Int,
     data: Intent?,
@@ -65,14 +88,14 @@ class ReadProgramSpaceAPIRoute(
     when (resultCode) {
       Activity.RESULT_OK -> {
         val resultMap = Arguments.createMap()
-        val response = data?.extras?.get(Constants.EXTRA_DATA) as ReadProgramSpaceDataResponse
-        Timber.d("programSpaceData: $response")
-
-        var extractedData: String = helperObject.parseJWT(response.jwt).toString()
+        val response: ReadProgramSpaceDataResponse = data?.extras?.get(Key.DATA) as ReadProgramSpaceDataResponse
+        var extractedData: String = parseJWT(response.jwt).toString()
 
         if(decryptData){
             extractedData = String(cryptoService!!.decrypt(extractedData))
         }
+
+        Timber.tag(TAG).d(extractedData)
 
         resultMap.putString("programSpaceData", extractedData)
         promise.resolve(resultMap);

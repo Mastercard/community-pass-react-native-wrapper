@@ -45,16 +45,16 @@ const ReadProgramSpace = () => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
       rID: rID,
-      decryptData: false,
+      decryptData: true,
     })
       .then((res: ReadProgramSpaceResultType) => {
         setIsReadProgramSpaceLoading(false);
         setReadCardError('');
-        console.log(res);
+        console.log(JSON.parse(res.programSpaceData));
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));
-        setReadCardError(e.message);
+        setReadCardError(`${e.code}: ${e.message}`);
         setIsReadProgramSpaceLoading(false);
       });
   };
