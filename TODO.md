@@ -78,14 +78,14 @@ This phase will include all actions and activities that enable you to conduct a 
           ⬜ Implement method
           ⬜ Add example
 
-⬜ Action: Authenticate Passcode Registered User on Program using Form Factor-Card
+✅ Action: Authenticate Passcode Registered User on Program using Form Factor-Card
 
       getRegistrationDataActivityIntent()
           ✅ Implement method
           ✅ Add example
       getVerifyPasscodeActivityIntent()
-          ⬜ Implement method
-          ⬜ Add example
+          ✅ Implement method
+          ✅ Add example
 
 ⬜ Action: Authenticate Biometric Registered User on Program using Form Factor-QR
 
@@ -112,7 +112,7 @@ This phase demonstrates actions and activities that enable you to manage any act
           ✅ Implement method
           ✅ Add example
       getVerifyPasscodeActivityIntent()
-          ⬜ Implement method
+          ✅ Implement method
           ⬜ Add example
       getAddBiometricsActivityIntent()
           ⬜ Implement method
@@ -127,7 +127,7 @@ This phase demonstrates actions and activities that enable you to manage any act
           ✅ Implement method
           ✅ Add example
       getVerifyPasscodeActivityIntent()
-          ⬜ Implement method
+          ✅ Implement method
           ⬜ Add example
       getAddBiometricsActivityIntent()
           ⬜ Implement method

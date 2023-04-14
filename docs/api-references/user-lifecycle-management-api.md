@@ -255,4 +255,62 @@ In addition to the [general error codes](https://developer.mastercard.com/cp-ker
 | ERROR_CODE_AUTH_METHOD_BIOMETRIC_BUT_NO_HASHES  | User found, insufficient data cannot write profile on the card – missing modalities (if any LP, RP, Face configured to the program) |
 | ERROR_CODE_INSUFFICIENT_HASHES_TO_WRITE_ON_CARD | Insufficient data cannot write hashes on the card– missing modalities (if any LP, RP, Face configured to the program)               |
 
+## 3 User Authentication
+
+### 3.1 getVerifyPasscode
+
+This API is used to verify that the Passcode provided by the user is the same as the one present on the user’s card/CP Consumer Device. in this flow, the Reliant Application takes an input from the user, which consists of 6 digits, and passes it to CPK for passcode verification.
+
+**Compatibility**
+| **Available as of CPK version #** | **Deprecated as of CPK version #** |
+|-----------------------------------|------------------------------------|
+| + CPK 2.4.1 | + n/a |
+
+**Input Parameters**
+| **Parameter** | **Type** | **Description** |
+|---------------|----------|------------------------------------------------------|
+| getVerfiyPasscodeRequest | GetVerifyPasscodeParamType | An object that contains the passcode, programGUID and reliantGUID |
+
+**Response Parameters**
+| **Parameter** | **Type** | **Description** |
+|-----------------|-----------------|----------------------------------------------------------|
+| getVerifyPasscodeResponse | Promise<`GetVerifyPasscodeResultType`> | A promise that resolves to an object containing either the rId, counter value indicating the remaining passcode verification attempts and a boolean field (status) indicating whether the user is authenticated, or an error field. |
+
+**Type Aliases**
+
+```ts
+// GetVerifyPasscodeParamType
+interface GetVerifyPasscodeParamType {
+  passcode: string,
+  programGUID: string,
+  reliantGUID: string
+}
+
+// GetVerifyPasscodeResultType
+export interface GetVerifyPasscodeResultType {
+  status: boolean,
+  rId: string,
+  counter: number
+}
+```
+
+**Error codes**
+
+In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
+
+| **Error Code**                                | **Description**                                         |
+| --------------------------------------------- | ------------------------------------------------------- |
+| ERROR_CODE_CARD_NOT_ACTIVE	                | The card is not in ACTIVE state |
+| ERROR_CODE_CARD_BLACKLISTED	                | Card is blacklisted |
+| ERROR_CODE_PROGRAM_GUID_NOT_MATCH	                | Program GUID does not match on the card            |
+| ERROR_CODE_CARD_CONNECTION_ERROR	                | Card was moved or removed during read/write operation |
+| ERROR_CODE_PIN_BLOCKED		                | Card has a blocked PIN |
+| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT			                | Application data not written on the card for this application
+ | ERROR_CODE_CARD_OPERATION_ABORTED				                | Card operation terminated before card 
+ | ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR	 | Specified Program does not support QR form factor | ERROR_CODE_FORM_FACTOR_BLACKLISTED	 | Specified FormFactor is blacklisted
+| ERROR_CODE_INVALID_CP_USER_PROFILE | Invalid Cp User Profile
+| ERROR_CODE_QR_PASSCODE_VERIFICATION_BLOCKED	 | This device has reached the maximum failed passcode attempts. Kindly reset your Passcode
+
+
+
 [Return to API reference](README.md)
