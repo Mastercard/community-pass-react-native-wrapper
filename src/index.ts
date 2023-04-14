@@ -83,41 +83,43 @@ export function getRegisterUserWithBiometrics({
 export function getRegistrationData({
   reliantGUID,
   programGUID,
-}: GetRegistrationDataParamType) {
+}: RegistrationDataParamType) {
   return CompassLibraryReactNativeWrapper.getRegistrationData({
     reliantGUID,
-    programGUID
-  })
+    programGUID,
+  });
 }
 
 export function getVerifyPasscode({
   passcode,
-  programGUID, reliantGUID
-}: GetVerifyPasscodeParamType) {
+  programGUID,
+  reliantGUID,
+}: VerifyPasscodeParamType) {
   return CompassLibraryReactNativeWrapper.getVerifyPasscode({
     passcode,
-    programGUID, reliantGUID
-  })
+    programGUID,
+    reliantGUID,
+  });
 }
 
-export interface GetVerifyPasscodeParamType {
+export interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
   reliantGUID: string;
 }
 
-export interface GetVerifyPasscodeResultType {
+export interface VerifyPasscodeResultType {
   status: boolean;
   rId: string;
   counter: number;
 }
 
-export interface GetRegistrationDataParamType {
+export interface RegistrationDataParamType {
   reliantGUID: string;
   programGUID: string;
 }
 
-export interface GetRegistrationDataResultType {
+export interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
   authMethods: string[];
 }
