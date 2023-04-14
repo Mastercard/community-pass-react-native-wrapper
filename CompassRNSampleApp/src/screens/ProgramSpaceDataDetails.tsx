@@ -4,13 +4,13 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import CustomButton from './components/CustomButton';
 import { buttonLabels, screens } from '../assets/strings';
 import { themeColors } from '../assets/colors';
-import type { ProgramSpaceResponse } from '../types/programSpaceDataType';
+import type { SharedSpaceDataSchema } from '../types/programSpaceDataType';
 
 const { width: WIDTH } = Dimensions.get('screen');
 
 const ProgramSpaceDataDetails = ({ route, navigation }: any) => {
   const { programSpaceData } = route?.params;
-  const [data, setData] = useState<ProgramSpaceResponse>();
+  const [data, setData] = useState<SharedSpaceDataSchema>();
 
   const updateStateWithData = useCallback(() => {
     setData(JSON.parse(programSpaceData));

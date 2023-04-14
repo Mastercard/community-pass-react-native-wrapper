@@ -6,7 +6,6 @@ import {
   getRegistrationData,
   WriteProgramSpaceResultType,
   RegistrationDataResultType,
-  SharedSpaceDataSchema,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
@@ -18,6 +17,7 @@ import {
 } from '../assets/strings';
 import { themeColors } from '../assets/colors';
 import data from '../../data/sharedSpaceData.json';
+import type { SharedSpaceDataSchema } from '../types/programSpaceDataType';
 
 const { width: WIDTH } = Dimensions.get('screen');
 const sharedSpaceData: SharedSpaceDataSchema = data;
