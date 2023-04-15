@@ -48,7 +48,7 @@ const RegisterUserWithBiometrics = ({ route, navigation }: any) => {
       programGUID: PROGRAM_GUID,
       consentID: consentID,
       modalities: {
-        face: false,
+        face: true,
         leftPalm: true,
         rightPalm: true,
       },
