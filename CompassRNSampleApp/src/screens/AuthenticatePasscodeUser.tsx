@@ -14,11 +14,14 @@ import {
   authenticatePasscodeUserStrings,
   writePasscodeScreenStrings,
   keyboardTypes,
+  genericErrorMessages,
   screens,
 } from '../assets/strings';
 import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
+
+var REG = /^[0-9]{6}$/;
 
 const AuthenticatePasscodeUser = ({ navigation }: any) => {
   const [readCardError, setReadCardError] = useState('');
@@ -27,6 +30,16 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
   const [count, setCount] = useState('');
 
   const handleVerifyPasscode = () => {
+    if (passcode?.length === 0) {
+      setReadCardError(genericErrorMessages.INVALID_PASSCODE);
+      return;
+    } else {
+      if (!REG.test(passcode)) {
+        setReadCardError(genericErrorMessages.INVALID_PASSCODE);
+        return;
+      }
+    }
+
     setLoading(true);
     getVerifyPasscode({
       passcode: passcode,
@@ -87,6 +100,7 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
             placeholderText: writePasscodeScreenStrings.INPUT_PLACEHOLDER,
             keyboadType: keyboardTypes.NUMERIC,
             hasError: false,
+            secureTextEntry: true,
           }}
           value={passcode}
           onChange={setPasscode}

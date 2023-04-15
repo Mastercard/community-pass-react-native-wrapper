@@ -80,6 +80,7 @@ const WritePasscode = ({ route, navigation }: any) => {
             placeholderText: writePasscodeScreenStrings.INPUT_PLACEHOLDER,
             keyboadType: keyboardTypes.NUMERIC,
             hasError: false,
+            secureTextEntry: true,
           }}
           value={passcode}
           onChange={setPasscode}

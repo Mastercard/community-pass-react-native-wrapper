@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {
   ErrorResultType,
   getReadProgramSpace,
-  getRegistrationData,
-  RegistrationDataResultType,
   ReadProgramSpaceResultType,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
@@ -19,29 +17,11 @@ import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
 
-const ReadProgramSpace = ({ navigation }: any) => {
+const ReadProgramSpace = ({ route, navigation }: any) => {
+  const { rID } = route?.params;
   const [readCardError, setReadCardError] = useState('');
-  const [rID, setRID] = useState('');
   const [isReadProgramSpaceLoading, setIsReadProgramSpaceLoading] =
     useState(false);
-
-  const handleReadRegistrationData = () => {
-    setIsReadProgramSpaceLoading(true);
-    getRegistrationData({
-      reliantGUID: RELIANT_APP_GUID,
-      programGUID: PROGRAM_GUID,
-    })
-      .then((res: RegistrationDataResultType) => {
-        console.log(JSON.stringify(res, null, 2));
-        setRID(res.rID);
-        handleReadProgramSpace();
-      })
-      .catch((e: ErrorResultType) => {
-        console.log(JSON.stringify(e, null, 2));
-        setReadCardError(e.message);
-        setIsReadProgramSpaceLoading(false);
-      });
-  };
 
   const handleReadProgramSpace = () => {
     setIsReadProgramSpaceLoading(true);
@@ -80,7 +60,7 @@ const ReadProgramSpace = ({ navigation }: any) => {
         <Text style={styles.error}>{readCardError}</Text>
         <CustomButton
           isLoading={isReadProgramSpaceLoading}
-          onPress={handleReadRegistrationData}
+          onPress={handleReadProgramSpace}
           label={buttonLabels.READ_CARD}
           customStyles={styles.readProgramSpaceButton}
           labelStyles={styles.readProgramSpaceButtonLabel}

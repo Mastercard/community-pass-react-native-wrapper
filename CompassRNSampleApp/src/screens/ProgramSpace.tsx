@@ -2,13 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { programSpaceScreenStrings, screens } from '../assets/strings';
 import { themeColors } from '../assets/colors';
+import { NAVIGATION_OPTIONS } from '../../utils/enums';
 
 const ProgramSpace = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate(screens.READ_PROGRAM_SPACE)}
+        onPress={() =>
+          navigation.navigate(screens.RETRIEVE_REGISTRATION_DATA, {
+            navOptions: NAVIGATION_OPTIONS.READ_PROGRAM_SPACE,
+          })
+        }
       >
         <Text style={styles.sectionLabel}>
           {programSpaceScreenStrings.ACTION}
@@ -22,7 +27,11 @@ const ProgramSpace = ({ navigation }: any) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate(screens.WRITE_PROGRAM_SPACE)}
+        onPress={() =>
+          navigation.navigate(screens.RETRIEVE_REGISTRATION_DATA, {
+            navOptions: NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE,
+          })
+        }
       >
         <Text style={styles.sectionLabel}>
           {programSpaceScreenStrings.ACTION}
