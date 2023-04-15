@@ -121,6 +121,12 @@ interface RegisterUserWithBiometricsParamType {
   reliantGUID: string;
   programGUID: string;
   consentID: string;
+  modalities: {
+    face: boolean;
+    leftPalm: boolean;
+    rightPalm: boolean;
+  };
+  operationMode: string;
 }
 
 // RegisterUserWithBiometricsResultType

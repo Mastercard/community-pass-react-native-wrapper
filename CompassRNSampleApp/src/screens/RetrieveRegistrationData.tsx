@@ -67,6 +67,7 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
         console.log(JSON.stringify(res, null, 2));
         setRID(res.rID);
         setLoading(false);
+        setReadCardError('');
         handleNextNavigation(res.authMethods);
       })
       .catch((e: ErrorResultType) => {

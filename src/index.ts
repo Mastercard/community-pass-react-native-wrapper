@@ -72,11 +72,15 @@ export function getRegisterUserWithBiometrics({
   reliantGUID,
   programGUID,
   consentID,
+  modalities,
+  operationMode,
 }: RegisterUserWithBiometricsParamType) {
   return CompassLibraryReactNativeWrapper.getRegisterUserWithBiometrics({
     reliantGUID,
     programGUID,
     consentID,
+    modalities,
+    operationMode,
   });
 }
 
@@ -204,6 +208,12 @@ export interface RegisterUserWithBiometricsParamType {
   reliantGUID: string;
   programGUID: string;
   consentID: string;
+  modalities: {
+    face: boolean;
+    leftPalm: boolean;
+    rightPalm: boolean;
+  };
+  operationMode: string;
 }
 
 export interface WriteProgramSpaceParamType {
@@ -257,3 +267,8 @@ export interface ReadProgramSpaceResultType {
 export interface WriteProgramSpaceResultType {
   isSuccess: boolean;
 }
+
+export const OperationModes = {
+  BEST_AVAILABLE: 'BEST_AVAILABLE',
+  FULL: 'FULL',
+};
