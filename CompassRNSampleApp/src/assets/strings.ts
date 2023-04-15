@@ -88,7 +88,7 @@ export const preTransactionsScreenStrings = {
   ACTION: 'Action',
   ENROLL_A_NEW_USER_TITLE: 'Enrol a New User',
   ENROLL_A_NEW_USER_DESCRIPTION:
-    'enroll a user using either biometrics or passcode',
+    'Enroll a user using either biometrics or passcode',
   USE_SHARED_SPACE_TITLE: 'Use the Shared Space',
   USE_SHARED_SPACE_DESCRIPTION: 'Sync data between the POI and the Card',
   TOAST_MESSAGE: 'have not yet been implemented.',

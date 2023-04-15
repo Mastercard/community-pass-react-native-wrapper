@@ -29,7 +29,7 @@ const Transactions = ({ navigation }: any) => {
         style={styles.card}
         onPress={() =>
           navigation.navigate(screens.RETRIEVE_REGISTRATION_DATA, {
-            navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_BIOMETRIC_USER,
+            navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_USER,
           })
         }
       >

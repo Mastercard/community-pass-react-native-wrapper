@@ -15,6 +15,7 @@ import com.mastercard.compass.model.programspace.DataSchemaResponse
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.security.PublicKey
 import java.security.SignatureException
 
@@ -75,8 +76,11 @@ class SharedSpaceApi(
     if(dataSchema == null) dataSchema = fetchDataSchemaResponse()
 
     try {
-      if(dataSchema?.responseStatus != ResponseStatus.SUCCESS){
-        return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_FETCHING_SCHEMA, dataSchema?.message)
+      if (dataSchema?.responseStatus != ResponseStatus.SUCCESS) {
+        return SharedSpaceValidationDecryptionResponse.Error(
+          SharedSpaceValidationDecryptionError.ERROR_FETCHING_SCHEMA,
+          dataSchema?.message
+        )
       }
       var data: String = integrityService.parseJWT(response.jwt)
       when {
@@ -87,15 +91,15 @@ class SharedSpaceApi(
           data = String(cryptoService!!.decrypt(data))
         }
       }
-      Log.d(TAG, "validateDecryptData: $data")
+      Timber.tag(TAG).d("validateDecryptData: $data")
       val sharedSpace = Gson().fromJson(data, SharedSpace::class.java)
       return SharedSpaceValidationDecryptionResponse.Success(sharedSpace)
     } catch (e: SignatureException){
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_SIGNATURE_VALIDATION_FAILED)
     } catch (e: InvalidJWTException){
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_INVALID_JWT)
-    } catch (e: Exception){
-      Log.e(TAG, "validateDecryptData: process failed", e)
+    } catch (e: Exception) {
+      Timber.tag(TAG).e(e, "validateDecryptData: process failed")
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_VALIDATION_DECRYPTION_SERIALIZATION_FAILED)
     }
   }

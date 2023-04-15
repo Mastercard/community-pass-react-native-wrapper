@@ -3,6 +3,8 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -20,6 +22,8 @@ import com.mastercard.compass.jwt.JwtConstants
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.security.InvalidKeyException
 import java.security.PrivateKey
@@ -89,6 +93,10 @@ class ReadProgramSpaceAPIRoute(
       Activity.RESULT_OK -> {
         val resultMap = Arguments.createMap()
         val response: ReadProgramSpaceDataResponse = data?.extras?.get(Key.DATA) as ReadProgramSpaceDataResponse
+
+
+
+
         var extractedData: String = parseJWT(response.jwt).toString()
 
         if(decryptData){

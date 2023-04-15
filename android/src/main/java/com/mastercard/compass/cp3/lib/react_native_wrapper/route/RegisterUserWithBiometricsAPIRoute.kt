@@ -25,19 +25,33 @@ class RegisterUserWithBiometricsAPIRoute(
         const val REGISTER_BIOMETRICS_REQUEST_CODE = 300
     }
 
-    fun startRegisterUserWithBiometricsIntent(RegisterUserWithBiometricsParams: ReadableMap){
+    fun startRegisterUserWithBiometricsIntent(RegisterUserWithBiometricsParams: ReadableMap) {
       val reliantGUID: String = RegisterUserWithBiometricsParams.getString("reliantGUID")!!;
       val programGUID: String = RegisterUserWithBiometricsParams.getString("programGUID")!!
       val consentID: String = RegisterUserWithBiometricsParams.getString("consentID")!!
+      val operationMode: String = RegisterUserWithBiometricsParams.getString("operationMode")!!
+      val modalities: ReadableMap = RegisterUserWithBiometricsParams.getMap("modalities")!!
+      val face: Boolean = modalities.getBoolean("face")
+      val leftPalm: Boolean = modalities.getBoolean("leftPalm")
+      val rightPalm: Boolean = modalities.getBoolean("rightPalm")
 
       // Log
-      Timber.d("reliantGUID: {$reliantGUID}")
-      Timber.d("programGUID: {$programGUID}")
-      Timber.d("consentID: {$consentID}")
-        val intent = Intent(context, RegisterUserForBioTokenCompassApiHandlerActivity::class.java).apply {
-            putExtra(Key.RELIANT_APP_GUID, reliantGUID)
-            putExtra(Key.PROGRAM_GUID, programGUID)
-            putExtra(Key.CONSENT_ID, consentID)
+      Timber.d("reliantGUID: $reliantGUID")
+      Timber.d("programGUID: $programGUID")
+      Timber.d("consentID: $consentID")
+      Timber.tag(TAG).d(modalities.getBoolean("face").toString())
+      Timber.tag(TAG).d(modalities.getBoolean("leftPalm").toString())
+      Timber.tag(TAG).d(modalities.getBoolean("rightPalm").toString())
+      Timber.tag(TAG).d(operationMode)
+
+      val intent = Intent(context, RegisterUserForBioTokenCompassApiHandlerActivity::class.java).apply {
+          putExtra(Key.RELIANT_APP_GUID, reliantGUID)
+          putExtra(Key.PROGRAM_GUID, programGUID)
+          putExtra(Key.CONSENT_ID, consentID)
+          putExtra(Key.OPERATION_MODE, operationMode)
+          putExtra(Key.FACE_MODALITY, face)
+          putExtra(Key.LEFT_PALM_MODALITY, leftPalm)
+          putExtra(Key.RIGHT_PALM_MODALITY, rightPalm)
         }
 
       currentActivity?.startActivityForResult(intent, REGISTER_BIOMETRICS_REQUEST_CODE)

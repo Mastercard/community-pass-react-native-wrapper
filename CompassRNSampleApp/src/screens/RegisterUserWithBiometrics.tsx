@@ -4,6 +4,7 @@ import {
   getRegisterUserWithBiometrics,
   ErrorResultType,
   RegisterUserWithBiometricsResultType,
+  OperationModes,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
@@ -25,6 +26,7 @@ const RegisterUserWithBiometrics = ({ route, navigation }: any) => {
 
   const handleCancel = (res: RegisterUserWithBiometricsResultType) => {
     setIsLoading(false);
+    setRegistrationError('');
     navigation.navigate(screens.HOME, {
       rID: res.rID,
     });
@@ -45,6 +47,12 @@ const RegisterUserWithBiometrics = ({ route, navigation }: any) => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
       consentID: consentID,
+      modalities: {
+        face: true,
+        leftPalm: true,
+        rightPalm: true,
+      },
+      operationMode: OperationModes.BEST_AVAILABLE,
     })
       .then((res: RegisterUserWithBiometricsResultType) => {
         console.log(res);

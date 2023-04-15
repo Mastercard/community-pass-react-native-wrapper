@@ -50,6 +50,7 @@ const WritePasscode = ({ route, navigation }: any) => {
         console.log(res);
         if (res.responseStatus === 'Success') {
           setIsLoading(false);
+          setWritePasscodeError('');
           navigation.navigate(screens.WRITE_SUCCESSFUL, {
             consumerDeviceNumber: consumerDeviceNumber,
             rID: rID,
@@ -80,6 +81,7 @@ const WritePasscode = ({ route, navigation }: any) => {
             placeholderText: writePasscodeScreenStrings.INPUT_PLACEHOLDER,
             keyboadType: keyboardTypes.NUMERIC,
             hasError: false,
+            secureTextEntry: true,
           }}
           value={passcode}
           onChange={setPasscode}

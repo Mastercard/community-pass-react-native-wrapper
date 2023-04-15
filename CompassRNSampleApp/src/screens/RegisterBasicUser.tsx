@@ -31,6 +31,7 @@ const RegisterBasicUser = ({ navigation }: any) => {
       .then((res: RegisterBasicUserResultType) => {
         console.log(res);
         setIsLoading(false);
+        setRegistrationError('');
         navigation.navigate(screens.WRITE_PROFILE, {
           rID: res.rID,
           registrationType: registrationTypes.BASIC_USER,

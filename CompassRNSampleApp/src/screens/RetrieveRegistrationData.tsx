@@ -26,23 +26,34 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
   const [loading, setLoading] = useState(false);
 
   const handleNextNavigation = (authMethods: Array<string>) => {
-    if (navOptions === NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE) {
-      navigation.navigate(screens.WRITE_PROGRAM_SPACE, {
-        rID: rID,
-        navOptions: NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE,
-      });
-    } else {
-      if (authMethods.includes('BIO')) {
-        navigation.navigate(screens.AUTHENTICATE_BIOMETRIC_USER, {
+    switch (navOptions) {
+      case NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE:
+        navigation.navigate(screens.WRITE_PROGRAM_SPACE, {
           rID: rID,
-          navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_BIOMETRIC_USER,
+          navOptions: NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE,
         });
-      } else {
-        navigation.navigate(screens.AUTHENICATE_PASSCODE_USER, {
+        return;
+      case NAVIGATION_OPTIONS.READ_PROGRAM_SPACE:
+        navigation.navigate(screens.READ_PROGRAM_SPACE, {
           rID: rID,
-          navOptions: NAVIGATION_OPTIONS.AUTHENICATE_PASSCODE_USER,
+          navOptions: NAVIGATION_OPTIONS.READ_PROGRAM_SPACE,
         });
-      }
+        return;
+      case NAVIGATION_OPTIONS.AUTHENTICATE_USER:
+        if (authMethods.includes('BIO')) {
+          navigation.navigate(screens.AUTHENTICATE_BIOMETRIC_USER, {
+            rID: rID,
+            navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_USER,
+          });
+        } else {
+          navigation.navigate(screens.AUTHENICATE_PASSCODE_USER, {
+            rID: rID,
+            navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_USER,
+          });
+        }
+        return;
+      default:
+        return;
     }
   };
 
@@ -56,6 +67,7 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
         console.log(JSON.stringify(res, null, 2));
         setRID(res.rID);
         setLoading(false);
+        setReadCardError('');
         handleNextNavigation(res.authMethods);
       })
       .catch((e: ErrorResultType) => {

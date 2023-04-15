@@ -16,6 +16,7 @@ const CustomInput = ({ config, value, onChange }: any) => {
           placeholder={config.placeholderText}
           keyboardType={config.keyboadType}
           onChangeText={onChange}
+          secureTextEntry={config.secureTextEntry}
         />
       </View>
     </>
