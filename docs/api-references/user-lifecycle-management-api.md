@@ -126,7 +126,7 @@ interface RegisterUserWithBiometricsParamType {
     leftPalm: boolean;
     rightPalm: boolean;
   };
-  operationMode: string;
+  operationMode: string; // OperationModes.BEST_AVAILABLE or OperationModes.FULL
 }
 
 // RegisterUserWithBiometricsResultType
