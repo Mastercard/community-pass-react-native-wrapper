@@ -259,7 +259,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    // implementation files("../../node_modules/community-pass-react-native-wrapper/android/libs/community-pass-library-v2.4.0.aar") // add this implementation to your project
+    // implementation files("../../node_modules/community-pass-react-native-wrapper/android/libs/community-pass-library-v2.5.1.aar") // add this implementation to your project
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
