@@ -18,7 +18,7 @@ import { themeColors } from '../assets/colors';
 const { width: WIDTH } = Dimensions.get('screen');
 
 const ReadProgramSpace = ({ route, navigation }: any) => {
-  const { rID } = route?.params;
+  const { rID } = route?.params || {};
   const [readCardError, setReadCardError] = useState('');
   const [isReadProgramSpaceLoading, setIsReadProgramSpaceLoading] =
     useState(false);

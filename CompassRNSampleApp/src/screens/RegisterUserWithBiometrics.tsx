@@ -20,7 +20,7 @@ import {
 const { width: WIDTH } = Dimensions.get('screen');
 
 const RegisterUserWithBiometrics = ({ route, navigation }: any) => {
-  const { consentID } = route?.params;
+  const { consentID } = route?.params || {};
   const [registrationError, setRegistrationError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

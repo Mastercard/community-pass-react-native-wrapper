@@ -23,7 +23,7 @@ const { width: WIDTH } = Dimensions.get('screen');
 var REG = /^[0-9]{6}$/;
 
 const WritePasscode = ({ route, navigation }: any) => {
-  const { rID, consumerDeviceNumber } = route?.params;
+  const { rID, consumerDeviceNumber } = route?.params || {};
   const [writePasscodeError, setWritePasscodeError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [passcode, setPasscode] = useState('');
