@@ -41,7 +41,7 @@ dependencies {
     ...
 
     // add this to your list of dependencies
-    implementation files("../../node_modules/community-pass-react-native-wrapper/android/libs/community-pass-library-v2.4.0.aar");
+    implementation files("../../node_modules/community-pass-react-native-wrapper/android/libs/community-pass-library-v2.5.1.aar");
 
     ...
 }
@@ -59,7 +59,8 @@ configurations {
     implementation.exclude group: 'org.slf4j', module: 'slf4j-api'
 }
 ```
-6. In the file `android/build.gradle` bump your compileSdkVersion and targetSdkVersion to 33, and your minSdkVersion to 26 
+
+6. In the file `android/build.gradle` bump your compileSdkVersion and targetSdkVersion to 33, and your minSdkVersion to 26
 
 ```gradle
 buildscript {

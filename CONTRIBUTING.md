@@ -78,7 +78,7 @@ The following are the steps required to set up your project with the Community P
 
 **Locate and Move the Community Pass Kernel Library File to your Android Studio Project**
 
-1. Locate the folder where you downloaded the AAR library to. The library will have a name similar to the following example: `community-pass-library-2.4.0.aar`
+1. Locate the folder where you downloaded the AAR library to. The library will have a name similar to the following example: `community-pass-library-v2.5.1.aar`
 2. Start your Android Studio and click on the open button at the top right corner.
 
 3. Navigate to the location of the `community-pass-react-native-wrapper` folder and select the android folder at the root level of the project. Click open.
