@@ -9,7 +9,7 @@ import type { SharedSpaceDataSchema } from '../types/programSpaceDataType';
 const { width: WIDTH } = Dimensions.get('screen');
 
 const ProgramSpaceDataDetails = ({ route, navigation }: any) => {
-  const { programSpaceData } = route?.params;
+  const { programSpaceData } = route?.params || {};
   const [data, setData] = useState<SharedSpaceDataSchema>();
 
   const updateStateWithData = useCallback(() => {

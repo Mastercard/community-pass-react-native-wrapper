@@ -19,7 +19,7 @@ import { NAVIGATION_OPTIONS } from '../../utils/enums';
 const { width: WIDTH } = Dimensions.get('screen');
 
 const RetrieveRegistrationData = ({ route, navigation }: any) => {
-  const { navOptions } = route?.params;
+  const { navOptions } = route?.params || {};
   const [readCardError, setReadCardError] = useState('');
   const [rID, setRID] = useState('');
 

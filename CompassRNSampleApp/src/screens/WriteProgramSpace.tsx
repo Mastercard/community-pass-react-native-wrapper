@@ -21,7 +21,7 @@ const { width: WIDTH } = Dimensions.get('screen');
 const sharedSpaceData: SharedSpaceDataSchema = data;
 
 const WriteProgramSpace = ({ route, navigation }: any) => {
-  const { rID } = route?.params;
+  const { rID } = route?.params || {};
   const [readCardError, setWriteCardError] = useState('');
   const [isWriteProgramSpaceLoading, setIsWriteProgramSpaceLoading] =
     useState(false);
