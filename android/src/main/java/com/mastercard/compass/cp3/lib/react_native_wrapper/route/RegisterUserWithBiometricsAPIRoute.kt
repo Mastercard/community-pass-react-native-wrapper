@@ -6,6 +6,7 @@ import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.mastercard.compass.jwt.RegisterUserForBioTokenResponse
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
@@ -30,31 +31,24 @@ class RegisterUserWithBiometricsAPIRoute(
       val programGUID: String = RegisterUserWithBiometricsParams.getString("programGUID")!!
       val consentID: String = RegisterUserWithBiometricsParams.getString("consentID")!!
       val operationMode: String = RegisterUserWithBiometricsParams.getString("operationMode")!!
-      val modalities: ReadableMap = RegisterUserWithBiometricsParams.getMap("modalities")!!
-      val face: Boolean = modalities.getBoolean("face")
-      val leftPalm: Boolean = modalities.getBoolean("leftPalm")
-      val rightPalm: Boolean = modalities.getBoolean("rightPalm")
+      val modalities: ReadableArray = RegisterUserWithBiometricsParams.getArray("modalities")!!
 
       // Log
       Timber.d("reliantGUID: $reliantGUID")
       Timber.d("programGUID: $programGUID")
       Timber.d("consentID: $consentID")
-      Timber.tag(TAG).d(modalities.getBoolean("face").toString())
-      Timber.tag(TAG).d(modalities.getBoolean("leftPalm").toString())
-      Timber.tag(TAG).d(modalities.getBoolean("rightPalm").toString())
       Timber.tag(TAG).d(operationMode)
+      Timber.tag(TAG).d(modalities.toString())
 
       val intent = Intent(context, RegisterUserForBioTokenCompassApiHandlerActivity::class.java).apply {
           putExtra(Key.RELIANT_APP_GUID, reliantGUID)
           putExtra(Key.PROGRAM_GUID, programGUID)
           putExtra(Key.CONSENT_ID, consentID)
           putExtra(Key.OPERATION_MODE, operationMode)
-          putExtra(Key.FACE_MODALITY, face)
-          putExtra(Key.LEFT_PALM_MODALITY, leftPalm)
-          putExtra(Key.RIGHT_PALM_MODALITY, rightPalm)
+          putExtra(Key.MODALITIES, modalities.toArrayList())
         }
 
-      currentActivity?.startActivityForResult(intent, REGISTER_BIOMETRICS_REQUEST_CODE)
+        currentActivity?.startActivityForResult(intent, REGISTER_BIOMETRICS_REQUEST_CODE)
     }
 
     fun handleRegisterUserWithBiometricsIntentResponse(

@@ -108,7 +108,7 @@ interface ReadProgramSpaceParamType {
 
 // ReadProgramSpaceResultType
 interface ReadProgramSpaceResultType {
-  programSpaceData: String | null;
+  programSpaceData: String;
 }
 ```
 

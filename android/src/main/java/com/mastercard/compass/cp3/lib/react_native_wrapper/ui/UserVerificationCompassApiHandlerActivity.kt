@@ -8,11 +8,9 @@ class UserVerificationCompassApiHandlerActivity: CompassApiHandlerActivity<Strin
   override suspend fun callCompassApi() {
     val programGUID: String = intent.getStringExtra(Key.PROGRAM_GUID)!!
     val reliantGUID: String = intent.getStringExtra(Key.RELIANT_APP_GUID)!!
-    val face: Boolean = intent.getBooleanExtra(Key.FACE_MODALITY, true)
-    val leftPalm: Boolean = intent.getBooleanExtra(Key.LEFT_PALM_MODALITY, true)
-    val rightPalm: Boolean = intent.getBooleanExtra(Key.RIGHT_PALM_MODALITY, true)
+    val modalities: ArrayList<String> = intent.getStringArrayListExtra(Key.MODALITIES)!!
 
-    val requestJwt = helper.generateJWT(reliantGUID, programGUID, populateModalityList(face, leftPalm, rightPalm))
+    val requestJwt = helper.generateJWT(reliantGUID, programGUID, populateModalityList(modalities))
 
     val verificationIntent = compassKernelServiceInstance.getUserVerificationActivityIntent(requestJwt, reliantGUID)
 

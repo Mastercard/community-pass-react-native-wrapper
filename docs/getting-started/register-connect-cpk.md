@@ -83,11 +83,7 @@ getRegisterUserWithBiometrics({
   reliantGUID: '120a2c48-461e-4312-91c8-c3ba586ad29a', //string
   programGUID: '6d498a97-fb8c-42b3-89a4-0fe13372f557', //string
   consentID: 'c6873db3-3975-4773-ab49-3b6c3e5e03b9', //string
-  modalities: {
-    face: true,
-    leftPalm: true,
-    rightPalm: true,
-  },
+  modalities: [Modalities.FACE, Modalities.LEFT_PALM, Modalities.RIGHT_PALM],
   operationMode: OperationModes.BEST_AVAILABLE, // or OperationModes.FULL
 })
   .then((response: RegisterUserWithBiometricsResultType) => {

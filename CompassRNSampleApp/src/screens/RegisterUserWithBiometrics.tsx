@@ -5,6 +5,7 @@ import {
   ErrorResultType,
   RegisterUserWithBiometricsResultType,
   OperationModes,
+  Modalities,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
@@ -47,11 +48,11 @@ const RegisterUserWithBiometrics = ({ route, navigation }: any) => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
       consentID: consentID,
-      modalities: {
-        face: true,
-        leftPalm: true,
-        rightPalm: true,
-      },
+      modalities: [
+        Modalities.FACE,
+        Modalities.LEFT_PALM,
+        Modalities.RIGHT_PALM,
+      ],
       operationMode: OperationModes.BEST_AVAILABLE,
     })
       .then((res: RegisterUserWithBiometricsResultType) => {
