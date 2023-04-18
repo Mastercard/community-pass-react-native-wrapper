@@ -65,8 +65,12 @@ class WriteProgramSpaceAPIRoute(
         val response: WriteProgramSpaceDataResponse = data?.extras?.get(Key.DATA) as WriteProgramSpaceDataResponse
 
         Timber.tag(TAG).d(response.toString())
-        resultMap.putBoolean("isSuccess", response.isSuccess)
-        promise.resolve(resultMap);
+        if(response.isSuccess){
+          resultMap.putBoolean("isSuccess", true)
+          promise.resolve(resultMap);
+        } else {
+          promise.reject(ErrorCode.UNKNOWN.toString(), Throwable("Unknown error" ));
+        }
       }
       Activity.RESULT_CANCELED -> {
         val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()

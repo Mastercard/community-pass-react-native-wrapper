@@ -1,6 +1,7 @@
 package com.mastercard.compass.cp3.lib.react_native_wrapper.ui
 
 import com.mastercard.compass.base.OperationMode
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.populateModalityList
 import com.mastercard.compass.model.biometrictoken.Modality
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 
@@ -16,7 +17,8 @@ class RegisterUserForBioTokenCompassApiHandlerActivity: CompassApiHandlerActivit
 
 
         val jwt = helper.generateBioTokenJWT(
-            reliantGUID, programGUID, consentID, populateModalityList(face, leftPalm, rightPalm))
+            reliantGUID, programGUID, consentID, populateModalityList(face, leftPalm, rightPalm)
+        )
 
         val intent = compassKernelServiceInstance.getRegisterUserForBioTokenActivityIntent(
             jwt,
@@ -29,14 +31,5 @@ class RegisterUserForBioTokenCompassApiHandlerActivity: CompassApiHandlerActivit
 
   private fun getOperationMode(operationMode: String): OperationMode {
     return if(operationMode == Key.BEST_AVAILABLE) OperationMode.BEST_AVAILABLE else OperationMode.FULL
-  }
-  private fun populateModalityList (face: Boolean, leftPalm: Boolean, rightPalm: Boolean) : MutableList<Modality> {
-    val listOfModalities = mutableListOf<Modality>()
-
-    if(face) listOfModalities.add(Modality.FACE)
-    if(leftPalm) listOfModalities.add(Modality.LEFT_PALM)
-    if(rightPalm) listOfModalities.add(Modality.RIGHT_PALM)
-
-    return listOfModalities
   }
 }
