@@ -24,7 +24,7 @@ Then, the Reliant Application must store it with CPK.
 **Response Parameters**
 | **Parameter** | **Type** | **Description** |
 |-----------------|-----------------|----------------------------------------------------------|
-| getRegistrationDataResponse | Promise<`RegistrationDataResultType`> | A promise that resolves to an object containing either an authMethods array with a boolean field indicating whether the user is registered in the current program, or an error field. |
+| getRegistrationDataResponse | Promise<`RegistrationDataResultType`> | A promise that resolves to an object containing a list of authMethods, a list of modalityTypes, rID and an isRegisteredInProgram fields, or an error field. |
 
 **Type Aliases**
 
@@ -38,7 +38,22 @@ interface RegistrationDataParamType {
 // RegistrationDataResultType
 interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
-  authMethods: string[];
+  authMethods: AuthType[];
+  modalityType: Modality[];
+  rID: string;
+}
+
+enum AuthType {
+  NONE = 'NONE',
+  CARD_PRESENT = 'CARD_PRESENT',
+  PASSCODE = 'PASSCODE',
+  BIO = 'BIO',
+}
+
+enum Modality {
+  FACE = 'FACE',
+  LEFT_PALM = 'LEFT_PALM',
+  RIGHT_PALM = 'RIGHT_PALM',
 }
 ```
 

@@ -48,7 +48,7 @@ const WritePasscode = ({ route, navigation }: any) => {
     })
       .then((res: WritePasscodeResultType) => {
         console.log(res);
-        if (res.responseStatus === 'Success') {
+        if (res.responseStatus === 'SUCCESS') {
           setIsLoading(false);
           setWritePasscodeError('');
           navigation.navigate(screens.WRITE_SUCCESSFUL, {
