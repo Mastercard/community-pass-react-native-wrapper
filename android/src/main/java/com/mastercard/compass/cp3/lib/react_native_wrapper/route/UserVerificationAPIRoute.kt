@@ -12,7 +12,6 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.biometric.BiometricMatchResult
 import timber.log.Timber
 
-
 class UserVerificationAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?, private val helperObject: CompassKernelUIController.CompassHelper) {
   companion object {
     val REQUEST_CODE_RANGE = 1100 until 1200
