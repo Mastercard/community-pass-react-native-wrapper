@@ -61,231 +61,245 @@ const ProgramSpaceDataDetails = ({ route, navigation }: any) => {
           </View>
         </View>
         <Text style={styles.collectionTitle}> Collection Information</Text>
-        <View style={styles.userCardContainer}>
-          <Text style={styles.collectionTitle}>Collection 1</Text>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.id}
-            </Text>
+        {data?.collectionInfo?.firstCollection?.id && (
+          <View style={styles.userCardContainer}>
+            <Text style={styles.collectionTitle}>Collection 1</Text>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.id}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.produceId}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce Name</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.produceName}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.amount}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount per gram</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.amountPerGram}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Weight in grams</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.weightInGrams}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.firstCollection?.timeStamp}
+              </Text>
+            </View>
           </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.produceId}
-            </Text>
+        )}
+
+        {data?.collectionInfo?.secondCollection?.id && (
+          <View style={styles.userCardContainer}>
+            <Text style={styles.collectionTitle}>Collection 2</Text>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.id}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.produceId}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce Name</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.produceName}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.amount}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount per gram</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.amountPerGram}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Weight in grams</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.weightInGrams}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.secondCollection?.timeStamp}
+              </Text>
+            </View>
           </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce Name</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.produceName}
-            </Text>
+        )}
+
+        {data?.collectionInfo?.thirdCollection?.id && (
+          <View style={styles.userCardContainer}>
+            <Text style={styles.collectionTitle}>Collection 3</Text>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.id}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.produceId}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce Name</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.produceName}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.amount}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount per gram</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.amountPerGram}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Weight in grams</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.weightInGrams}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.thirdCollection?.timeStamp}
+              </Text>
+            </View>
           </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.amount}
-            </Text>
+        )}
+
+        {data?.collectionInfo?.fourthCollection?.id && (
+          <View style={styles.userCardContainer}>
+            <Text style={styles.collectionTitle}>Collection 4</Text>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.id}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.produceId}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce Name</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.produceName}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.amount}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount per gram</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.amountPerGram}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Weight in grams</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.weightInGrams}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fourthCollection?.timeStamp}
+              </Text>
+            </View>
           </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount per gram</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.amountPerGram}
-            </Text>
+        )}
+
+        {data?.collectionInfo?.fifthCollection?.id && (
+          <View style={styles.userCardContainer}>
+            <Text style={styles.collectionTitle}>Collection 5</Text>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.id}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.produceId}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Produce Name</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.produceName}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.amount}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Amount per gram</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.amountPerGram}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>Weight in grams</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.weightInGrams}
+              </Text>
+            </View>
+            <View style={styles.userCardWrapper}>
+              <Text style={styles.label}>ID</Text>
+              <Text style={styles.desc}>
+                {data?.collectionInfo?.fifthCollection?.timeStamp}
+              </Text>
+            </View>
           </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Weight in grams</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.weightInGrams}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.firstCollection?.timeStamp}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.userCardContainer}>
-          <Text style={styles.collectionTitle}>Collection 2</Text>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.id}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.produceId}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce Name</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.produceName}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.amount}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount per gram</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.amountPerGram}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Weight in grams</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.weightInGrams}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.secondCollection?.timeStamp}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.userCardContainer}>
-          <Text style={styles.collectionTitle}>Collection 3</Text>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.id}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.produceId}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce Name</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.produceName}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.amount}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount per gram</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.amountPerGram}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Weight in grams</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.weightInGrams}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.thirdCollection?.timeStamp}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.userCardContainer}>
-          <Text style={styles.collectionTitle}>Collection 4</Text>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.id}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.produceId}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce Name</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.produceName}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.amount}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount per gram</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.amountPerGram}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Weight in grams</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.weightInGrams}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fourthCollection?.timeStamp}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.userCardContainer}>
-          <Text style={styles.collectionTitle}>Collection 5</Text>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.id}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.produceId}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Produce Name</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.produceName}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.amount}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Amount per gram</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.amountPerGram}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>Weight in grams</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.weightInGrams}
-            </Text>
-          </View>
-          <View style={styles.userCardWrapper}>
-            <Text style={styles.label}>ID</Text>
-            <Text style={styles.desc}>
-              {data?.collectionInfo?.fifthCollection?.timeStamp}
-            </Text>
-          </View>
-        </View>
+        )}
         <View style={styles.bottomPadding} />
       </ScrollView>
     </View>
