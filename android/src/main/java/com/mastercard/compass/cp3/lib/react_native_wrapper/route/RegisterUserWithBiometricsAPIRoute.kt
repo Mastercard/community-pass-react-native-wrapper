@@ -6,6 +6,7 @@ import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.mastercard.compass.jwt.RegisterUserForBioTokenResponse
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
@@ -25,22 +26,29 @@ class RegisterUserWithBiometricsAPIRoute(
         const val REGISTER_BIOMETRICS_REQUEST_CODE = 300
     }
 
-    fun startRegisterUserWithBiometricsIntent(RegisterUserWithBiometricsParams: ReadableMap){
+    fun startRegisterUserWithBiometricsIntent(RegisterUserWithBiometricsParams: ReadableMap) {
       val reliantGUID: String = RegisterUserWithBiometricsParams.getString("reliantGUID")!!;
       val programGUID: String = RegisterUserWithBiometricsParams.getString("programGUID")!!
       val consentID: String = RegisterUserWithBiometricsParams.getString("consentID")!!
+      val operationMode: String = RegisterUserWithBiometricsParams.getString("operationMode")!!
+      val modalities: ReadableArray = RegisterUserWithBiometricsParams.getArray("modalities")!!
 
       // Log
-      Timber.d("reliantGUID: {$reliantGUID}")
-      Timber.d("programGUID: {$programGUID}")
-      Timber.d("consentID: {$consentID}")
-        val intent = Intent(context, RegisterUserForBioTokenCompassApiHandlerActivity::class.java).apply {
-            putExtra(Key.RELIANT_APP_GUID, reliantGUID)
-            putExtra(Key.PROGRAM_GUID, programGUID)
-            putExtra(Key.CONSENT_ID, consentID)
+      Timber.d("reliantGUID: $reliantGUID")
+      Timber.d("programGUID: $programGUID")
+      Timber.d("consentID: $consentID")
+      Timber.tag(TAG).d(operationMode)
+      Timber.tag(TAG).d(modalities.toString())
+
+      val intent = Intent(context, RegisterUserForBioTokenCompassApiHandlerActivity::class.java).apply {
+          putExtra(Key.RELIANT_APP_GUID, reliantGUID)
+          putExtra(Key.PROGRAM_GUID, programGUID)
+          putExtra(Key.CONSENT_ID, consentID)
+          putExtra(Key.OPERATION_MODE, operationMode)
+          putExtra(Key.MODALITIES, modalities.toArrayList())
         }
 
-      currentActivity?.startActivityForResult(intent, REGISTER_BIOMETRICS_REQUEST_CODE)
+        currentActivity?.startActivityForResult(intent, REGISTER_BIOMETRICS_REQUEST_CODE)
     }
 
     fun handleRegisterUserWithBiometricsIntentResponse(
@@ -66,7 +74,7 @@ class RegisterUserWithBiometricsAPIRoute(
                 resultMap.putString("programGUID", response.programGUID)
 
                 // Log
-                Timber.d("resultMap: {${resultMap}}")
+                Timber.d("resultMap: $resultMap")
                 promise.resolve(resultMap);
               }
             }

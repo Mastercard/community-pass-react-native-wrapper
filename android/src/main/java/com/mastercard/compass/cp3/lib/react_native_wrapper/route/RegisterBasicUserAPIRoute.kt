@@ -46,7 +46,7 @@ class RegisterBasicUserAPIRoute(private val context: ReactApplicationContext, pr
           val resultMap = Arguments.createMap()
           resultMap.putString("rID", data?.extras?.get(Key.DATA).toString())
 
-          Timber.d("rID: {$data?.extras?.get(Key.DATA).toString()}")
+          Timber.d("rID: ${data?.extras?.get(Key.DATA).toString()}")
           promise.resolve(resultMap);
         }
         Activity.RESULT_CANCELED -> {

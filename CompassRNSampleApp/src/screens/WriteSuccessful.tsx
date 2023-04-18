@@ -12,7 +12,7 @@ import { themeColors } from '../assets/colors';
 const { width: WIDTH } = Dimensions.get('screen');
 
 const WriteSuccessful = ({ route, navigation }: any) => {
-  const { rID, consumerDeviceNumber } = route?.params;
+  const { rID, consumerDeviceNumber } = route?.params || {};
 
   const goToHomeScreen = () => {
     navigation.navigate(screens.HOME);

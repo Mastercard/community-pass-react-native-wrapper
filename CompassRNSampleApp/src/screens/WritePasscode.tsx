@@ -23,7 +23,7 @@ const { width: WIDTH } = Dimensions.get('screen');
 var REG = /^[0-9]{6}$/;
 
 const WritePasscode = ({ route, navigation }: any) => {
-  const { rID, consumerDeviceNumber } = route?.params;
+  const { rID, consumerDeviceNumber } = route?.params || {};
   const [writePasscodeError, setWritePasscodeError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [passcode, setPasscode] = useState('');
@@ -48,8 +48,9 @@ const WritePasscode = ({ route, navigation }: any) => {
     })
       .then((res: WritePasscodeResultType) => {
         console.log(res);
-        if (res.responseStatus === 'Success') {
+        if (res.responseStatus === 'SUCCESS') {
           setIsLoading(false);
+          setWritePasscodeError('');
           navigation.navigate(screens.WRITE_SUCCESSFUL, {
             consumerDeviceNumber: consumerDeviceNumber,
             rID: rID,
@@ -80,6 +81,7 @@ const WritePasscode = ({ route, navigation }: any) => {
             placeholderText: writePasscodeScreenStrings.INPUT_PLACEHOLDER,
             keyboadType: keyboardTypes.NUMERIC,
             hasError: false,
+            secureTextEntry: true,
           }}
           value={passcode}
           onChange={setPasscode}

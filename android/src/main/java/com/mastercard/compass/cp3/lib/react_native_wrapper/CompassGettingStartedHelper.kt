@@ -33,6 +33,7 @@ import com.mastercard.compass.kernel.client.service.KernelServiceConsumer
 import com.mastercard.compass.kernel.client.utils.KernelServiceConfigurations
 import com.mastercard.compass.kernel.client.utils.PermissionType
 import com.mastercard.compass.model.ClientPublicKey
+import com.mastercard.compass.model.biometric.BiometricMatchResult
 import com.mastercard.compass.model.biometrictoken.FormFactor
 import com.mastercard.compass.model.biometrictoken.Modality
 import com.mastercard.compass.model.instanceId.ReliantAppInstanceIdRequest
@@ -778,7 +779,12 @@ interface CompassKernelUIController {
                     }
                     val isMatch = claims!![JwtConstants.CLAIM_MATCH].toString().toYesNoBoolean()
                     val rId = claims.subject
-                    return CompassJWTResponse.Success(isMatch, rId)
+                    val biometricMatchList = builder.getMatchResultClaim(claims[JwtConstants.BIOMETRIC_MATCH_RESULT] as? String)
+
+                  claims.entries
+                    return CompassJWTResponse.Success(isMatch, rId,
+                      biometricMatchList
+                    )
                 } catch (e: Exception) {
                     val error = when (e) {
                         is UnsupportedJwtException -> "Unsupported Request"
@@ -801,7 +807,7 @@ interface CompassKernelUIController {
         }
 
         sealed class CompassJWTResponse {
-            data class Success(val isMatchFound: Boolean, val rId: String?) : CompassJWTResponse()
+            data class Success(val isMatchFound: Boolean, val rId: String?, val biometricMatchList: List<BiometricMatchResult>?) : CompassJWTResponse()
             data class Error(val message: String) : CompassJWTResponse()
         }
 

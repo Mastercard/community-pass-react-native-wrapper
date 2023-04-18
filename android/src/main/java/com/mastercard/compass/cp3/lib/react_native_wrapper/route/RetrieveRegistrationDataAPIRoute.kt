@@ -8,25 +8,26 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.mastercard.compass.cp3.lib.react_native_wrapper.R
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.GetRegistrationDataCompassApiHandlerActivity
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.RegistrationDataCompassApiHandlerActivity
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
+import com.mastercard.compass.model.biometrictoken.AuthenticationType
 import com.mastercard.compass.model.card.RegistrationStatusData
+import timber.log.Timber
 
-
-class GetRegistrationDataAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
+class RetrieveRegistrationDataAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
   companion object {
     val REQUEST_CODE_RANGE = 700 until 800
 
     const val GET_REGISTRATION_DATA_REQUEST_CODE = 700
-    private const val TAG = "GetRegistrationDataAPIRoute"
+    private const val TAG = "RetrieveRegistrationDataAPIRoute"
   }
 
   fun startGetRegistrationIntent(getRegistrationDataParams: ReadableMap){
     val reliantGUID: String = getRegistrationDataParams.getString("reliantGUID")!!
     val programGUID: String = getRegistrationDataParams.getString("programGUID")!!
 
-    val intent = Intent(context, GetRegistrationDataCompassApiHandlerActivity::class.java).apply {
+    val intent = Intent(context, RegistrationDataCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PROGRAM_GUID, programGUID)
       putExtra(Key.RELIANT_APP_GUID, reliantGUID )
     }
@@ -43,18 +44,22 @@ class GetRegistrationDataAPIRoute(private val context: ReactApplicationContext, 
       Activity.RESULT_OK -> {
         val resultMap = Arguments.createMap()
         val response = data?.extras?.get(Key.DATA) as RegistrationStatusData
-        val methods = response.authMethods.authType.map { it.name }
+        val authMethods = response.authMethods.authType.map { it.name }
+        val modalityType = response.authMethods.modalityType?.map { it.name }
+
         resultMap.apply {
           putBoolean("isRegisteredInProgram", response.isRegisteredInProgram)
-          putArray("authMethods", Arguments.fromList(methods))
+          putString("rID", response.rId)
+          putArray("authMethods", Arguments.fromList(authMethods))
+          if(response.authMethods.authType.contains(AuthenticationType.BIO)) putArray("modalityType", Arguments.fromList(modalityType))
         }
-        promise.resolve(resultMap);
+          promise.resolve(resultMap);
       }
       Activity.RESULT_CANCELED -> {
-        val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-        val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: context.getString(R.string.error_unknown)
-        Log.e(TAG, "Error $code Message $message")
-        promise.reject(code, Throwable(message))
+          val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
+          val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: context.getString(R.string.error_unknown)
+          Timber.tag(TAG).e("Error $code:  $message")
+          promise.reject(code, Throwable(message))
       }
     }
   }

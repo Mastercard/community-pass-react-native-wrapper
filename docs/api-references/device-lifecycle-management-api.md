@@ -14,31 +14,46 @@ Then, the Reliant Application must store it with CPK.
 **Compatibility**
 | **Available as of CPK version #** | **Deprecated as of CPK version #** |
 |--------------------------------------------------|------------------------------------------------------------------|
-| + CPK 2.0.1 | + n/a |
+| + CPK 2.4.1 | + n/a |
 
 **Input Parameters**
 | **Parameter** | **Type** | **Description** |
 |---------------|----------|------------------------------------------------------|
-| getRegistrationDataRequest | GetRegistrationDataParamType | An object that contains a reliantGUID and programGUID |
+| getRegistrationDataRequest | RegistrationDataParamType | An object that contains a reliantGUID and programGUID |
 
 **Response Parameters**
 | **Parameter** | **Type** | **Description** |
 |-----------------|-----------------|----------------------------------------------------------|
-| getRegistrationDataResponse | Promise<`GetRegistrationDataResultType`> | A promise that resolves to an object containing either an authMethods array with a boolean field indicating whether the user is registered in the current program, or an error field. |
+| getRegistrationDataResponse | Promise<`RegistrationDataResultType`> | A promise that resolves to an object containing a list of authMethods, a list of modalityTypes, rID and an isRegisteredInProgram fields, or an error field. |
 
 **Type Aliases**
 
 ```ts
-// GetRegistrationDataParamType
-interface GetRegistrationDataParamType {
+// RegistrationDataParamType
+interface RegistrationDataParamType {
   reliantGUID: string;
   programGUID: string;
 }
 
-// GetRegistrationDataResultType
-interface GetRegistrationDataResultType {
+// RegistrationDataResultType
+interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
-  authMethods: string[];
+  authMethods: AuthType[];
+  modalityType: Modality[];
+  rID: string;
+}
+
+enum AuthType {
+  NONE = 'NONE',
+  CARD_PRESENT = 'CARD_PRESENT',
+  PASSCODE = 'PASSCODE',
+  BIO = 'BIO',
+}
+
+enum Modality {
+  FACE = 'FACE',
+  LEFT_PALM = 'LEFT_PALM',
+  RIGHT_PALM = 'RIGHT_PALM',
 }
 ```
 
@@ -46,8 +61,10 @@ interface GetRegistrationDataResultType {
 
 In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
 
-| **Error Code**                                | **Description**                                         |
-| --------------------------------------------- | ------------------------------------------------------- |
-| ERROR_CODE_INVALID_ARGUMENT	                | Arguments passed in request parameters are either blank or incorrect. Refer to the error message            |
-| ERROR_CODE_CARD_NOT_ACTIVE	                | The card is not in ACTIVE state |
-| ERROR_CODE_CARD_BLACKLISTED	                | Card is blacklisted |
+| **Error Code**              | **Description**                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------ |
+| ERROR_CODE_INVALID_ARGUMENT | Arguments passed in request parameters are either blank or incorrect. Refer to the error message |
+| ERROR_CODE_CARD_NOT_ACTIVE  | The card is not in ACTIVE state                                                                  |
+| ERROR_CODE_CARD_BLACKLISTED | Card is blacklisted                                                                              |
+
+[Return to API reference](README.md)

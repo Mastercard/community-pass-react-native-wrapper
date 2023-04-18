@@ -20,7 +20,7 @@ import {
 const { width: WIDTH } = Dimensions.get('screen');
 
 const WriteProfile = ({ route, navigation }: any) => {
-  const { rID, registrationType } = route?.params;
+  const { rID, registrationType } = route?.params || {};
   const [writeProfileError, setWriteProfileError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [overwriteCard, setOverwriteCard] = useState(false);
