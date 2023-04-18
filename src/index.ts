@@ -162,7 +162,7 @@ export interface RegistrationDataParamType {
 export interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
-  modalities: Modalities[];
+  modalities: Modality[];
 }
 
 export interface SaveBiometricConsentParamType {
@@ -194,8 +194,8 @@ export interface RegisterUserWithBiometricsParamType {
   reliantGUID: string;
   programGUID: string;
   consentID: string;
-  modalities: Modalities[];
-  operationMode: OperationModes;
+  modalities: Modality[];
+  operationMode: OperationMode;
 }
 
 export interface WriteProgramSpaceParamType {
@@ -227,13 +227,14 @@ export interface VerifyPasscodeResultType {
 
 export interface RegistrationDataResultType {
   isRegisteredInProgram: boolean;
-  authMethods: string[];
+  authMethods: AuthType[];
+  modalityType: Modality[];
   rID: string;
 }
 
 export interface SaveBiometricConsentResultType {
   consentID: string;
-  responseStatus: string;
+  responseStatus: ResponseStatus;
 }
 
 export interface RegisterBasicUserResultType {
@@ -244,7 +245,7 @@ export interface RegisterUserWithBiometricsResultType {
   programGUID: string;
   rID: string;
   bioToken: string;
-  enrolmentStatus: string;
+  enrolmentStatus: EnrolmentStatus;
 }
 
 export interface WriteProfileResultType {
@@ -252,7 +253,7 @@ export interface WriteProfileResultType {
 }
 
 export interface WritePasscodeResultType {
-  responseStatus: string;
+  responseStatus: ResponseStatus;
 }
 
 export interface ErrorResultType {
@@ -268,15 +269,33 @@ export interface WriteProgramSpaceResultType {
   isSuccess: boolean;
 }
 
-export enum OperationModes {
+export enum OperationMode {
   BEST_AVAILABLE = 'BEST_AVAILABLE',
   FULL = 'FULL',
 }
 
-export enum Modalities {
+export enum Modality {
   FACE = 'FACE',
   LEFT_PALM = 'LEFT_PALM',
   RIGHT_PALM = 'RIGHT_PALM',
+}
+
+enum AuthType {
+  NONE = 'NONE',
+  CARD_PRESENT = 'CARD_PRESENT',
+  PASSCODE = 'PASSCODE',
+  BIO = 'BIO',
+}
+
+enum ResponseStatus {
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR',
+  UNDEFINED = 'UNDEFINED',
+}
+
+enum EnrolmentStatus {
+  NEW = 'NEW',
+  EXISTING = 'EXISTING',
 }
 
 interface Match {

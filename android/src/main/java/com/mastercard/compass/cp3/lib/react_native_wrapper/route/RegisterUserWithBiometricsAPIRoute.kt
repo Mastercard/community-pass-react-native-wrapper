@@ -74,7 +74,7 @@ class RegisterUserWithBiometricsAPIRoute(
                 resultMap.putString("programGUID", response.programGUID)
 
                 // Log
-                Timber.d("resultMap: {${resultMap}}")
+                Timber.d("resultMap: $resultMap")
                 promise.resolve(resultMap);
               }
             }

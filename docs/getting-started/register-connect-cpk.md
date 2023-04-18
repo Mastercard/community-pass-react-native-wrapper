@@ -83,8 +83,8 @@ getRegisterUserWithBiometrics({
   reliantGUID: '120a2c48-461e-4312-91c8-c3ba586ad29a', //string
   programGUID: '6d498a97-fb8c-42b3-89a4-0fe13372f557', //string
   consentID: 'c6873db3-3975-4773-ab49-3b6c3e5e03b9', //string
-  modalities: [Modalities.FACE, Modalities.LEFT_PALM, Modalities.RIGHT_PALM],
-  operationMode: OperationModes.BEST_AVAILABLE, // or OperationModes.FULL
+  modalities: [Modality.FACE, Modality.LEFT_PALM, Modality.RIGHT_PALM],
+  operationMode: OperationMode.BEST_AVAILABLE, // or OperationMode.FULL
 })
   .then((response: RegisterUserWithBiometricsResultType) => {
     console.log(response); //{"bioToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", "enrolmentStatus": "NEW", "programGUID": "6d498a97-fb8c-42b3-89a4-0fe13372f557", "rID": "bc54738d3056638532982df19f5a9441509099ea"}

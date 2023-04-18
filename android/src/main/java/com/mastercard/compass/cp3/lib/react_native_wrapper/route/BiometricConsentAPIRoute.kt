@@ -55,8 +55,8 @@ class BiometricConsentAPIRoute(private val context: ReactApplicationContext, pri
           resultMap.putString("responseStatus", response.responseStatus.toString())
 
           //Log
-          Timber.d("consentID: {${response.consentId}}")
-          Timber.d("responseStatus: {${response.responseStatus}}")
+          Timber.d("consentID: ${response.consentId}")
+          Timber.d("responseStatus: ${response.responseStatus}")
 
           // Resolve
           promise.resolve(resultMap);

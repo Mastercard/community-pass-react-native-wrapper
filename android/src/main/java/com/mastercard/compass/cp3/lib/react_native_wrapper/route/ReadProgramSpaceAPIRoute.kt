@@ -94,9 +94,6 @@ class ReadProgramSpaceAPIRoute(
         val resultMap = Arguments.createMap()
         val response: ReadProgramSpaceDataResponse = data?.extras?.get(Key.DATA) as ReadProgramSpaceDataResponse
 
-
-
-
         var extractedData: String = parseJWT(response.jwt).toString()
 
         if(decryptData){

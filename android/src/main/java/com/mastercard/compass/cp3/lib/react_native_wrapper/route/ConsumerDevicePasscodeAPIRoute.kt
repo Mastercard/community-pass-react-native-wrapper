@@ -10,6 +10,7 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.WritePasscodeCompa
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import timber.log.Timber
+import java.util.*
 
 class ConsumerDevicePasscodeAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
     companion object {
@@ -48,10 +49,10 @@ class ConsumerDevicePasscodeAPIRoute(private val context: ReactApplicationContex
       when (resultCode) {
         Activity.RESULT_OK -> {
           val resultMap = Arguments.createMap()
-          resultMap.putString("responseStatus", data?.extras?.get(Key.DATA).toString())
+          resultMap.putString("responseStatus", data?.extras?.get(Key.DATA).toString().uppercase())
 
           // Log
-          Timber.d("responseStatus: {$data?.extras?.get(Key.DATA).toString()}")
+          Timber.d("responseStatus: ${data?.extras?.get(Key.DATA).toString()}")
           promise.resolve(resultMap);
         }
         Activity.RESULT_CANCELED -> {

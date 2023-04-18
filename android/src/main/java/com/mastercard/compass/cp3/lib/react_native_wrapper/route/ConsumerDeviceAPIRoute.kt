@@ -51,7 +51,7 @@ class ConsumerDeviceAPIRoute(private val context: ReactApplicationContext, priva
           resultMap.putString("consumerDeviceNumber", data?.extras?.get(Key.DATA).toString())
 
           // Log
-          Timber.d("consumerDeviceNumber: {$data?.extras?.get(Key.DATA).toString()}")
+          Timber.d("consumerDeviceNumber: ${data?.extras?.get(Key.DATA).toString()}")
           promise.resolve(resultMap);
         }
         Activity.RESULT_CANCELED -> {

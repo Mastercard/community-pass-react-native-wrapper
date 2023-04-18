@@ -4,7 +4,7 @@ import {
   getUserVerification,
   ErrorResultType,
   UserVerificationResultType,
-  Modalities,
+  Modality,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
@@ -27,11 +27,7 @@ const AuthenticateBiometricUser = ({ navigation }: any) => {
     getUserVerification({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
-      modalities: [
-        Modalities.FACE,
-        Modalities.LEFT_PALM,
-        Modalities.RIGHT_PALM,
-      ],
+      modalities: [Modality.FACE, Modality.LEFT_PALM, Modality.RIGHT_PALM],
     })
       .then((res: UserVerificationResultType) => {
         console.log(JSON.stringify(res, null, 2));
