@@ -121,12 +121,19 @@ interface RegisterUserWithBiometricsParamType {
   reliantGUID: string;
   programGUID: string;
   consentID: string;
-  modalities: {
-    face: boolean;
-    leftPalm: boolean;
-    rightPalm: boolean;
-  };
-  operationMode: string; // OperationModes.BEST_AVAILABLE or OperationModes.FULL
+  modalities: Modalities[];
+  operationMode: OperationModes; // OperationModes.BEST_AVAILABLE or OperationModes.FULL
+}
+
+export enum Modalities {
+  FACE = 'FACE',
+  LEFT_PALM = 'LEFT_PALM',
+  RIGHT_PALM = 'RIGHT_PALM',
+}
+
+export enum OperationModes {
+  BEST_AVAILABLE = 'BEST_AVAILABLE',
+  FULL = 'FULL',
 }
 
 // RegisterUserWithBiometricsResultType
@@ -343,21 +350,23 @@ This API is used to start the user verification process using the biometric data
 interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
-  modalities: {
-    face: boolean;
-    leftPalm: boolean;
-    rightPalm: boolean;
-  };
+  modalities: Modalities[];
+}
+
+export enum Modalities {
+  FACE = 'FACE',
+  LEFT_PALM = 'LEFT_PALM',
+  RIGHT_PALM = 'RIGHT_PALM',
 }
 
 // UserVerificationResultType
 interface UserVerificationResultType {
   isMatchFound: string;
   rID: string;
-  biometricMatchList: match[];
+  biometricMatchList: Match[];
 }
 
-interface match {
+interface Match {
   distance: number;
   modality: string;
   normalizedScore: number;

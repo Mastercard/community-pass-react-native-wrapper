@@ -23,17 +23,12 @@ class UserVerificationAPIRoute(private val context: ReactApplicationContext, pri
   fun startGetUserVerificationIntent(UserVerificationParams: ReadableMap) {
     val programGUID: String = UserVerificationParams.getString("programGUID")!!
     val reliantGUID: String = UserVerificationParams.getString("reliantGUID")!!
-    val modalities: ReadableMap = UserVerificationParams.getMap("modalities")!!
-    val face: Boolean = modalities.getBoolean("face")
-    val leftPalm: Boolean = modalities.getBoolean("leftPalm")
-    val rightPalm: Boolean = modalities.getBoolean("rightPalm")
+    val modalities: ReadableArray = UserVerificationParams.getArray("modalities")!!
 
     val intent = Intent(context, UserVerificationCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PROGRAM_GUID, programGUID)
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)
-      putExtra(Key.FACE_MODALITY, face)
-      putExtra(Key.LEFT_PALM_MODALITY, leftPalm)
-      putExtra(Key.RIGHT_PALM_MODALITY, rightPalm)
+      putExtra(Key.MODALITIES, modalities.toArrayList())
     }
 
     currentActivity?.startActivityForResult(intent, GET_USER_VERIFICATION_REQUEST_CODE)

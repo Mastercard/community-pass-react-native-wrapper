@@ -148,32 +148,10 @@ export function getUserVerification({
   });
 }
 
-export interface UserVerificationParamType {
-  reliantGUID: string;
-  programGUID: string;
-  modalities: {
-    face: boolean;
-    leftPalm: boolean;
-    rightPalm: boolean;
-  };
-}
-
-export interface UserVerificationResultType {
-  isMatchFound: boolean;
-  rID: string;
-  biometricMatchList: match[];
-}
-
 export interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
   reliantGUID: string;
-}
-
-export interface VerifyPasscodeResultType {
-  status: boolean;
-  rID: string;
-  retryCount: number;
 }
 
 export interface RegistrationDataParamType {
@@ -181,10 +159,10 @@ export interface RegistrationDataParamType {
   programGUID: string;
 }
 
-export interface RegistrationDataResultType {
-  isRegisteredInProgram: boolean;
-  authMethods: string[];
-  rID: string;
+export interface UserVerificationParamType {
+  reliantGUID: string;
+  programGUID: string;
+  modalities: Modalities[];
 }
 
 export interface SaveBiometricConsentParamType {
@@ -216,12 +194,8 @@ export interface RegisterUserWithBiometricsParamType {
   reliantGUID: string;
   programGUID: string;
   consentID: string;
-  modalities: {
-    face: boolean;
-    leftPalm: boolean;
-    rightPalm: boolean;
-  };
-  operationMode: string;
+  modalities: Modalities[];
+  operationMode: OperationModes;
 }
 
 export interface WriteProgramSpaceParamType {
@@ -237,6 +211,24 @@ export interface ReadProgramSpaceParamType {
   programGUID: string;
   rID: string;
   decryptData: boolean;
+}
+
+export interface UserVerificationResultType {
+  isMatchFound: boolean;
+  rID: string;
+  biometricMatchList: Match[];
+}
+
+export interface VerifyPasscodeResultType {
+  status: boolean;
+  rID: string;
+  retryCount: number;
+}
+
+export interface RegistrationDataResultType {
+  isRegisteredInProgram: boolean;
+  authMethods: string[];
+  rID: string;
 }
 
 export interface SaveBiometricConsentResultType {
@@ -276,12 +268,18 @@ export interface WriteProgramSpaceResultType {
   isSuccess: boolean;
 }
 
-export const OperationModes = {
-  BEST_AVAILABLE: 'BEST_AVAILABLE',
-  FULL: 'FULL',
-};
+export enum OperationModes {
+  BEST_AVAILABLE = 'BEST_AVAILABLE',
+  FULL = 'FULL',
+}
 
-interface match {
+export enum Modalities {
+  FACE = 'FACE',
+  LEFT_PALM = 'LEFT_PALM',
+  RIGHT_PALM = 'RIGHT_PALM',
+}
+
+interface Match {
   distance: number;
   modality: string;
   normalizedScore: number;

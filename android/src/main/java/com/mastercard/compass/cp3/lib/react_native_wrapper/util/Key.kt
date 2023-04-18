@@ -25,4 +25,5 @@ object Key {
     const val RIGHT_PALM_MODALITY = "RIGHT_PALM_MODALITY"
     const val BEST_AVAILABLE = "BEST_AVAILABLE"
     const val FULL = "FULL"
+    const val MODALITIES = "MODALITIES"
 }
