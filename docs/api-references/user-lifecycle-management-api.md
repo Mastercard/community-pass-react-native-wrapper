@@ -343,12 +343,24 @@ This API is used to start the user verification process using the biometric data
 interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
+  modalities: {
+    face: boolean;
+    leftPalm: boolean;
+    rightPalm: boolean;
+  };
 }
 
 // UserVerificationResultType
 interface UserVerificationResultType {
   isMatchFound: string;
   rID: string;
+  biometricMatchList: match[];
+}
+
+interface match {
+  distance: number;
+  modality: string;
+  normalizedScore: number;
 }
 ```
 

@@ -2,15 +2,14 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReadableMap
+import android.util.Log
+import com.facebook.react.bridge.*
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
 import com.mastercard.compass.cp3.lib.react_native_wrapper.R
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.UserVerificationCompassApiHandlerActivity
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
+import com.mastercard.compass.model.biometric.BiometricMatchResult
 import timber.log.Timber
 
 
@@ -22,14 +21,20 @@ class UserVerificationAPIRoute(private val context: ReactApplicationContext, pri
     private const val TAG = "UserVerificationAPIRoute"
   }
 
-  fun startGetUserVerificationIntent(UserVerificationParams: ReadableMap){
-
+  fun startGetUserVerificationIntent(UserVerificationParams: ReadableMap) {
     val programGUID: String = UserVerificationParams.getString("programGUID")!!
     val reliantGUID: String = UserVerificationParams.getString("reliantGUID")!!
+    val modalities: ReadableMap = UserVerificationParams.getMap("modalities")!!
+    val face: Boolean = modalities.getBoolean("face")
+    val leftPalm: Boolean = modalities.getBoolean("leftPalm")
+    val rightPalm: Boolean = modalities.getBoolean("rightPalm")
 
     val intent = Intent(context, UserVerificationCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PROGRAM_GUID, programGUID)
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)
+      putExtra(Key.FACE_MODALITY, face)
+      putExtra(Key.LEFT_PALM_MODALITY, leftPalm)
+      putExtra(Key.RIGHT_PALM_MODALITY, rightPalm)
     }
 
     currentActivity?.startActivityForResult(intent, GET_USER_VERIFICATION_REQUEST_CODE)
@@ -44,12 +49,13 @@ class UserVerificationAPIRoute(private val context: ReactApplicationContext, pri
       Activity.RESULT_OK -> {
         val resultMap = Arguments.createMap()
         val jwt = data?.extras?.get(Key.DATA).toString()
-        val response: CompassKernelUIController.CompassHelper.CompassJWTResponse.Success =
+        val response =
           helperObject.parseJWT(jwt) as CompassKernelUIController.CompassHelper.CompassJWTResponse.Success
 
         resultMap.apply {
-          putString("rID", response.rId)
           putBoolean("isMatchFound", response.isMatchFound)
+          putString("rID", response.rId)
+          putArray("biometricMatchList", response.biometricMatchList?.let { getMatchListArray(it) })
         }
         promise.resolve(resultMap);
       }
@@ -61,5 +67,19 @@ class UserVerificationAPIRoute(private val context: ReactApplicationContext, pri
         promise.reject(code, Throwable(message))
       }
     }
+  }
+
+  private fun getMatchListArray(list: List<BiometricMatchResult>): ReadableArray {
+    val matchArray = Arguments.createArray()
+    list.forEach {
+      val matchMap = Arguments.createMap()
+      matchMap.putString("modality", it.modality)
+      matchMap.putDouble("distance", it.distance.toDouble())
+      matchMap.putDouble("normalizedScore", it.normalizedScore.toDouble())
+      matchArray.pushMap(matchMap)
+    }
+
+    Log.d(TAG, matchArray.toString())
+    return matchArray
   }
 }

@@ -26,6 +26,11 @@ const AuthenticateBiometricUser = ({ navigation }: any) => {
     getUserVerification({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
+      modalities: {
+        face: true,
+        leftPalm: true,
+        rightPalm: true,
+      },
     })
       .then((res: UserVerificationResultType) => {
         console.log(JSON.stringify(res, null, 2));

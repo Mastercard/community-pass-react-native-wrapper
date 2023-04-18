@@ -139,21 +139,29 @@ export function getVerifyPasscode({
 export function getUserVerification({
   reliantGUID,
   programGUID,
+  modalities,
 }: UserVerificationParamType) {
   return CompassLibraryReactNativeWrapper.getUserVerification({
     reliantGUID,
     programGUID,
+    modalities,
   });
 }
 
 export interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
+  modalities: {
+    face: boolean;
+    leftPalm: boolean;
+    rightPalm: boolean;
+  };
 }
 
 export interface UserVerificationResultType {
-  isMatchFound: string;
+  isMatchFound: boolean;
   rID: string;
+  biometricMatchList: match[];
 }
 
 export interface VerifyPasscodeParamType {
@@ -272,3 +280,9 @@ export const OperationModes = {
   BEST_AVAILABLE: 'BEST_AVAILABLE',
   FULL: 'FULL',
 };
+
+interface match {
+  distance: number;
+  modality: string;
+  normalizedScore: number;
+}
