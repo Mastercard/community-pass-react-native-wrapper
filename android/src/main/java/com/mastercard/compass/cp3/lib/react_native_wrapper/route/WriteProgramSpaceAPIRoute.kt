@@ -2,21 +2,15 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
-import com.google.gson.Gson
-import com.mastercard.compass.base.Constants
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.WriteProgramSpaceCompassApiHandlerActivity
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.*
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.Collection
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.programspace.WriteProgramSpaceDataResponse
 import timber.log.Timber
-import java.util.Date
 
 class WriteProgramSpaceAPIRoute(
   private val context: ReactApplicationContext,
