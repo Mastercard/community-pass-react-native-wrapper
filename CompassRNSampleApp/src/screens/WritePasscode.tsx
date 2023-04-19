@@ -20,7 +20,7 @@ import {
 
 const { width: WIDTH } = Dimensions.get('screen');
 
-var REG = /^[0-9]{6}$/;
+const REG = /^[\d]{6}$/;
 
 const WritePasscode = ({ route, navigation }: any) => {
   const { rID, consumerDeviceNumber } = route?.params || {};

@@ -21,7 +21,7 @@ import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
 
-var REG = /^[0-9]{6}$/;
+const REG = /^[\d]{6}$/;
 
 const AuthenticatePasscodeUser = ({ navigation }: any) => {
   const [readCardError, setReadCardError] = useState('');

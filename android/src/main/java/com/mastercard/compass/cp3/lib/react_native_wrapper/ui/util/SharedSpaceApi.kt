@@ -1,6 +1,5 @@
 package com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util
 
-import android.util.Log
 import com.google.gson.Gson
 import com.mastercard.compass.base.ResponseStatus
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaData

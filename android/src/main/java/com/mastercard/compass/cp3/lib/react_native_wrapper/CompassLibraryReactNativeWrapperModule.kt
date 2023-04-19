@@ -57,72 +57,72 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
 
   @ReactMethod
-  fun saveBiometricConsent(SaveBiometricConsentParams: ReadableMap, promise: Promise){
+  fun saveBiometricConsent(saveBiometricConsentParams: ReadableMap, promise: Promise){
     this.promise = promise
 
-    biometricConsentAPIRoute.startBiometricConsentIntent(SaveBiometricConsentParams)
+    biometricConsentAPIRoute.startBiometricConsentIntent(saveBiometricConsentParams)
   }
 
   @ReactMethod
-  fun getWritePasscode(WritePasscodeParams: ReadableMap, promise: Promise){
+  fun getWritePasscode(writePasscodeParams: ReadableMap, promise: Promise){
     this.promise = promise
 
-    consumerDevicePasscodeAPIRoute.startWritePasscodeIntent(WritePasscodeParams)
+    consumerDevicePasscodeAPIRoute.startWritePasscodeIntent(writePasscodeParams)
   }
 
   @ReactMethod
-  fun getWriteProfile(WriteProfileParams: ReadableMap, promise: Promise){
+  fun getWriteProfile(writeProfileParams: ReadableMap, promise: Promise){
     this.promise = promise
 
-    consumerDeviceApiRoute.startWriteProfileIntent(WriteProfileParams)
+    consumerDeviceApiRoute.startWriteProfileIntent(writeProfileParams)
   }
 
   @ReactMethod
-  fun getRegisterBasicUser(RegisterBasicUserParams: ReadableMap, promise: Promise){
+  fun getRegisterBasicUser(registerBasicUserParams: ReadableMap, promise: Promise){
     this.promise = promise
 
-  registerBasicUserAPIRoute.startRegisterBasicUserIntent(RegisterBasicUserParams);
+  registerBasicUserAPIRoute.startRegisterBasicUserIntent(registerBasicUserParams);
   }
 
   @ReactMethod
-  fun getRegisterUserWithBiometrics(RegisterUserWithBiometricsParams: ReadableMap, promise: Promise){
+  fun getRegisterUserWithBiometrics(registerUserWithBiometricsParams: ReadableMap, promise: Promise){
     this.promise = promise
 
     registerUserWithBiometricsAPIRoute.startRegisterUserWithBiometricsIntent(
-      RegisterUserWithBiometricsParams
+      registerUserWithBiometricsParams
     );
   }
 
   @ReactMethod
-  fun getReadProgramSpace(ReadProgramSpaceParams: ReadableMap, promise: Promise) {
+  fun getReadProgramSpace(readProgramSpaceParams: ReadableMap, promise: Promise) {
     this.promise = promise
 
-    readProgramSpaceAPIRoute.startReadProgramSpaceIntent(ReadProgramSpaceParams)
+    readProgramSpaceAPIRoute.startReadProgramSpaceIntent(readProgramSpaceParams)
   }
 
   @ReactMethod
-  fun getWriteProgramSpace(WriteProgramSpaceParams: ReadableMap, promise:Promise){
+  fun getWriteProgramSpace(writeProgramSpaceParams: ReadableMap, promise:Promise){
     this.promise = promise
 
-    writeProgramSpaceAPIRoute.startWriteProgramSpaceIntent(WriteProgramSpaceParams)
+    writeProgramSpaceAPIRoute.startWriteProgramSpaceIntent(writeProgramSpaceParams)
   }
 
   @ReactMethod
-  fun getRegistrationData(RegistrationDataParams: ReadableMap, promise: Promise){
+  fun getRegistrationData(registrationDataParams: ReadableMap, promise: Promise){
     this.promise = promise
-    retrieveRegistrationDataAPIRoute.startGetRegistrationIntent(RegistrationDataParams)
+    retrieveRegistrationDataAPIRoute.startGetRegistrationIntent(registrationDataParams)
   }
 
   @ReactMethod
-  fun getVerifyPasscode(VerifyPasscodeParams: ReadableMap, promise: Promise){
+  fun getVerifyPasscode(verifyPasscodeParams: ReadableMap, promise: Promise){
     this.promise = promise
-    getVerifyPasscodeAPIRoute.startGetVerifyPasscodeIntent(VerifyPasscodeParams)
+    getVerifyPasscodeAPIRoute.startGetVerifyPasscodeIntent(verifyPasscodeParams)
   }
 
   @ReactMethod
-  fun getUserVerification(UserVerificationParams: ReadableMap, promise: Promise){
+  fun getUserVerification(userVerificationParams: ReadableMap, promise: Promise){
     this.promise = promise
-    userVerificationAPIRoute.startGetUserVerificationIntent(UserVerificationParams)
+    userVerificationAPIRoute.startGetUserVerificationIntent(userVerificationParams)
   }
 
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
@@ -141,7 +141,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
 
   override fun onNewIntent(p0: Intent?) {
-
+      //to be implemented
   }
 
   private fun handleApiRouteResponse(
