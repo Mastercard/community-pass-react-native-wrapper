@@ -13,7 +13,7 @@ import {
 import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
-const RE = /^[\d]+$/;
+const RE = /^\d+$/;
 
 const EnterIdentificationNumber = ({ navigation }: any) => {
   const [mobileValidationErrror, setMobileValidationError] = useState('');
