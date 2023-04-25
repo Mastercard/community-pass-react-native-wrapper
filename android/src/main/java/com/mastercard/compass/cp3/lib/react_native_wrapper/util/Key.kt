@@ -20,9 +20,9 @@ object Key {
 
     // BIOMETRICS
     const val OPERATION_MODE = "OPERATION_MODE"
-    const val FACE_MODALITY = "FACE_MODALITY"
-    const val LEFT_PALM_MODALITY = "LEFT_PALM_MODALITY"
-    const val RIGHT_PALM_MODALITY = "RIGHT_PALM_MODALITY"
+    const val FACE_MODALITY = "FACE"
+    const val LEFT_PALM_MODALITY = "LEFT_PALM"
+    const val RIGHT_PALM_MODALITY = "RIGHT_PALM"
     const val BEST_AVAILABLE = "BEST_AVAILABLE"
     const val FULL = "FULL"
     const val MODALITIES = "MODALITIES"
