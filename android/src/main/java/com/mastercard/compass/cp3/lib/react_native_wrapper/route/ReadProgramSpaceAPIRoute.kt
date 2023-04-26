@@ -9,15 +9,12 @@ import com.facebook.react.bridge.ReadableMap
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.ReadProgramSpaceCompassApiHandlerActivity
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCryptoService
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpaceApi
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.jwt.JwtConstants
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.security.PublicKey
 import java.security.SignatureException
@@ -39,12 +36,12 @@ class ReadProgramSpaceAPIRoute(
   }
 
   fun startReadProgramSpaceIntent(
-    ReadProgramSpaceParams: ReadableMap
+    readProgramSpaceParams: ReadableMap
   ){
-    val reliantGUID: String = ReadProgramSpaceParams.getString("reliantGUID")!!
-    val programGUID: String = ReadProgramSpaceParams.getString("programGUID")!!
-    val rID: String = ReadProgramSpaceParams.getString("rID")!!
-    decryptData = ReadProgramSpaceParams.getBoolean("decryptData")
+    val reliantGUID: String = readProgramSpaceParams.getString("reliantGUID")!!
+    val programGUID: String = readProgramSpaceParams.getString("programGUID")!!
+    val rID: String = readProgramSpaceParams.getString("rID")!!
+    decryptData = readProgramSpaceParams.getBoolean("decryptData")
 
     Timber.d("reliantGUID: $reliantGUID")
     Timber.d("programGUID: $programGUID")

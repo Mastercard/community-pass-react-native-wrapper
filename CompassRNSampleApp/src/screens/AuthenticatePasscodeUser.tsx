@@ -21,13 +21,42 @@ import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
 
-var REG = /^[0-9]{6}$/;
+const REG = /^\d{6}$/;
 
 const AuthenticatePasscodeUser = ({ navigation }: any) => {
   const [readCardError, setReadCardError] = useState('');
   const [passcode, setPasscode] = useState('');
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState('');
+
+  const showAlert = (res: VerifyPasscodeResultType) => {
+    if (res.retryCount > 0 && res.status === true) {
+      return Alert.alert(
+        res.status
+          ? authenticatePasscodeUserStrings.MATCH_FOUND_ALERT_TITLE
+          : authenticatePasscodeUserStrings.MATCH_NOT_FOUND_ALERT_TITLE,
+  
+        res.status
+          ? authenticatePasscodeUserStrings.ALERT_MATCH_FOUND_DESCRIPTION
+          : authenticatePasscodeUserStrings.ALERT_MATCH_NOT_FOUND_DESCRIPTION,
+  
+        [
+          {
+            text: authenticatePasscodeUserStrings.ALERT_ACCEPT_BUTTON,
+            onPress: () => navigation.navigate(screens.HOME),
+            style: "default",
+          },
+        ],
+  
+        {
+          cancelable: true,
+          onDismiss: () => null,
+        }
+      );
+    } else {
+      return;
+    }
+  };
 
   const handleVerifyPasscode = () => {
     if (passcode?.length === 0) {
@@ -51,27 +80,7 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
         setLoading(false);
         setCount(res.retryCount?.toString());
 
-        res.retryCount > 0 && res.status === true
-          ? null
-          : Alert.alert(
-              res.status
-                ? authenticatePasscodeUserStrings.MATCH_FOUND_ALERT_TITLE
-                : authenticatePasscodeUserStrings.MATCH_NOT_FOUND_ALERT_TITLE,
-              res.status
-                ? authenticatePasscodeUserStrings.ALERT_MATCH_FOUND_DESCRIPTION
-                : authenticatePasscodeUserStrings.ALERT_MATCH_NOT_FOUND_DESCRIPTION,
-              [
-                {
-                  text: authenticatePasscodeUserStrings.ALERT_ACCEPT_BUTTON,
-                  onPress: () => navigation.navigate(screens.HOME),
-                  style: 'default',
-                },
-              ],
-              {
-                cancelable: true,
-                onDismiss: () => null,
-              }
-            );
+        showAlert(res)
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));

@@ -28,7 +28,7 @@ class SharedSpaceApi(
     const val TAG = "SharedSpaceApi"
   }
 
-  private var dataSchema: DataSchemaResponse? = null
+  private lateinit var dataSchema: DataSchemaResponse
 
   fun performKeyExchange(instanceID: String, clientPublicKey: PublicKey): KeyExchangeResponse =
     kernelConnection.exchangeKeys(KeyExchangeRequest(
@@ -39,14 +39,14 @@ class SharedSpaceApi(
     ))
 
   suspend fun validateEncryptData(input: String): SharedSpaceValidationEncryptionResponse {
-    if(dataSchema == null) dataSchema = fetchDataSchemaResponse()
-
+    dataSchema = fetchDataSchemaResponse()
     if(dataSchema?.responseStatus != ResponseStatus.SUCCESS){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA, dataSchema?.message)
     }
-    else if(dataSchema?.schemaConfig == null){
+    if(dataSchema?.schemaConfig == null){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG)
-    } else if(dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null){
+    }
+    if(dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED)
     }
 

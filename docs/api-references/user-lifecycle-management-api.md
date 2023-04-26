@@ -328,16 +328,17 @@ interface VerifyPasscodeResultType {
 
 In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
 
-| **Error Code**                                     | **Description**                                                                          |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------- | ----------------------------------- |
-| ERROR_CODE_CARD_NOT_ACTIVE                         | The card is not in ACTIVE state                                                          |
-| ERROR_CODE_CARD_BLACKLISTED                        | Card is blacklisted                                                                      |
-| ERROR_CODE_PROGRAM_GUID_NOT_MATCH                  | Program GUID does not match on the card                                                  |
-| ERROR_CODE_CARD_CONNECTION_ERROR                   | Card was moved or removed during read/write operation                                    |
-| ERROR_CODE_PIN_BLOCKED                             | Card has a blocked PIN                                                                   |
-| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT            | Application data not written on the card for this application                            |
-| ERROR_CODE_CARD_OPERATION_ABORTED                  | Card operation terminated before card                                                    |
-| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR | Specified Program does not support QR form factor                                        | ERROR_CODE_FORM_FACTOR_BLACKLISTED | Specified FormFactor is blacklisted |
+| **Error Code**                                  | **Description**                                                                                                                     |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| ERROR_CODE_CARD_NOT_ACTIVE                  | The card is not in ACTIVE state                                                                                                 |
+| ERROR_CODE_CARD_BLACKLISTED                     | Card is Blacklisted                                                                                                                 |
+| ERROR_CODE_PROGRAM_GUID_NOT_MATCH               | Program GUID does not match on the card                                                                                             |
+| ERROR_CODE_CARD_CONNECTION_ERROR                | Card was moved or removed during read/write operation                                                                               |
+| ERROR_CODE_PIN_BLOCKED           | Card has a blocked PIN                                                           |
+| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT            | Application data not written on the card for this                                                           |
+| ERROR_CODE_CARD_OPERATION_ABORTED            | Card operation terminated before card                                                           |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR  | Specified Program does not support QR form factor |
+| ERROR_CODE_FORM_FACTOR_BLACKLISTED | Specified FormFactor is blacklisted |
 | ERROR_CODE_INVALID_CP_USER_PROFILE                 | Invalid Cp User Profile                                                                  |
 | ERROR_CODE_QR_PASSCODE_VERIFICATION_BLOCKED        | This device has reached the maximum failed passcode attempts. Kindly reset your Passcode |
 
