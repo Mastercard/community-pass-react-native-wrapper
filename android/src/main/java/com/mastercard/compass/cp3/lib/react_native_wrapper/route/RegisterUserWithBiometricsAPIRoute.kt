@@ -2,7 +2,6 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -26,12 +25,12 @@ class RegisterUserWithBiometricsAPIRoute(
         const val REGISTER_BIOMETRICS_REQUEST_CODE = 300
     }
 
-    fun startRegisterUserWithBiometricsIntent(RegisterUserWithBiometricsParams: ReadableMap) {
-      val reliantGUID: String = RegisterUserWithBiometricsParams.getString("reliantGUID")!!;
-      val programGUID: String = RegisterUserWithBiometricsParams.getString("programGUID")!!
-      val consentID: String = RegisterUserWithBiometricsParams.getString("consentID")!!
-      val operationMode: String = RegisterUserWithBiometricsParams.getString("operationMode")!!
-      val modalities: ReadableArray = RegisterUserWithBiometricsParams.getArray("modalities")!!
+    fun startRegisterUserWithBiometricsIntent(registerUserWithBiometricsParams: ReadableMap) {
+      val reliantGUID: String = registerUserWithBiometricsParams.getString("reliantGUID")!!;
+      val programGUID: String = registerUserWithBiometricsParams.getString("programGUID")!!
+      val consentID: String = registerUserWithBiometricsParams.getString("consentID")!!
+      val operationMode: String = registerUserWithBiometricsParams.getString("operationMode")!!
+      val modalities: ReadableArray = registerUserWithBiometricsParams.getArray("modalities")!!
 
       // Log
       Timber.d("reliantGUID: $reliantGUID")

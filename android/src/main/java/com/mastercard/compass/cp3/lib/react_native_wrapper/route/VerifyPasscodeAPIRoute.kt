@@ -2,7 +2,6 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -23,11 +22,11 @@ class GetVerifyPasscodeAPIRoute(private val context: ReactApplicationContext, pr
     private const val TAG = "GetVerifyPasscodeAPIRoute"
   }
 
-  fun startGetVerifyPasscodeIntent(VerifyPasscodeParams: ReadableMap){
+  fun startGetVerifyPasscodeIntent(verifyPasscodeParams: ReadableMap){
 
-    val passcode: String = VerifyPasscodeParams.getString("passcode")!!
-    val programGUID: String = VerifyPasscodeParams.getString("programGUID")!!
-    val reliantGUID: String = VerifyPasscodeParams.getString("reliantGUID")!!
+    val passcode: String = verifyPasscodeParams.getString("passcode")!!
+    val programGUID: String = verifyPasscodeParams.getString("programGUID")!!
+    val reliantGUID: String = verifyPasscodeParams.getString("reliantGUID")!!
 
     val intent = Intent(context, VerifyPasscodeCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PASSCODE, passcode)

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.mastercard.compass.model.consent.ConsentResponse
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
@@ -79,16 +78,11 @@ abstract class CompassApiHandlerActivity<T : Any> : CompassKernelUIController.Co
         connectKernelService(reliantGUID) { isSuccess, errorCode, errorMessage ->
             when (isSuccess) {
                 true -> {
-                    //Log.d(TAG, "Connected to Kernel successfully")
                     Timber.d("Connected to Kernel successfully")
                     startCompassCoroutine()
                 }
                 false -> {
                     Timber.e("Could not connect to Kernel. Code: $errorCode. Message: $errorMessage")
-                    /**Log.e(
-                        TAG,
-                        "Could not connect to Kernel. Code: $errorCode. Message: $errorMessage"
-                    )**/
                     errorFoundFinishActivity(errorCode, errorMessage)
                 }
             }

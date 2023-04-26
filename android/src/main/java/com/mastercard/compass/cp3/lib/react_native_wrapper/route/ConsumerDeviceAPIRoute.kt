@@ -18,11 +18,11 @@ class ConsumerDeviceAPIRoute(private val context: ReactApplicationContext, priva
         const val WRITE_PROFILE_REQUEST_CODE = 200
     }
 
-    fun startWriteProfileIntent(WriteProfileParams: ReadableMap){
-      val reliantGUID: String = WriteProfileParams.getString("reliantGUID")!!
-      val programGUID: String = WriteProfileParams.getString("programGUID")!!
-      val rID: String = WriteProfileParams.getString("rID")!!
-      val overwriteCard = WriteProfileParams.getBoolean("overwriteCard")
+    fun startWriteProfileIntent(writeProfileParams: ReadableMap){
+      val reliantGUID: String = writeProfileParams.getString("reliantGUID")!!
+      val programGUID: String = writeProfileParams.getString("programGUID")!!
+      val rID: String = writeProfileParams.getString("rID")!!
+      val overwriteCard = writeProfileParams.getBoolean("overwriteCard")
 
       // Log
       Timber.d("reliantGUID: {$reliantGUID}")
