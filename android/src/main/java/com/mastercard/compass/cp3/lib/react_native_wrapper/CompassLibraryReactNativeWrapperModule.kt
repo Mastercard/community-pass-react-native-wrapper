@@ -6,6 +6,7 @@ import com.facebook.react.BuildConfig
 import com.facebook.react.bridge.*
 import com.mastercard.compass.cp3.lib.react_native_wrapper.route.*
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCryptoService
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpaceApi
 import timber.log.Timber
 
 class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),

@@ -68,7 +68,7 @@ class WriteProgramSpaceAPIRoute(
       }
       Activity.RESULT_CANCELED -> {
         val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-        val message = data?.getStringExtra(Key.ERROR_MESSAGE)!!
+        val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: "Unknown error"
 
         Timber.e("Error $code Message $message")
         promise.reject(code, Throwable(message))

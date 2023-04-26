@@ -1,7 +1,5 @@
 package com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util
 
-import android.util.Log
-import com.google.gson.Gson
 import com.mastercard.compass.base.ResponseStatus
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaData
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaProcessor
@@ -92,8 +90,8 @@ class SharedSpaceApi(
         }
       }
       Timber.tag(TAG).d("validateDecryptData: $data")
-      val sharedSpace = Gson().fromJson(data, SharedSpace::class.java)
-      return SharedSpaceValidationDecryptionResponse.Success(sharedSpace)
+
+      return SharedSpaceValidationDecryptionResponse.Success(data)
     } catch (e: SignatureException){
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_SIGNATURE_VALIDATION_FAILED)
     } catch (e: InvalidJWTException){
@@ -125,7 +123,7 @@ enum class SharedSpaceValidationEncryptionError {
 }
 
 sealed class SharedSpaceValidationDecryptionResponse {
-  data class Success(val data: SharedSpace): SharedSpaceValidationDecryptionResponse()
+  data class Success(val data: String): SharedSpaceValidationDecryptionResponse()
   data class Error(val error: SharedSpaceValidationDecryptionError, val message: String? = null): SharedSpaceValidationDecryptionResponse()
 }
 

@@ -2,20 +2,14 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
-import com.google.gson.Gson
-import com.mastercard.compass.base.Constants
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.ReadProgramSpaceCompassApiHandlerActivity
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.RegisterBasicUserCompassApiHandlerActivity
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCryptoService
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpace
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpaceApi
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.jwt.JwtConstants
@@ -25,20 +19,17 @@ import io.jsonwebtoken.Jwts
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.security.InvalidKeyException
-import java.security.PrivateKey
 import java.security.PublicKey
 import java.security.SignatureException
-import java.util.*
 
 class ReadProgramSpaceAPIRoute(
   private val context: ReactApplicationContext,
   private val currentActivity: Activity?,
-  private val helperObject: CompassKernelUIController.CompassHelper,
-  private val cryptoService: DefaultCryptoService?
+  helperObject: CompassKernelUIController.CompassHelper,
+  private val cryptoService: DefaultCryptoService?,
 ) {
   private var decryptData: Boolean = false
-  val kernelPublicKey: PublicKey? = helperObject.getKernelJWTPublicKey()
+  private val kernelPublicKey: PublicKey? = helperObject.getKernelJWTPublicKey()
 
   companion object {
     val REQUEST_CODE_RANGE = 900 until 1000
@@ -99,6 +90,8 @@ class ReadProgramSpaceAPIRoute(
         if(decryptData){
             extractedData = String(cryptoService!!.decrypt(extractedData))
         }
+
+//        sharedSpaceApi.validateDecryptData(response)
 
         Timber.tag(TAG).d(extractedData)
 
