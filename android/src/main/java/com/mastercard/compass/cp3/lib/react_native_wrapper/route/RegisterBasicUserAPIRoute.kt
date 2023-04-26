@@ -19,10 +19,10 @@ class RegisterBasicUserAPIRoute(private val context: ReactApplicationContext, pr
     }
 
     fun startRegisterBasicUserIntent(
-      RegisterBasicUserParams: ReadableMap
+      registerBasicUserParams: ReadableMap
     ){
-      val reliantGUID: String = RegisterBasicUserParams.getString("reliantGUID")!!
-      val programGUID: String = RegisterBasicUserParams.getString("programGUID")!!
+      val reliantGUID: String = registerBasicUserParams.getString("reliantGUID")!!
+      val programGUID: String = registerBasicUserParams.getString("programGUID")!!
 
       Timber.d("reliantGUID: {$reliantGUID}")
       Timber.d("programGUID: {$programGUID}")

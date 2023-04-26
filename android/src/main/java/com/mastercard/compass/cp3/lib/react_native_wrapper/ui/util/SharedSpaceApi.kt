@@ -40,23 +40,26 @@ class SharedSpaceApi(
 
   suspend fun validateEncryptData(input: String): SharedSpaceValidationEncryptionResponse {
     dataSchema = fetchDataSchemaResponse()
-    if(dataSchema?.responseStatus != ResponseStatus.SUCCESS){
-      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA, dataSchema?.message)
+
+    if(dataSchema.responseStatus != ResponseStatus.SUCCESS){
+      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA,
+        dataSchema.message
+      )
     }
-    if(dataSchema?.schemaConfig == null){
+    if(dataSchema.schemaConfig == null){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG)
     }
-    if(dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null){
+    if(dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED)
     }
 
-    val schemaValidationInput = when(dataSchema?.schemaConfig!!.isDataValidationRequired){
-      true -> SchemaValidationInput(jsonSchema = dataSchema?.schemaJson, jsonInput = input)
+    val schemaValidationInput = when(dataSchema.schemaConfig!!.isDataValidationRequired){
+      true -> SchemaValidationInput(jsonSchema = dataSchema.schemaJson, jsonInput = input)
       false -> SchemaValidationInput(jsonInput = input)
     }
 
     val schemaProcessor = SchemaProcessor.Builder(
-      schemaConfigurations = dataSchema!!.schemaConfig,
+      schemaConfigurations = dataSchema.schemaConfig,
       schemaValidationInput = schemaValidationInput,
       cryptoService = cryptoService,
       tokenService = integrityService
@@ -71,21 +74,19 @@ class SharedSpaceApi(
   }
 
   suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse) : SharedSpaceValidationDecryptionResponse{
-    if(dataSchema == null) dataSchema = fetchDataSchemaResponse()
-
     try {
-      if (dataSchema?.responseStatus != ResponseStatus.SUCCESS) {
+      if (dataSchema.responseStatus != ResponseStatus.SUCCESS) {
         return SharedSpaceValidationDecryptionResponse.Error(
           SharedSpaceValidationDecryptionError.ERROR_FETCHING_SCHEMA,
-          dataSchema?.message
+          dataSchema.message
         )
       }
       var data: String = integrityService.parseJWT(response.jwt)
       when {
-        dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
+        dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
           return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_DECRYPTION_SERVICE_REQUIRED)
         }
-        dataSchema?.schemaConfig?.isDataEncrypted == true -> {
+        dataSchema.schemaConfig?.isDataEncrypted == true -> {
           data = String(cryptoService!!.decrypt(data))
         }
       }
