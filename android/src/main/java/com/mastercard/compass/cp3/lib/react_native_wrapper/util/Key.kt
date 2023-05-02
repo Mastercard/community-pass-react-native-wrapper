@@ -26,4 +26,9 @@ object Key {
     const val BEST_AVAILABLE = "BEST_AVAILABLE"
     const val FULL = "FULL"
     const val MODALITIES = "MODALITIES"
+
+    //SVA
+    const val UNIT = "UNIT"
+    const val TYPE  = "TYPE"
+    const val E_VOUCHER_TYPE = "EVOUCHER_TYPE"
 }

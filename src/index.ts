@@ -148,6 +148,20 @@ export function getUserVerification({
   });
 }
 
+export function getCreateSVA({
+  reliantGUID,
+  programGUID,
+  rID,
+  sva
+}: CreateSVAParamType) {
+  return CompassLibraryReactNativeWrapper.getCreateSVA({
+    reliantGUID,
+    programGUID,
+    rID,
+    sva
+  });
+}
+
 export interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
@@ -302,4 +316,36 @@ interface Match {
   distance: number;
   modality: string;
   normalizedScore: number;
+}
+
+export interface CreateSVAParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID?: string;
+  sva: sva;
+} 
+  
+export interface sva {
+  value: FinancialSVA | EVoucherSVA;
+}
+  
+export enum SVA {
+  FinancialSVA = 'FinancialSVA',
+  EVoucherSVA = 'EVoucherSVA',
+}
+  
+export enum EVoucherType {
+  COMMODITY = 'COMMODITY',
+  POINT = 'POINT', 
+}
+  
+export interface FinancialSVA {
+  type: SVA.FinancialSVA;
+  unit: string;
+}
+  
+ export interface EVoucherSVA {
+  type: SVA.EVoucherSVA;
+  unit: string;
+  eVoucherType: EVoucherType;
 }

@@ -44,6 +44,9 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   private val userVerificationAPIRoute by lazy {
     UserVerificationAPIRoute(reactContext, currentActivity, helperObject)
   }
+  private val createSvaAPIRoute by lazy {
+    CreateSvaAPIRoute(reactContext, currentActivity)
+  }
   override fun getName(): String {
       return "CompassLibraryReactNativeWrapper"
   }
@@ -125,6 +128,12 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
     userVerificationAPIRoute.startGetUserVerificationIntent(userVerificationParams)
   }
 
+  @ReactMethod
+  fun getCreateSVA(createSvaParams: ReadableMap, promise: Promise){
+    this.promise = promise
+    createSvaAPIRoute.startCreateSvaIntent(createSvaParams)
+  }
+
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
     when(requestCode){
       in BiometricConsentAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
@@ -137,6 +146,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       in RetrieveRegistrationDataAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in GetVerifyPasscodeAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in UserVerificationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in CreateSvaAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
     }
   }
 
@@ -160,6 +170,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       RetrieveRegistrationDataAPIRoute.GET_REGISTRATION_DATA_REQUEST_CODE -> retrieveRegistrationDataAPIRoute.handleGetRegistrationDataIntentResponse(resultCode, data, this.promise)
       GetVerifyPasscodeAPIRoute.GET_VERIFY_PASSCODE_REQUEST_CODE -> getVerifyPasscodeAPIRoute.handleGetVerifyPasscodeIntentResponse(resultCode, data, this.promise)
       UserVerificationAPIRoute.GET_USER_VERIFICATION_REQUEST_CODE -> userVerificationAPIRoute.handleGetUserVerificationIntentResponse(resultCode, data, promise)
+      CreateSvaAPIRoute.GET_CREATE_SVA_REQUEST_CODE -> createSvaAPIRoute.handleGetCreateSvaIntentResponse(resultCode, data, promise)
     }
   }
 }
