@@ -13,9 +13,9 @@ class CreateSVACompassApiHandlerActivity: CompassApiHandlerActivity<String>() {
   override suspend fun callCompassApi() {
     val reliantGUID: String = intent.getStringExtra(Key.RELIANT_APP_GUID)!!
     val programGUID: String = intent.getStringExtra(Key.PROGRAM_GUID)!!
-    val rId: String = intent.getStringExtra(Key.RID) as String
-    val type: String = intent.getStringExtra(Key.TYPE) as String
-    val unit: String = intent.getStringExtra(Key.UNIT) as String
+    val rId: String = intent.getStringExtra(Key.RID)!!
+    val type: String = intent.getStringExtra(Key.TYPE)!!
+    val unit: String = intent.getStringExtra(Key.UNIT)!!
     when (type){
       "FinancialSVA" ->  {
         sva = FinancialSVA(unit = unit)

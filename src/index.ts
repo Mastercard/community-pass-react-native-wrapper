@@ -162,6 +162,20 @@ export function getCreateSVA({
   });
 }
 
+export function getSVAOperation({
+  reliantGUID,
+  programGUID,
+  rID,
+  svaOperation
+}: SVAOperationParamType) {
+  return CompassLibraryReactNativeWrapper.getSVAOperation({
+    reliantGUID,
+    programGUID,
+    rID,
+    svaOperation
+  });
+}
+
 export function getReadSVA({
   reliantGUID,
   programGUID,
@@ -382,4 +396,23 @@ export interface ReadSVAResultType {
 export interface Transaction {
   amount: number;
   balance: number;
+}
+
+export enum SVAOperationType {
+  DECREASE = 'DECREASE',
+  INCREASE = 'INCREASE', 
+  UPDATE = 'UPDATE'
+}
+
+export interface SVAOperation {
+  svaUnit: string;
+  svaAmount: number;
+  svaOperationType: SVAOperationType;
+}
+
+export interface SVAOperationParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  svaOperation: SVAOperation;
 }
