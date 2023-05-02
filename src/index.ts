@@ -389,7 +389,7 @@ export interface ReadSVAResultType {
   currentBalance: number;
   transactionCount: number;
   purseType: string;
-  unit: String;
+  unit: string;
   lastTransaction: Transaction
 }
 

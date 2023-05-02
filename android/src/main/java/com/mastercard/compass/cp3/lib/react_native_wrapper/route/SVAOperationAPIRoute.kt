@@ -103,7 +103,6 @@ class SVAOperationAPIRoute(private val context: ReactApplicationContext, private
 
     val cryptogramByteArray = ByteArray(Long.SIZE_BYTES)
     signingInputBuffer.get(cryptogramByteArray, 0, cryptogramByteArray.size)
-    //Log.d(TAG, "Cryptogram Value: ${cryptogramByteArray.contentToString()}")
     processResultMap.putString("cryptogramValue", cryptogramByteArray.contentToString())
 
     return processResultMap
