@@ -162,6 +162,20 @@ export function getCreateSVA({
   });
 }
 
+export function getReadSVA({
+  reliantGUID,
+  programGUID,
+  rID,
+  svaUnit
+}: ReadSVAParamType) {
+  return CompassLibraryReactNativeWrapper.getReadSVA({
+    reliantGUID,
+    programGUID,
+    rID,
+    svaUnit
+  });
+}
+
 export interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
@@ -218,6 +232,13 @@ export interface WriteProgramSpaceParamType {
   rID: string;
   programSpaceData: string;
   encryptData: boolean;
+}
+
+export interface ReadSVAParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  svaUnit: string;
 }
 
 export interface ReadProgramSpaceParamType {
@@ -344,8 +365,21 @@ export interface FinancialSVA {
   unit: string;
 }
   
- export interface EVoucherSVA {
+export interface EVoucherSVA {
   type: SVA.EVoucherSVA;
   unit: string;
   eVoucherType: EVoucherType;
+}
+
+export interface ReadSVAResultType {
+  currentBalance: number;
+  transactionCount: number;
+  purseType: string;
+  unit: String;
+  lastTransaction: Transaction
+}
+
+export interface Transaction {
+  amount: number;
+  balance: number;
 }

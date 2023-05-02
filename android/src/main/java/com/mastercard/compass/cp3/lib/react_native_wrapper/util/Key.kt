@@ -29,6 +29,7 @@ object Key {
 
     //SVA
     const val UNIT = "UNIT"
+    const val SVA_UNIT = "SVA_UNIT"
     const val TYPE  = "TYPE"
     const val E_VOUCHER_TYPE = "EVOUCHER_TYPE"
 }

@@ -47,6 +47,9 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   private val createSvaAPIRoute by lazy {
     CreateSvaAPIRoute(reactContext, currentActivity)
   }
+  private val readSvaAPIRoute by lazy {
+    ReadSvaAPIRoute(reactContext, currentActivity)
+  }
   override fun getName(): String {
       return "CompassLibraryReactNativeWrapper"
   }
@@ -134,6 +137,12 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
     createSvaAPIRoute.startCreateSvaIntent(createSvaParams)
   }
 
+  @ReactMethod
+  fun getReadSVA(readSvaParams: ReadableMap, promise: Promise){
+    this.promise = promise
+    readSvaAPIRoute.startReadSvaIntent(readSvaParams)
+  }
+
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
     when(requestCode){
       in BiometricConsentAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
@@ -147,6 +156,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       in GetVerifyPasscodeAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in UserVerificationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in CreateSvaAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in ReadSvaAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
     }
   }
 
@@ -171,6 +181,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       GetVerifyPasscodeAPIRoute.GET_VERIFY_PASSCODE_REQUEST_CODE -> getVerifyPasscodeAPIRoute.handleGetVerifyPasscodeIntentResponse(resultCode, data, this.promise)
       UserVerificationAPIRoute.GET_USER_VERIFICATION_REQUEST_CODE -> userVerificationAPIRoute.handleGetUserVerificationIntentResponse(resultCode, data, promise)
       CreateSvaAPIRoute.GET_CREATE_SVA_REQUEST_CODE -> createSvaAPIRoute.handleGetCreateSvaIntentResponse(resultCode, data, promise)
+      ReadSvaAPIRoute.GET_READ_SVA_REQUEST_CODE -> readSvaAPIRoute.handleGetReadSvaIntentResponse(resultCode, data, promise)
     }
   }
 }

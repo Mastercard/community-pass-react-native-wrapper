@@ -22,15 +22,15 @@ class CreateSvaAPIRoute(private val context: ReactApplicationContext, private va
 
   lateinit var eVoucherType: String
 
-  fun startCreateSvaIntent(createSvaParamns: ReadableMap){
+  fun startCreateSvaIntent(createSvaParams: ReadableMap){
 
-    val programGUID: String = createSvaParamns.getString("programGUID")!!
-    val reliantGUID: String = createSvaParamns.getString("reliantGUID")!!
-    val rId: String = createSvaParamns.getString("rID")!!
-    val unit = createSvaParamns.getMap("sva")!!.getMap("value")?.getString("unit") as String
-    val type = createSvaParamns.getMap("sva")!!.getMap("value")?.getString("type") as String
+    val programGUID: String = createSvaParams.getString("programGUID")!!
+    val reliantGUID: String = createSvaParams.getString("reliantGUID")!!
+    val rId: String = createSvaParams.getString("rID")!!
+    val unit = createSvaParams.getMap("sva")!!.getMap("value")?.getString("unit") as String
+    val type = createSvaParams.getMap("sva")!!.getMap("value")?.getString("type") as String
     if(type.equals("EVoucherSVA", true)){
-      eVoucherType = createSvaParamns.getMap("sva")!!.getMap("value")?.getString("eVoucherType") as String
+      eVoucherType = createSvaParams.getMap("sva")!!.getMap("value")?.getString("eVoucherType") as String
     }
 
     val intent = Intent(context, CreateSVACompassApiHandlerActivity::class.java).apply {
