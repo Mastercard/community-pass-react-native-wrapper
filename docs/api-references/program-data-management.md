@@ -131,4 +131,185 @@ In addition to the [general error codes](https://developer.mastercard.com/cp-ker
 | ERROR_CODE_PROGRAM_SPACE_INVALID_CONFIGURATIONS   | Program Space configuration in the request does not match the program’s specified configuration |
 | ERROR_CODE_INVALID_ACCESS_FOR_REQUESTED_OPERATION | Invalid access for the requested operation                                                      |
 
+## 2 Application SVA Management
+
+### 2.1 getCreateSVA
+
+This API is used to create the SVA provided by the Reliant Application on the card.
+
+**Compatibility**
+| **Available as of CPK version #** | **Deprecated as of CPK version #** |
+|--------------------------------------------------|------------------------------------------------------------------|
+| + CPK 2.5.0 | + n/a |
+
+**Input Parameters**
+| **Parameter** | **Type** | **Description** |
+|---------------|----------|------------------------------------------------------|
+| createSVARequest | CreateSVAParamType | An object that contains a reliantGUID, programGUID, rID and sva object |
+
+**Response Parameters**
+| **Parameter** | **Type** | **Description** |
+|-----------------|-----------------|----------------------------------------------------------|
+| createSVAResponse | Promise<`CreateSVAResultType`> | A promise that resolves to an object containing a string response message from the CPK, or an Error Field |
+
+**Type Aliases**
+
+```ts
+// CreateSVAParamType
+interface CreateSVAParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID?: string;
+  sva: sva;
+}
+
+// CreateSVAResultType
+interface CreateSVAResultType {
+  response: string;
+}
+
+//sva object
+```
+
+**Error codes**
+
+In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
+
+| Error Code                                        | Description                                                                                     |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| ERROR_CODE_CARD_NOT_ACTIVE                        | The Card is not in ACTIVE state                                                                     
+| ERROR_CODE_CARD_BLACKLISTED                       | Card is Blacklisted                                                                             |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_CARD          | Program does not support card operations                                                        
+| ERROR_CODE_CARD_NOT_ASSOCIATED_TO_USER	                          | Card is not associated to the passed rID value  
+| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT	              | Program/Application Data not written on the card
+| ERROR_CODE_CARD_CONNECTION_ERROR	         | Error occured while reading/writing to the card                                        |
+| ERROR_CODE_INVALID_ARGUMENT	            | Arguments passed in request parameters are either blank or incorrect. Refer to the error message                                                          |
+| ERROR_CODE_SVA_ALREADY_CREATED	          | SVA with given sva unit value is already created on the card                                                    |
+| ERROR_CODE_SVA_LIMIT_EXHAUSTED	           | Maximum SVA limit exhausted to create on card                                     |
+| ERROR_CODE_CARD_OPERATION_ABORTED	   | Card operation terminated before card transaction started by pressing Back button
+
+### 2.2 getReadSVA
+
+This API is used to read an existing SVA from the card. It will return the SVARecord object that contains details pertaining to the SVA.
+
+**Compatibility**
+| **Available as of CPK version #** | **Deprecated as of CPK version #** |
+|--------------------------------------------------|------------------------------------------------------------------|
+| + CPK 2.5.0 | + n/a |
+
+**Input Parameters**
+| **Parameter** | **Type** | **Description** |
+|---------------|----------|------------------------------------------------------|
+| readSVARequest | ReadSVAParamType | An object that contains a reliantGUID, programGUID, rID and the svaUnit string |
+
+**Response Parameters**
+| **Parameter** | **Type** | **Description** |
+|-----------------|-----------------|----------------------------------------------------------|
+| readSVAResponse | Promise<`ReadSVAResultType`> | A promise that resolves to an object containing the current SVA balance, transactionCount, purseType, unit, and lastTransaction Object, or an error message. |
+
+**Type Aliases**
+
+```ts
+// ReadSVAParamType
+interface ReadSVAParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  svaUnit: string;
+}
+
+// ReadSVAResultType
+interface ReadSVAResultType {
+  currentBalance: number;
+  transactionCount: number;
+  purseType: string;
+  unit: string;
+  lastTransaction: Transaction
+}
+
+//Transaction
+interface Transaction {
+  amount: number;
+  balance: number;
+}
+
+```
+
+**Error codes**
+
+In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
+
+| Error Code                                        | Description                                                                                     |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| ERROR_CODE_CARD_NOT_ACTIVE                        | The Card is not in ACTIVE state                                                                     
+| ERROR_CODE_CARD_BLACKLISTED                       | Card is Blacklisted                                                                             |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_CARD          | Program does not support card operations                                                        
+| ERROR_CODE_CARD_NOT_ASSOCIATED_TO_USER	                          | Card is not associated to the passed rID value  
+| ERROR_CODE_APPLICATION_DATA_NOT_PRESENT	              | Program/Application Data not written on the card
+| ERROR_CODE_CARD_CONNECTION_ERROR	         | Card was moved or removed during read/write operation                                        |
+| ERROR_CODE_INVALID_ARGUMENT	            | Arguments passed in request parameters are either blank or incorrect. Refer to the error message                                                          |
+| ERROR_CODE_CARD_OPERATION_ABORTED		          | Card operation terminated before card transaction started by pressing Back button                                                    |
+
+
+### 2.3 getSVAOperation
+
+This API is used to perform several SVA operations on the card using SVA specific data provided by the Reliant Application or the program. SVA Operations include updating, incrementing or decrementing the value of a particular SVA. If the executed operation is successful, it will return the SVAOperationResult object. Otherwise, it will return an error message wrapped inside the intent result.
+
+```
+NOTE:An amount must not be less than 0 because operations cannot be carried out with negative amount values, 0 being the minimum limit. An amount must not be greater than 2147483647 either, as this is the maximum limit value allowed for the operation to be carried out.
+```
+
+**Compatibility**
+| **Available as of CPK version #** | **Deprecated as of CPK version #** |
+|--------------------------------------------------|------------------------------------------------------------------|
+| + CPK 2.5.0 | + n/a |
+
+**Input Parameters**
+| **Parameter** | **Type** | **Description** |
+|---------------|----------|------------------------------------------------------|
+| svaOperationRequest | SVAOperationParamType | An object that contains a reliantGUID, programGUID, rID and the svaUnit string |
+
+**Response Parameters**
+| **Parameter** | **Type** | **Description** |
+|-----------------|-----------------|----------------------------------------------------------|
+| svaOperationResponse | Promise<`SVAOperationResultType`> | A promise that resolves to an object containing the current SVAOperationResult, or an error message. |
+
+**Type Aliases**
+
+```ts
+// SVAOperationType
+enum SVAOperationType {
+  DECREASE = 'DECREASE',
+  INCREASE = 'INCREASE', 
+  UPDATE = 'UPDATE'
+}
+
+// SVAOperation
+interface SVAOperation {
+  svaUnit: string;
+  svaAmount: number;
+  svaOperationType: SVAOperationType;
+}
+
+// SVAOperationParamType
+interface SVAOperationParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  svaOperation: SVAOperation;
+}
+
+```
+
+**Error codes**
+
+In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
+
+| Error Code                                        | Description                                                                                     |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| ERROR_CODE_NO_ERROR                        | Success                                                                   
+| ERROR_CODE_INVALID_ARGUMENT	                       | Arguments passed in request parameters are either blank or incorrect. Refer to the error message                                                                             |
+| ERROR_CODE_KEY_RETRIEVAL_ERROR	          | Internal Key Retrieval Error
+
+
 [Return to API reference](README.md)

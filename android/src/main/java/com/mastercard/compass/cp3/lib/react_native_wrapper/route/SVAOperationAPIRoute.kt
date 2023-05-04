@@ -111,6 +111,7 @@ class SVAOperationAPIRoute(private val context: ReactApplicationContext, private
   fun verifyCryptogram(cryptogram: ByteArray , signedCryptogram: String?):Boolean{
     val isValid: Boolean
     val algorithm ="SHA256withRSA"
+    //helperObject.key
     val signature: ByteArray = Base64.decode(signedCryptogram, Base64.URL_SAFE)
     //We check if the signature is valid. We use RSA algorithm along SHA-256 digest algorithm
     isValid = Signature.getInstance(algorithm).run {

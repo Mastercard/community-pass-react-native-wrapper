@@ -358,7 +358,11 @@ export interface CreateSVAParamType {
   programGUID: string;
   rID?: string;
   sva: sva;
-} 
+}
+
+export interface CreateSVAResultType {
+  response: string;
+}
   
 export interface sva {
   value: FinancialSVA | EVoucherSVA;
