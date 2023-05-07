@@ -62,6 +62,7 @@ class SVAOperationAPIRoute(private val context: ReactApplicationContext, private
           svaOperationResult.signingInput,
           svaOperationResult.signedData
         )
+
         if(verification){
           resultMap.putBoolean("verification", true)
           resultMap.putMap("response", processSvaOperationResult(svaOperationResult))
