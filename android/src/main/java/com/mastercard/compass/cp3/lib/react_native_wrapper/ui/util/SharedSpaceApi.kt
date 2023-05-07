@@ -1,5 +1,6 @@
 package com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util
 
+import android.util.Log
 import com.mastercard.compass.base.ResponseStatus
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaData
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaProcessor
@@ -73,7 +74,10 @@ class SharedSpaceApi(
     }
   }
 
-  suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse) : SharedSpaceValidationDecryptionResponse{
+  suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse) : SharedSpaceValidationDecryptionResponse {
+    dataSchema = fetchDataSchemaResponse()
+    Timber.tag("ReadProgramSpaceAPIRoutesssss").d(dataSchema.toString())
+
     try {
       if (dataSchema.responseStatus != ResponseStatus.SUCCESS) {
         return SharedSpaceValidationDecryptionResponse.Error(
@@ -86,6 +90,7 @@ class SharedSpaceApi(
         dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
           return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_DECRYPTION_SERVICE_REQUIRED)
         }
+
         dataSchema.schemaConfig?.isDataEncrypted == true -> {
           data = String(cryptoService!!.decrypt(data))
         }
@@ -93,9 +98,9 @@ class SharedSpaceApi(
       Timber.tag(TAG).d("validateDecryptData: $data")
 
       return SharedSpaceValidationDecryptionResponse.Success(data)
-    } catch (e: SignatureException){
+    } catch (e: SignatureException) {
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_SIGNATURE_VALIDATION_FAILED)
-    } catch (e: InvalidJWTException){
+    } catch (e: InvalidJWTException) {
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_INVALID_JWT)
     } catch (e: Exception) {
       Timber.tag(TAG).e(e, "validateDecryptData: process failed")
