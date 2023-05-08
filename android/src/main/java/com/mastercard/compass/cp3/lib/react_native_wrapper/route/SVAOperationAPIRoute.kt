@@ -13,9 +13,7 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.SVAOperationCompas
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.sva.SVAOperationResult
-import com.mastercard.compass.wrapper.toHex
 import timber.log.Timber
-import java.nio.ByteBuffer
 import java.security.PublicKey
 import java.security.Signature
 
@@ -73,34 +71,6 @@ class SVAOperationAPIRoute(private val context: ReactApplicationContext, private
         promise.reject(code, Throwable(message))
       }
     }
-  }
-
-  private fun processSvaOperationResult(response: SVAOperationResult) : ReadableMap {
-
-    val processResultMap = Arguments.createMap()
-    val signingInputBuffer = ByteBuffer.wrap(response.signingInput)
-
-    val amountByteArray = ByteArray(Int.SIZE_BYTES + 1)
-    signingInputBuffer.get(amountByteArray, 0, amountByteArray.size)
-    processResultMap.putString("transactionAmount", amountByteArray.toHex())
-
-    val dateByteArray = ByteArray(3)
-    signingInputBuffer.get(dateByteArray, 0, dateByteArray.size)
-    processResultMap.putString("transactionAmount", dateByteArray.toHex())
-
-    val timeByteArray = ByteArray(3)
-    signingInputBuffer.get(timeByteArray, 0, timeByteArray.size)
-    processResultMap.putString("transactionTime", timeByteArray.toHex())
-
-    val transactionCountByteArray = ByteArray(Int.SIZE_BYTES)
-    signingInputBuffer.get(transactionCountByteArray, 0, transactionCountByteArray.size)
-    processResultMap.putString("transactionCount", transactionCountByteArray.toHex())
-
-    val cryptogramByteArray = ByteArray(Long.SIZE_BYTES)
-    signingInputBuffer.get(cryptogramByteArray, 0, cryptogramByteArray.size)
-    processResultMap.putString("cryptogramValue", cryptogramByteArray.contentToString())
-
-    return processResultMap
   }
 
   fun verifyCryptogram(cryptogram: ByteArray , signedCryptogram: String?):Boolean{
