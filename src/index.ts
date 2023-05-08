@@ -162,6 +162,22 @@ export function getCreateSVA({
   });
 }
 
+export function getBlacklistFormFactor({
+  programGUID,
+  rID,
+  reliantGUID,
+  consumerDeviceNumber,
+  formFactor
+}: BlacklistFormFactorParamType) {
+  return CompassLibraryReactNativeWrapper.getBlacklistFormFactor({
+    programGUID,
+    rID,
+    reliantGUID,
+    consumerDeviceNumber,
+    formFactor
+  });
+}
+
 export function getSVAOperation({
   reliantGUID,
   programGUID,
@@ -360,6 +376,19 @@ export interface CreateSVAParamType {
   sva: sva;
 }
 
+export interface BlacklistFormFactorParamType {
+  programGUID: string;
+  rID: string;
+  reliantGUID: string;
+  consumerDeviceNumber: string;
+  formFactor: FormFactor;
+}
+
+export interface BlacklistFormFactorResultType {
+  type: string;
+  consumerDeviceNumber: string;
+}
+
 export interface CreateSVAResultType {
   response: string;
 }
@@ -419,4 +448,10 @@ export interface SVAOperationParamType {
   programGUID: string;
   rID: string;
   svaOperation: SVAOperation;
+}
+
+export enum FormFactor {
+  CARD = 'CARD',
+  QR = 'QR', 
+  NONE = 'NONE'
 }

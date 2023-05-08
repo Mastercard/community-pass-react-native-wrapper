@@ -34,4 +34,7 @@ object Key {
     const val SVA_OPERATION_TYPE = "SVA_OPERATION_TYPE"
     const val TYPE  = "TYPE"
     const val E_VOUCHER_TYPE = "EVOUCHER_TYPE"
+
+    //ADMIN TRANSACTIONS
+    const val FORMFACTOR = "FORMFACTOR"
 }
