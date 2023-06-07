@@ -2,7 +2,6 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.ui
 
 import com.mastercard.compass.base.OperationMode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.populateModalityList
-import com.mastercard.compass.model.biometrictoken.Modality
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 
 class RegisterUserForBioTokenCompassApiHandlerActivity: CompassApiHandlerActivity<String>() {

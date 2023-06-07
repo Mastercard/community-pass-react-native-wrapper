@@ -20,10 +20,21 @@ object Key {
 
     // BIOMETRICS
     const val OPERATION_MODE = "OPERATION_MODE"
-    const val FACE_MODALITY = "FACE_MODALITY"
-    const val LEFT_PALM_MODALITY = "LEFT_PALM_MODALITY"
-    const val RIGHT_PALM_MODALITY = "RIGHT_PALM_MODALITY"
+    const val FACE_MODALITY = "FACE"
+    const val LEFT_PALM_MODALITY = "LEFT_PALM"
+    const val RIGHT_PALM_MODALITY = "RIGHT_PALM"
     const val BEST_AVAILABLE = "BEST_AVAILABLE"
     const val FULL = "FULL"
     const val MODALITIES = "MODALITIES"
+
+    //SVA
+    const val UNIT = "UNIT"
+    const val SVA_UNIT = "SVA_UNIT"
+    const val SVA_AMOUNT = "SVA_AMOUNT"
+    const val SVA_OPERATION_TYPE = "SVA_OPERATION_TYPE"
+    const val TYPE  = "TYPE"
+    const val E_VOUCHER_TYPE = "EVOUCHER_TYPE"
+
+    //ADMIN TRANSACTIONS
+    const val FORMFACTOR = "FORMFACTOR"
 }

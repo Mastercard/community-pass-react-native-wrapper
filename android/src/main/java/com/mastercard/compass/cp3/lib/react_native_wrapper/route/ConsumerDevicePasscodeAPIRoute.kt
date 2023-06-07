@@ -19,11 +19,11 @@ class ConsumerDevicePasscodeAPIRoute(private val context: ReactApplicationContex
         const val WRITE_PASSCODE_REQUEST_CODE = 500
     }
 
-    fun startWritePasscodeIntent(WritePasscodeParams: ReadableMap){
-      val reliantGUID: String = WritePasscodeParams.getString("reliantGUID")!!
-      val programGUID: String = WritePasscodeParams.getString("programGUID")!!
-      val rID: String = WritePasscodeParams.getString("rID")!!
-      val passcode: String = WritePasscodeParams.getString("passcode")!!
+    fun startWritePasscodeIntent(writePasscodeParams: ReadableMap){
+      val reliantGUID: String = writePasscodeParams.getString("reliantGUID")!!
+      val programGUID: String = writePasscodeParams.getString("programGUID")!!
+      val rID: String = writePasscodeParams.getString("rID")!!
+      val passcode: String = writePasscodeParams.getString("passcode")!!
 
       // Log
       Timber.d("reliantGUID: {$reliantGUID}")

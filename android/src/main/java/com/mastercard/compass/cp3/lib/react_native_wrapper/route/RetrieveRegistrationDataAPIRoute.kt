@@ -2,7 +2,6 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
