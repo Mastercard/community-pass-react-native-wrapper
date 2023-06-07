@@ -24,13 +24,13 @@ class WriteProgramSpaceAPIRoute(
   }
 
   fun startWriteProgramSpaceIntent(
-    WriteProgramSpaceParams: ReadableMap
+    writeProgramSpaceParams: ReadableMap
   ) {
-    val reliantGUID: String = WriteProgramSpaceParams.getString("reliantGUID")!!
-    val programGUID: String = WriteProgramSpaceParams.getString("programGUID")!!
-    val rID: String = WriteProgramSpaceParams.getString("rID")!!
-    val jsonData: String = WriteProgramSpaceParams.getString("programSpaceData")!!
-    val encryptData: Boolean = WriteProgramSpaceParams.getBoolean("encryptData")
+    val reliantGUID: String = writeProgramSpaceParams.getString("reliantGUID")!!
+    val programGUID: String = writeProgramSpaceParams.getString("programGUID")!!
+    val rID: String = writeProgramSpaceParams.getString("rID")!!
+    val jsonData: String = writeProgramSpaceParams.getString("programSpaceData")!!
+    val encryptData: Boolean = writeProgramSpaceParams.getBoolean("encryptData")
 
     Timber.d("reliantGUID: $reliantGUID")
     Timber.d("programGUID: $programGUID")

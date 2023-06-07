@@ -2,7 +2,6 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.route
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -23,10 +22,10 @@ class BiometricConsentAPIRoute(private val context: ReactApplicationContext, pri
         private const val TAG = "BiometricConsentAPIRoute"
     }
 
-    fun startBiometricConsentIntent(SaveBiometricConsentParams: ReadableMap){
-      val reliantGUID: String = SaveBiometricConsentParams.getString("reliantGUID")!!
-      val programGUID: String = SaveBiometricConsentParams.getString("programGUID")!!
-      val consumerConsentValue: Boolean = SaveBiometricConsentParams.getBoolean("consumerConsentValue")
+    fun startBiometricConsentIntent(saveBiometricConsentParams: ReadableMap){
+      val reliantGUID: String = saveBiometricConsentParams.getString("reliantGUID")!!
+      val programGUID: String = saveBiometricConsentParams.getString("programGUID")!!
+      val consumerConsentValue: Boolean = saveBiometricConsentParams.getBoolean("consumerConsentValue")
 
       Timber.d("reliantGUID: {$reliantGUID}")
       Timber.d("programGUID: {$programGUID}")
