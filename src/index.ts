@@ -148,6 +148,64 @@ export function getUserVerification({
   });
 }
 
+export function getCreateSVA({
+  reliantGUID,
+  programGUID,
+  rID,
+  sva
+}: CreateSVAParamType) {
+  return CompassLibraryReactNativeWrapper.getCreateSVA({
+    reliantGUID,
+    programGUID,
+    rID,
+    sva
+  });
+}
+
+export function getBlacklistFormFactor({
+  programGUID,
+  rID,
+  reliantGUID,
+  consumerDeviceNumber,
+  formFactor
+}: BlacklistFormFactorParamType) {
+  return CompassLibraryReactNativeWrapper.getBlacklistFormFactor({
+    programGUID,
+    rID,
+    reliantGUID,
+    consumerDeviceNumber,
+    formFactor
+  });
+}
+
+export function getSVAOperation({
+  reliantGUID,
+  programGUID,
+  rID,
+  svaOperation
+}: SVAOperationParamType) {
+  return CompassLibraryReactNativeWrapper.getSVAOperation({
+    reliantGUID,
+    programGUID,
+    rID,
+    svaOperation
+  });
+}
+
+export function getReadSVA({
+  reliantGUID,
+  programGUID,
+  rID,
+  svaUnit
+}: ReadSVAParamType) {
+  return CompassLibraryReactNativeWrapper.getReadSVA({
+    reliantGUID,
+    programGUID,
+    rID,
+    svaUnit
+  });
+}
+
 export interface VerifyPasscodeParamType {
   passcode: string;
   programGUID: string;
@@ -204,6 +262,13 @@ export interface WriteProgramSpaceParamType {
   rID: string;
   programSpaceData: string;
   encryptData: boolean;
+}
+
+export interface ReadSVAParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  svaUnit: string;
 }
 
 export interface ReadProgramSpaceParamType {
@@ -302,4 +367,91 @@ interface Match {
   distance: number;
   modality: string;
   normalizedScore: number;
+}
+
+export interface CreateSVAParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID?: string;
+  sva: sva;
+}
+
+export interface BlacklistFormFactorParamType {
+  programGUID: string;
+  rID: string;
+  reliantGUID: string;
+  consumerDeviceNumber: string;
+  formFactor: FormFactor;
+}
+
+export interface BlacklistFormFactorResultType {
+  type: string;
+  consumerDeviceNumber: string;
+}
+
+export interface CreateSVAResultType {
+  response: string;
+}
+  
+export interface sva {
+  value: FinancialSVA | EVoucherSVA;
+}
+  
+export enum SVA {
+  FinancialSVA = 'FinancialSVA',
+  EVoucherSVA = 'EVoucherSVA',
+}
+  
+export enum EVoucherType {
+  COMMODITY = 'COMMODITY',
+  POINT = 'POINT', 
+}
+  
+export interface FinancialSVA {
+  type: SVA.FinancialSVA;
+  unit: string;
+}
+  
+export interface EVoucherSVA {
+  type: SVA.EVoucherSVA;
+  unit: string;
+  eVoucherType: EVoucherType;
+}
+
+export interface ReadSVAResultType {
+  currentBalance: number;
+  transactionCount: number;
+  purseType: string;
+  unit: string;
+  lastTransaction: Transaction
+}
+
+export interface Transaction {
+  amount: number;
+  balance: number;
+}
+
+export enum SVAOperationType {
+  DECREASE = 'DECREASE',
+  INCREASE = 'INCREASE', 
+  UPDATE = 'UPDATE'
+}
+
+export interface SVAOperation {
+  svaUnit: string;
+  svaAmount: number;
+  svaOperationType: SVAOperationType;
+}
+
+export interface SVAOperationParamType {
+  reliantGUID: string;
+  programGUID: string;
+  rID: string;
+  svaOperation: SVAOperation;
+}
+
+export enum FormFactor {
+  CARD = 'CARD',
+  QR = 'QR', 
+  NONE = 'NONE'
 }

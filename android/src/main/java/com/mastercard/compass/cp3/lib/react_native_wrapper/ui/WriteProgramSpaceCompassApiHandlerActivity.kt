@@ -1,6 +1,8 @@
 package com.mastercard.compass.cp3.lib.react_native_wrapper.ui
 
+import android.content.Intent
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.*
+import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
 import com.mastercard.compass.model.programspace.WriteProgramSpaceDataRequest
 import kotlinx.coroutines.Dispatchers
@@ -72,6 +74,12 @@ class WriteProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<Stri
         SharedSpaceValidationEncryptionError.SCHEMA_PROCESSOR_ERROR -> "Error schema processor"
       }
       Timber.tag(TAG).e(errorMessage)
+      val intent = Intent().apply {
+        putExtra(Key.ERROR_CODE, response.error ?: ErrorCode.UNKNOWN)
+        putExtra(Key.ERROR_MESSAGE, errorMessage ?: "unknown error")
+      }
+      setResult(RESULT_CANCELED, intent)
+      finish()
     }
   }
 }
