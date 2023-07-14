@@ -103,6 +103,7 @@ Pre-requisite
 // BlacklistFormFactorResultType
 interface BlacklistFormFactorResultType {
   type: string;
+  status: FormFactorStatus;
   consumerDeviceNumber: string;
 }
 
@@ -120,6 +121,14 @@ export enum FormFactor {
   CARD = 'CARD',
   QR = 'QR', 
   NONE = 'NONE'
+}
+
+//FormFactorStatus
+export enum FormFactorStatus {
+  ACTIVE = 'ACTIVE',
+  BLACKLISTED = 'BLACKLISTED', 
+  UNKNOWN = 'UNKNOWN',
+  BLOCKED = 'BLOCKED'
 }
 ```
 

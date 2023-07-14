@@ -52,6 +52,7 @@ class BlacklistFormFactorAPIRoute(private val context: ReactApplicationContext, 
         val resultMap = Arguments.createMap()
         resultMap.apply {
           putString("type", response.type.name)
+          putString("status", response.status.name)
           putString("consumerDeviceNumber", response.consumerDeviceNumber)
         }
         promise.resolve(resultMap);
