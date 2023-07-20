@@ -67,4 +67,81 @@ In addition to the [general error codes](https://developer.mastercard.com/cp-ker
 | ERROR_CODE_CARD_NOT_ACTIVE  | The card is not in ACTIVE state                                                                  |
 | ERROR_CODE_CARD_BLACKLISTED | Card is blacklisted                                                                              |
 
+## 2. Blacklist Form Factor
+
+### 2.1. getBlacklistFormFactorActivityIntent
+
+This API manages blacklisting of formfactor. Card or CP User Profile to be added to the Blacklist when the user reports a specified form factor lost or stolen to the RA or simply no longer contains the latest data and has been replaced with a newer issuance of a fresh CP Consumer Device.
+
+```
+Pre-requisite
+- RA is aware of the ProgramGUID, R-ID, RA GUID and consumer device id
+- Cards/CP Consumer Device has been issued by the Program
+- RA performs the reading of the Program data prior to calling the Blacklist in case of CP User Profile Form Factor.
+- RA reads the application data and stores it on their end in case of QR Form Factor.
+- RA does verification/ identification of the user (Biometrical/ Passcode), to lookup Consumer device number prior to invoking the blacklist API.
+```
+
+**Compatibility**
+| **Available as of CPK version #** | **Deprecated as of CPK version #** |
+|--------------------------------------------------|------------------------------------------------------------------|
+| + CPK 2.5.1 | + n/a |
+
+**Input Parameters**
+| **Parameter** | **Type** | **Description** |
+|---------------|----------|------------------------------------------------------|
+| getBlacklistFormFactorRequest | BlacklistFormFactorParamType | An object that contains a reliantGUID, programGUID, rID, consumerDeviceNumber and FormFactor |
+
+**Response Parameters**
+| **Parameter** | **Type** | **Description** |
+|-----------------|-----------------|----------------------------------------------------------|
+| getBlacklistFormFactorResponse | Promise<`BlacklistFormFactorResultType`> | A promise that resolves to an object containnt the blacklisted Formfactor, e.g CARD, and the consumerDeviceNumber, or an error field. |
+
+**Type Aliases**
+
+```ts
+// BlacklistFormFactorResultType
+interface BlacklistFormFactorResultType {
+  type: string;
+  status: FormFactorStatus;
+  consumerDeviceNumber: string;
+}
+
+// BlacklistFormFactorParamType
+interface BlacklistFormFactorParamType {
+  programGUID: string;
+  rID: string;
+  reliantGUID: string;
+  consumerDeviceNumber: string;
+  formFactor: FormFactor;
+}
+
+// FormFactor
+export enum FormFactor {
+  CARD = 'CARD',
+  QR = 'QR', 
+  NONE = 'NONE'
+}
+
+//FormFactorStatus
+export enum FormFactorStatus {
+  ACTIVE = 'ACTIVE',
+  BLACKLISTED = 'BLACKLISTED', 
+  UNKNOWN = 'UNKNOWN',
+  BLOCKED = 'BLOCKED'
+}
+```
+
+**Error codes**
+
+In addition to the [general error codes](https://developer.mastercard.com/cp-kernel-integration-api/documentation/reference-pages/code-and-formats/), below are the error codes that CPK can send as part of the response:
+
+| **Error Code**              | **Description**                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------ |
+| ERROR_CODE_FORM_FACTOR_BLACKLISTED	 | The Form Factor is Already Blacklisted
+| ERROR_CODE_FORM_FACTOR_NOT_ASSOCIATED_TO_USER	  | This form factor does not belong to the RID provided                                                                  |
+| ERROR_CODE_PROGRAM_DOES_NOT_SUPPORT_QR_FORM_FACTOR	 | Specified Program does not CP User Profile form factor support
+         
+
+
 [Return to API reference](README.md)

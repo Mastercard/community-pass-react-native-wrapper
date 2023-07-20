@@ -26,4 +26,15 @@ object Key {
     const val BEST_AVAILABLE = "BEST_AVAILABLE"
     const val FULL = "FULL"
     const val MODALITIES = "MODALITIES"
+
+    //SVA
+    const val UNIT = "UNIT"
+    const val SVA_UNIT = "SVA_UNIT"
+    const val SVA_AMOUNT = "SVA_AMOUNT"
+    const val SVA_OPERATION_TYPE = "SVA_OPERATION_TYPE"
+    const val TYPE  = "TYPE"
+    const val E_VOUCHER_TYPE = "EVOUCHER_TYPE"
+
+    //ADMIN TRANSACTIONS
+    const val FORMFACTOR = "FORMFACTOR"
 }

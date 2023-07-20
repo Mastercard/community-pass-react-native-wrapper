@@ -9,7 +9,7 @@ To help you connect to the Community Pass Kernel, our team created the Community
 ## 5.2 Pre-requisites
 
 1. Completed the sections 1, 2, 3 and 4 of this guide
-2. The React Native library, which is accessible via the [CP Assets](https://developer.mastercard.com/cp-kernel-integration-api/documentation/cp-assets/cp-assets-request/) Request. We will show you how to add the library to your project.
+2. The Community Pass Client Library, which is accessible via the [CP Assets](https://developer.mastercard.com/cp-kernel-integration-api/documentation/cp-assets/cp-assets-request/) Request. We will show you how to add the library to your project.
 
 ```
 NOTE: Please note that you will need to create a developer account and request access to the library file
@@ -21,20 +21,26 @@ The following are the steps required to set up your project with the Community P
 
 ## 5.3 Installation
 
-1. Locate the folder where you downloaded the library to. The library will have a name similar to the following example: `community-pass-react-native-wrapper-x.y.z.tgz`
-2. Open a terminal/command prompt and navigate to the root folder of your reliant application project. See example below:
+1. Download the Community Pass React Native Wrapper from the [releases](https://github.com/Mastercard/community-pass-react-native-wrapper/releases/) section  
+2. Locate the folder where you downloaded the library to. The library will have a name similar to the following example: `community-pass-react-native-wrapper-x.y.z.tgz`
+3. Open a terminal/command prompt and navigate to the root folder of your reliant application project. See example below:
 
 ```sh
 cd /path/TestApp
 ```
 
-3. From the root folder of your reliant applciation , run the following command to install the Community Pass React Native Wrapper
+4. From the root folder of your reliant applciation , run the following command to install the Community Pass React Native Wrapper
 
 ```sh
 npm install /path/community-pass-react-native-wrapper-x.y.z.tgz
 ```
+5. Add the Community Pass Client Library to your Wrapper by :
 
-4. Open `android/app/build.gradle` file of your reliant application and add the following line to your dependencies
+```sh
+cp /path/to/community-pass-library-v2.5.1.aar node_modules/community-pass-react-native-wrapper/android/libs/community-pass-library-v2.5.1.aar
+```
+
+6. Open `android/app/build.gradle` file of your reliant application and add the following line to your dependencies
 
 ```gradle
 dependencies {
@@ -47,7 +53,7 @@ dependencies {
 }
 ```
 
-5. In the same file `android/app/build.gradle` add the configurations block after your dependencies. See below:
+7. In the same file `android/app/build.gradle` add the configurations block after your dependencies. See below:
 
 ```gradle
 dependencies {
@@ -60,7 +66,7 @@ configurations {
 }
 ```
 
-6. In the file `android/build.gradle` bump your compileSdkVersion and targetSdkVersion to 33, and your minSdkVersion to 26
+8. In the file `android/build.gradle` bump your compileSdkVersion and targetSdkVersion to 33, and your minSdkVersion to 26
 
 ```gradle
 buildscript {
@@ -72,7 +78,7 @@ buildscript {
 }
 ```
 
-7.  A pop up notification will appear as given in the below image informing you that the Gradle files have changed. Click on Sync Now to synchronize the project with the Gradle files.
+9.  A pop up notification will appear as given in the below image informing you that the Gradle files have changed. Click on Sync Now to synchronize the project with the Gradle files.
 
 ![](/docs/assets/android-studio-popup.png)
 
