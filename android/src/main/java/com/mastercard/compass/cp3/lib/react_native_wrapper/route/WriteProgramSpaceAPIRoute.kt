@@ -19,7 +19,7 @@ class WriteProgramSpaceAPIRoute(
   companion object {
     val REQUEST_CODE_RANGE = 1000 until 1100
 
-    const val WRITE_PROGRAM_SPACE_REQUEST_CODE = 901
+    const val WRITE_PROGRAM_SPACE_REQUEST_CODE = 1000
     const val TAG = "WriteProgramSpaceAPIRoute"
   }
 

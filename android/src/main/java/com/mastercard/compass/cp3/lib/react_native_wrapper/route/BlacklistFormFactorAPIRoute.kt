@@ -17,7 +17,7 @@ import timber.log.Timber
 class BlacklistFormFactorAPIRoute(private val context: ReactApplicationContext, private val currentActivity: Activity?) {
   companion object {
     val REQUEST_CODE_RANGE = 1500 until 1600
-    const val GET_BLACKLIST_FORMFACTOR_REQUEST_CODE = 1500
+    const val GET_BLACKLIST_FORM_FACTOR_REQUEST_CODE = 1500
     private const val TAG = "BlacklistFormFactorAPIRoute"
   }
 
@@ -38,7 +38,7 @@ class BlacklistFormFactorAPIRoute(private val context: ReactApplicationContext, 
       putExtra(Key.FORMFACTOR, formFactor)
     }
 
-    currentActivity?.startActivityForResult(intent, GET_BLACKLIST_FORMFACTOR_REQUEST_CODE)
+    currentActivity?.startActivityForResult(intent, GET_BLACKLIST_FORM_FACTOR_REQUEST_CODE)
   }
 
   fun handleBlacklistFormFactorIntentResponse(

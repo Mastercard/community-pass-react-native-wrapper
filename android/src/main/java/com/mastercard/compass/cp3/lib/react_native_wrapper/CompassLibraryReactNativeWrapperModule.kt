@@ -59,6 +59,10 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   private val blacklistFormFactorAPIRoute by lazy {
     BlacklistFormFactorAPIRoute(reactContext, currentActivity)
   }
+
+  private val batchOperationsAPIRoute by lazy {
+    BatchOperationsAPIRoute(reactContext, currentActivity, helperObject)
+  }
   override fun getName(): String {
       return "CompassLibraryReactNativeWrapper"
   }
@@ -164,6 +168,12 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
     blacklistFormFactorAPIRoute.startBlacklistFormFactorIntent(blackListFormFactorParams)
   }
 
+  @ReactMethod
+  fun getBatchOperationsV1(batchOperationsV1Params: ReadableMap, promise: Promise){
+    this.promise = promise
+    batchOperationsAPIRoute.startBatchOperationsV1Intent(batchOperationsV1Params)
+  }
+
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
     when(requestCode){
       in BiometricConsentAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
@@ -180,6 +190,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       in ReadSvaAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in SVAOperationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in BlacklistFormFactorAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in BatchOperationsAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
     }
   }
 
@@ -206,7 +217,8 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       CreateSvaAPIRoute.GET_CREATE_SVA_REQUEST_CODE -> createSvaAPIRoute.handleGetCreateSvaIntentResponse(resultCode, data, promise)
       ReadSvaAPIRoute.GET_READ_SVA_REQUEST_CODE -> readSvaAPIRoute.handleGetReadSvaIntentResponse(resultCode, data, promise)
       SVAOperationAPIRoute.GET_SVA_OPERATION_REQUEST_CODE -> svaOperationAPIRoute.handleSvaOperationIntentResponse(resultCode, data, promise)
-      BlacklistFormFactorAPIRoute.GET_BLACKLIST_FORMFACTOR_REQUEST_CODE -> blacklistFormFactorAPIRoute.handleBlacklistFormFactorIntentResponse(resultCode, data, promise)
+      BlacklistFormFactorAPIRoute.GET_BLACKLIST_FORM_FACTOR_REQUEST_CODE -> blacklistFormFactorAPIRoute.handleBlacklistFormFactorIntentResponse(resultCode, data, promise)
+      BatchOperationsAPIRoute.BATCH_OPERATIONS_API_REQUEST_CODE -> batchOperationsAPIRoute.handleBatchOperationsV1IntentResponse(resultCode, data, promise)
     }
   }
 }
