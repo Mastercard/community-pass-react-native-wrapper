@@ -22,7 +22,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
-
 if (isNewArchitectureEnabled()) {
   apply plugin: 'com.facebook.react'
 }
