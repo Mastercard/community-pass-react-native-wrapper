@@ -1,0 +1,103 @@
+{
+  "registrationData": {
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "registrationData"
+  },
+  "basicRegistrationDifferentProgram": {
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "basicRegistrationDifferentProgram"
+  },
+  "consumerDeviceNumber": {
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "consumerDeviceNumber"
+  },
+  "updateCardProfile": {
+    "rid": "",
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "updateCardProfile"
+  },
+  "writePasscode": {
+    "rid": "",
+    "passcode": "123456",
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "writePasscode"
+  },
+  "verifyPasscode": {
+    "passcode": "123456",
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "verifyPasscode",
+    "shouldContinueOnVerificationFail": false
+  },
+  "writeProgramSpace": {
+    "rId": "",
+    "data": "",
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "writeProgramSpace"
+  },
+  "svaList": {
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "svaList"
+  },
+  "svaOperation": {
+    "svaOperation": {
+      "unit": "20",
+      "amount": 1,
+      "operationType": "DECREASE"
+    },
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "svaOperation"
+  },
+  "readSVA": {
+    "svaUnit": "20",
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "readSVA"
+  },
+  "createFinancialSva": {
+    "sva": {
+      "FinancialSVA": {
+        "unit": "21"
+      }
+    },
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "createFinancialSva"
+  },
+  "createEVoucherSva": {
+    "sva": {
+      "EVoucherSva": {
+        "unit": "20",
+        "eVoucherType": "COMMODITY"
+      }
+    },
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "createEVoucherSva"
+  },
+  "writeApplicationDataRecord": {
+    "appDataRecord": [
+      {
+        "index": 1,
+        "chunk": "",
+        "isShared": false
+      }
+    ],
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "writeApplicationDataRecord"
+  },
+  "readApplicationDataBlob": {
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "readApplicationDataBlob"
+  },
+  "writeApplicationDataBlob": {
+    "dataBlob": "",
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "writeApplicationDataBlob"
+  },
+  "readAppDataChunk": {
+    "indexes": [1, 2, 3, 4, 5],
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "readAppDataChunk"
+  },
+  "readProgramSpace": {
+    "programGUID": "8b00c113-6347-4b74-830f-268d267c04c1",
+    "name": "readProgramSpace"
+  }
+}

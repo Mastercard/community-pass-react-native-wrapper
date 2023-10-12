@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {
+  AuthType,
   ErrorResultType,
   getRegistrationData,
   RegistrationDataResultType,
@@ -25,7 +26,7 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleNextNavigation = (authMethods: Array<string>) => {
+  const handleNextNavigation = (response: RegistrationDataResultType) => {
     switch (navOptions) {
       case NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE:
         navigation.navigate(screens.WRITE_PROGRAM_SPACE, {
@@ -40,9 +41,10 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
         });
         return;
       case NAVIGATION_OPTIONS.AUTHENTICATE_USER:
-        if (authMethods.includes('BIO')) {
+        if (response.authMethods.includes(AuthType.BIO)) {
           navigation.navigate(screens.AUTHENTICATE_BIOMETRIC_USER, {
             rID: rID,
+            modalities: response.modalityType,
             navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_USER,
           });
         } else {
@@ -68,7 +70,7 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
         setRID(res.rID);
         setLoading(false);
         setReadCardError('');
-        handleNextNavigation(res.authMethods);
+        handleNextNavigation(res);
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));

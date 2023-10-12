@@ -23,6 +23,7 @@
     <activity android:name=".ui.ReadSVACompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
     <activity android:name=".ui.SVAOperationCompassApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
     <activity android:name=".ui.BlacklistFormFactorApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
+    <activity android:name=".ui.BatchOperationsApiHandlerActivity" android:theme="@style/Theme.Transparent"/>
   </application>
 
 </manifest>

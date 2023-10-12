@@ -15,6 +15,7 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.DATA
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.ERROR_CODE
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.ERROR_MESSAGE
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key.RELIANT_APP_GUID
+import com.mastercard.compass.kernel.client.service.KernelServiceConsumer
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
 import timber.log.Timber
 

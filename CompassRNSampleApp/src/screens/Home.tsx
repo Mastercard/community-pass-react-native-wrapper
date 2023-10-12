@@ -12,9 +12,51 @@ import {
   screenTitles,
   screens,
 } from '../assets/strings';
+// import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 import { themeColors } from '../assets/colors';
+// import {
+//   ErrorResultType,
+//   getBatchOperationsV1,
+// } from 'community-pass-react-native-wrapper';
+// import type { BatchOperationsV1ResultType } from 'lib/typescript';
 
 const Home = ({ navigation }: any) => {
+  // const [batchOperationsLoading, setBatchOperationsLoading] = useState(false);
+  // const [error, setError] = useState('');
+
+  // const handleBatchCardOperations = () => {
+  //   setBatchOperationsLoading(true);
+  //   getBatchOperationsV1({
+  //     reliantGUID: RELIANT_APP_GUID,
+  //     programGUID: PROGRAM_GUID,
+  //     listOfOperations: {
+  //       consumerDeviceNumber: {
+  //         programGUID: PROGRAM_GUID,
+  //         name: 'consumerDeviceNumber',
+  //       },
+  //       readProgramSpace: {
+  //         programGUID: PROGRAM_GUID,
+  //         name: 'readProgramSpace',
+  //       },
+  //       registrationData: {
+  //         programGUID: PROGRAM_GUID,
+  //         name: 'registrationData',
+  //       },
+  //     },
+  //   })
+  //     .then((res: BatchOperationsV1ResultType) => {
+  //       console.log(res.executedList);
+  //       console.log(res.skippedList);
+  //       setBatchOperationsLoading(false);
+  //       setError('');
+  //     })
+  //     .catch((e: ErrorResultType) => {
+  //       console.log(JSON.stringify(e, null, 2));
+  //       setError(e.message);
+  //       setBatchOperationsLoading(false);
+  //     });
+  // };
+
   const showToast = (message: string) => {
     ToastAndroid.show(
       `${message} ${genericErrorMessages.TOAST_MESSAGE_PLURAL}`,
@@ -49,6 +91,7 @@ const Home = ({ navigation }: any) => {
       <TouchableOpacity
         style={styles.card}
         onPress={() => showToast(screenTitles.ADMIN_TRANSACTIONS)}
+        // onPress={() => handleBatchCardOperations()}
       >
         <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
         <Text style={styles.cardTitle}>
