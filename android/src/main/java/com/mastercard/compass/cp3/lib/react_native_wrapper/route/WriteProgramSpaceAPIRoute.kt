@@ -19,7 +19,7 @@ class WriteProgramSpaceAPIRoute(
   companion object {
     val REQUEST_CODE_RANGE = 1000 until 1100
 
-    const val WRITE_PROGRAM_SPACE_REQUEST_CODE = 901
+    const val WRITE_PROGRAM_SPACE_REQUEST_CODE = 1000
     const val TAG = "WriteProgramSpaceAPIRoute"
   }
 
@@ -68,7 +68,7 @@ class WriteProgramSpaceAPIRoute(
       }
       Activity.RESULT_CANCELED -> {
         val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-        val message = data?.getStringExtra(Key.ERROR_MESSAGE)!!
+        val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: "Unknown error"
 
         Timber.e("Error $code Message $message")
         promise.reject(code, Throwable(message))

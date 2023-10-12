@@ -19,7 +19,7 @@ class WriteProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<Stri
     val reliantGUID: String = intent.getStringExtra(Key.RELIANT_APP_GUID)!!
     val rID: String = intent.getStringExtra(Key.RID)!!
     val programSpaceData: String = intent.getStringExtra(Key.PROGRAM_SPACE_DATA)!!
-    val encryptData: Boolean = intent.getBooleanExtra(Key.PROGRAM_SPACE_DATA, false)
+    val encryptData: Boolean = intent.getBooleanExtra(Key.ENCRYPT_DATA, false)
 
     val sharedSpaceApi = SharedSpaceApi(
       compassKernelServiceInstance,
@@ -49,7 +49,7 @@ class WriteProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<Stri
     }
 
     if(encryptData){
-        performSharedSpaceKeyExchange()
+      performSharedSpaceKeyExchange()
     }
 
     val response = getSharedSpaceValidate(programSpaceData)

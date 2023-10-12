@@ -1,3 +1,4 @@
+import type { BatchOperationsSchema } from 'CompassRNSampleApp/src/types/batchOperationDataTypes';
 import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
@@ -152,13 +153,13 @@ export function getCreateSVA({
   reliantGUID,
   programGUID,
   rID,
-  sva
+  sva,
 }: CreateSVAParamType) {
   return CompassLibraryReactNativeWrapper.getCreateSVA({
     reliantGUID,
     programGUID,
     rID,
-    sva
+    sva,
   });
 }
 
@@ -167,14 +168,14 @@ export function getBlacklistFormFactor({
   rID,
   reliantGUID,
   consumerDeviceNumber,
-  formFactor
+  formFactor,
 }: BlacklistFormFactorParamType) {
   return CompassLibraryReactNativeWrapper.getBlacklistFormFactor({
     programGUID,
     rID,
     reliantGUID,
     consumerDeviceNumber,
-    formFactor
+    formFactor,
   });
 }
 
@@ -182,13 +183,13 @@ export function getSVAOperation({
   reliantGUID,
   programGUID,
   rID,
-  svaOperation
+  svaOperation,
 }: SVAOperationParamType) {
   return CompassLibraryReactNativeWrapper.getSVAOperation({
     reliantGUID,
     programGUID,
     rID,
-    svaOperation
+    svaOperation,
   });
 }
 
@@ -196,13 +197,25 @@ export function getReadSVA({
   reliantGUID,
   programGUID,
   rID,
-  svaUnit
+  svaUnit,
 }: ReadSVAParamType) {
   return CompassLibraryReactNativeWrapper.getReadSVA({
     reliantGUID,
     programGUID,
     rID,
-    svaUnit
+    svaUnit,
+  });
+}
+
+export function getBatchOperationsV1({
+  reliantGUID,
+  programGUID,
+  listOfOperations,
+}: BatchOperationsV1ParamType) {
+  return CompassLibraryReactNativeWrapper.getBatchOperationsV1({
+    reliantGUID,
+    programGUID,
+    listOfOperations,
   });
 }
 
@@ -345,7 +358,7 @@ export enum Modality {
   RIGHT_PALM = 'RIGHT_PALM',
 }
 
-enum AuthType {
+export enum AuthType {
   NONE = 'NONE',
   CARD_PRESENT = 'CARD_PRESENT',
   PASSCODE = 'PASSCODE',
@@ -386,32 +399,33 @@ export interface BlacklistFormFactorParamType {
 
 export interface BlacklistFormFactorResultType {
   type: string;
+  status: FormFactorStatus;
   consumerDeviceNumber: string;
 }
 
 export interface CreateSVAResultType {
   response: string;
 }
-  
+
 export interface sva {
   value: FinancialSVA | EVoucherSVA;
 }
-  
+
 export enum SVA {
   FinancialSVA = 'FinancialSVA',
   EVoucherSVA = 'EVoucherSVA',
 }
-  
+
 export enum EVoucherType {
   COMMODITY = 'COMMODITY',
-  POINT = 'POINT', 
+  POINT = 'POINT',
 }
-  
+
 export interface FinancialSVA {
   type: SVA.FinancialSVA;
   unit: string;
 }
-  
+
 export interface EVoucherSVA {
   type: SVA.EVoucherSVA;
   unit: string;
@@ -423,7 +437,7 @@ export interface ReadSVAResultType {
   transactionCount: number;
   purseType: string;
   unit: string;
-  lastTransaction: Transaction
+  lastTransaction: Transaction;
 }
 
 export interface Transaction {
@@ -433,8 +447,8 @@ export interface Transaction {
 
 export enum SVAOperationType {
   DECREASE = 'DECREASE',
-  INCREASE = 'INCREASE', 
-  UPDATE = 'UPDATE'
+  INCREASE = 'INCREASE',
+  UPDATE = 'UPDATE',
 }
 
 export interface SVAOperation {
@@ -452,6 +466,19 @@ export interface SVAOperationParamType {
 
 export enum FormFactor {
   CARD = 'CARD',
-  QR = 'QR', 
-  NONE = 'NONE'
+  QR = 'QR',
+  NONE = 'NONE',
+}
+
+export enum FormFactorStatus {
+  ACTIVE = 'ACTIVE',
+  BLACKLISTED = 'BLACKLISTED',
+  UNKNOWN = 'UNKNOWN',
+  BLOCKED = 'BLOCKED',
+}
+
+export interface BatchOperationsV1ParamType {
+  reliantGUID: string;
+  programGUID: string;
+  listOfOperations: BatchOperationsSchema;
 }

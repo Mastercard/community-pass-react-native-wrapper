@@ -39,7 +39,7 @@ const WriteProgramSpace = ({ route, navigation }: any) => {
       programGUID: PROGRAM_GUID,
       rID: rID,
       programSpaceData: JSON.stringify(sharedSpaceData),
-      encryptData: true,
+      encryptData: false,
     })
       .then((res: WriteProgramSpaceResultType) => {
         setIsWriteProgramSpaceLoading(false);
