@@ -49,7 +49,7 @@ class WriteProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<Stri
     }
 
     if(encryptData){
-        performSharedSpaceKeyExchange()
+      performSharedSpaceKeyExchange()
     }
 
     val response = getSharedSpaceValidate(programSpaceData)

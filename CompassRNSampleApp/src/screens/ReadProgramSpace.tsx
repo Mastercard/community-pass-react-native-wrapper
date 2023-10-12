@@ -29,7 +29,7 @@ const ReadProgramSpace = ({ route, navigation }: any) => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
       rID: rID,
-      decryptData: true,
+      decryptData: false,
     })
       .then((res: ReadProgramSpaceResultType) => {
         setIsReadProgramSpaceLoading(false);
