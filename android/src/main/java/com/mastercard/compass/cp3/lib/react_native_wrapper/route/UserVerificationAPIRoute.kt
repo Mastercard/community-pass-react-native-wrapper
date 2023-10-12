@@ -24,7 +24,7 @@ class UserVerificationAPIRoute(private val context: ReactApplicationContext, pri
     val programGUID: String = userVerificationParams.getString("programGUID")!!
     val reliantGUID: String = userVerificationParams.getString("reliantGUID")!!
     val modalities: ReadableArray = userVerificationParams.getArray("modalities")!!
-
+    
     val intent = Intent(context, UserVerificationCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.PROGRAM_GUID, programGUID)
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)

@@ -35,19 +35,19 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
         res.status
           ? authenticatePasscodeUserStrings.MATCH_FOUND_ALERT_TITLE
           : authenticatePasscodeUserStrings.MATCH_NOT_FOUND_ALERT_TITLE,
-  
+
         res.status
           ? authenticatePasscodeUserStrings.ALERT_MATCH_FOUND_DESCRIPTION
           : authenticatePasscodeUserStrings.ALERT_MATCH_NOT_FOUND_DESCRIPTION,
-  
+
         [
           {
             text: authenticatePasscodeUserStrings.ALERT_ACCEPT_BUTTON,
             onPress: () => navigation.navigate(screens.HOME),
-            style: "default",
+            style: `default`,
           },
         ],
-  
+
         {
           cancelable: true,
           onDismiss: () => null,
@@ -80,7 +80,7 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
         setLoading(false);
         setCount(res.retryCount?.toString());
 
-        showAlert(res)
+        showAlert(res);
       })
       .catch((e: ErrorResultType) => {
         console.log(JSON.stringify(e, null, 2));

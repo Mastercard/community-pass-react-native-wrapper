@@ -1,6 +1,6 @@
 package com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util
 
-import com.google.gson.Gson
+import android.util.Log
 import com.mastercard.compass.base.ResponseStatus
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaData
 import com.mastercard.compass.kernel.client.schemavalidator.SchemaProcessor
@@ -41,23 +41,26 @@ class SharedSpaceApi(
 
   suspend fun validateEncryptData(input: String): SharedSpaceValidationEncryptionResponse {
     dataSchema = fetchDataSchemaResponse()
-    if(dataSchema?.responseStatus != ResponseStatus.SUCCESS){
-      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA, dataSchema?.message)
+
+    if(dataSchema.responseStatus != ResponseStatus.SUCCESS){
+      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA,
+        dataSchema.message
+      )
     }
-    if(dataSchema?.schemaConfig == null){
+    if(dataSchema.schemaConfig == null){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG)
     }
-    if(dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null){
+    if(dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null){
       return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED)
     }
 
-    val schemaValidationInput = when(dataSchema?.schemaConfig!!.isDataValidationRequired){
-      true -> SchemaValidationInput(jsonSchema = dataSchema?.schemaJson, jsonInput = input)
+    val schemaValidationInput = when(dataSchema.schemaConfig!!.isDataValidationRequired){
+      true -> SchemaValidationInput(jsonSchema = dataSchema.schemaJson, jsonInput = input)
       false -> SchemaValidationInput(jsonInput = input)
     }
 
     val schemaProcessor = SchemaProcessor.Builder(
-      schemaConfigurations = dataSchema!!.schemaConfig,
+      schemaConfigurations = dataSchema.schemaConfig,
       schemaValidationInput = schemaValidationInput,
       cryptoService = cryptoService,
       tokenService = integrityService
@@ -71,31 +74,33 @@ class SharedSpaceApi(
     }
   }
 
-  suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse) : SharedSpaceValidationDecryptionResponse{
-    if(dataSchema == null) dataSchema = fetchDataSchemaResponse()
+  suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse) : SharedSpaceValidationDecryptionResponse {
+    dataSchema = fetchDataSchemaResponse()
+    Timber.tag("ReadProgramSpaceAPIRoutesssss").d(dataSchema.toString())
 
     try {
-      if (dataSchema?.responseStatus != ResponseStatus.SUCCESS) {
+      if (dataSchema.responseStatus != ResponseStatus.SUCCESS) {
         return SharedSpaceValidationDecryptionResponse.Error(
           SharedSpaceValidationDecryptionError.ERROR_FETCHING_SCHEMA,
-          dataSchema?.message
+          dataSchema.message
         )
       }
       var data: String = integrityService.parseJWT(response.jwt)
       when {
-        dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
+        dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
           return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_DECRYPTION_SERVICE_REQUIRED)
         }
-        dataSchema?.schemaConfig?.isDataEncrypted == true -> {
+
+        dataSchema.schemaConfig?.isDataEncrypted == true -> {
           data = String(cryptoService!!.decrypt(data))
         }
       }
       Timber.tag(TAG).d("validateDecryptData: $data")
-      val sharedSpace = Gson().fromJson(data, SharedSpace::class.java)
-      return SharedSpaceValidationDecryptionResponse.Success(sharedSpace)
-    } catch (e: SignatureException){
+
+      return SharedSpaceValidationDecryptionResponse.Success(data)
+    } catch (e: SignatureException) {
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_SIGNATURE_VALIDATION_FAILED)
-    } catch (e: InvalidJWTException){
+    } catch (e: InvalidJWTException) {
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_INVALID_JWT)
     } catch (e: Exception) {
       Timber.tag(TAG).e(e, "validateDecryptData: process failed")
@@ -124,7 +129,7 @@ enum class SharedSpaceValidationEncryptionError {
 }
 
 sealed class SharedSpaceValidationDecryptionResponse {
-  data class Success(val data: SharedSpace): SharedSpaceValidationDecryptionResponse()
+  data class Success(val data: String): SharedSpaceValidationDecryptionResponse()
   data class Error(val error: SharedSpaceValidationDecryptionError, val message: String? = null): SharedSpaceValidationDecryptionResponse()
 }
 
