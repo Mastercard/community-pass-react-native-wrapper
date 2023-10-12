@@ -4,7 +4,6 @@ import {
   getUserVerification,
   ErrorResultType,
   UserVerificationResultType,
-  Modality,
 } from 'community-pass-react-native-wrapper';
 import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 
@@ -18,16 +17,19 @@ import { themeColors } from '../assets/colors';
 
 const { width: WIDTH } = Dimensions.get('screen');
 
-const AuthenticateBiometricUser = ({ navigation }: any) => {
+const AuthenticateBiometricUser = ({ route, navigation }: any) => {
+  const { modalities } = route?.params || {};
   const [readCardError, setReadCardError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  console.log('modalities', modalities);
 
   const handleVerifyBiometricUser = () => {
     setLoading(true);
     getUserVerification({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
-      modalities: [Modality.FACE, Modality.LEFT_PALM, Modality.RIGHT_PALM],
+      modalities: modalities,
     })
       .then((res: UserVerificationResultType) => {
         console.log(JSON.stringify(res, null, 2));
@@ -60,27 +62,29 @@ const AuthenticateBiometricUser = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <View style={styles.infoWrapper}>
-          <Text style={styles.title}>
-            {authenticateBiometricUserStrings.SCREEN_TITLE}
-          </Text>
-          <Text style={styles.description}>
-            {authenticateBiometricUserStrings.SCREEN_DESCRIPTION}
-          </Text>
+    <React.Fragment>
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <View style={styles.infoWrapper}>
+            <Text style={styles.title}>
+              {authenticateBiometricUserStrings.SCREEN_TITLE}
+            </Text>
+            <Text style={styles.description}>
+              {authenticateBiometricUserStrings.SCREEN_DESCRIPTION}
+            </Text>
+          </View>
+          <Text style={styles.error}>{readCardError}</Text>
+          <CustomButton
+            isLoading={loading}
+            onPress={handleVerifyBiometricUser}
+            label={buttonLabels.READ_CARD}
+            customStyles={styles.readProgramSpaceButton}
+            labelStyles={styles.readProgramSpaceButtonLabel}
+            indicatorColor={themeColors.white}
+          />
         </View>
-        <Text style={styles.error}>{readCardError}</Text>
-        <CustomButton
-          isLoading={loading}
-          onPress={handleVerifyBiometricUser}
-          label={buttonLabels.READ_CARD}
-          customStyles={styles.readProgramSpaceButton}
-          labelStyles={styles.readProgramSpaceButtonLabel}
-          indicatorColor={themeColors.white}
-        />
       </View>
-    </View>
+    </React.Fragment>
   );
 };
 

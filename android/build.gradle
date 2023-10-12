@@ -58,10 +58,12 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
   }
-
+  kotlinOptions{
+    jvmTarget  = "11"
+  }
 }
 
 repositories {
@@ -142,8 +144,8 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.android.support:appcompat-v7:28.0.0'
 
-  debugImplementation files('libs/community-pass-library-v2.5.1.aar')
-  releaseCompileOnly files('libs/community-pass-library-v2.5.1.aar')
+  debugImplementation files('libs/community-pass-library-v2.6.1.aar')
+  releaseCompileOnly files('libs/community-pass-library-v2.6.1.aar')
 
   //Logging
   implementation 'com.jakewharton.timber:timber:5.0.1'

@@ -358,7 +358,7 @@ export enum Modality {
   RIGHT_PALM = 'RIGHT_PALM',
 }
 
-enum AuthType {
+export enum AuthType {
   NONE = 'NONE',
   CARD_PRESENT = 'CARD_PRESENT',
   PASSCODE = 'PASSCODE',
