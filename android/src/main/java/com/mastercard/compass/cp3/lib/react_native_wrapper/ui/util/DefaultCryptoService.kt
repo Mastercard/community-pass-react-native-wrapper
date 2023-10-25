@@ -42,6 +42,8 @@ class DefaultCryptoService(private val helper: CompassKernelUIController.Compass
         }
         resultBytes += cache
       }
+      Log.d("RNProgramSpaceDataSize", "Original JSON size: ${data.size} bytes")
+      Log.d("RNProgramSpaceDataSize", "Encrypted JSON size: ${resultBytes.size} bytes")
       return resultBytes
     } catch (e: InvalidKeyException){
       Log.e(TAG, "cipherOperations: Public Key passed does not match algorithm or parameters required for the operation", e)

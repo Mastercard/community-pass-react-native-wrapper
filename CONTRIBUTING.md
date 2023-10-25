@@ -148,6 +148,12 @@ npx react-native run-android
 
 > While developing, you can run the [CompassRNSampleApp](/CompassRNSampleApp/) to test your changes. Any changes you make in your library's JavaScript code will be reflected in the CompassRNSampleApp without a rebuild. If you change any native code, then you'll need to rebuild the CompassRNSampleAppp.
 
+5. After you are done making changes, run the following command to
+
+```sh
+npm pack
+```
+
 ## 5 Quality Expectations
 
 Please ensure any contributions include unit tests. The project maintains a high level of test coverage for its functionality. Submissions are expected to maintain a similar level of coverage.
