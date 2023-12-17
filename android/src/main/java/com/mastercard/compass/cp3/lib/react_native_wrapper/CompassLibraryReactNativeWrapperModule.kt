@@ -61,7 +61,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
 
   private val batchOperationsAPIRoute by lazy {
-    BatchOperationsAPIRoute(reactContext, currentActivity, helperObject)
+    BatchOperationsAPIRoute(reactContext, currentActivity, helperObject, defaultCryptoService)
   }
   override fun getName(): String {
       return "CompassLibraryReactNativeWrapper"

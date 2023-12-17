@@ -309,7 +309,7 @@ const ProgramSpaceDataDetails = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     paddingHorizontal: 10,
     alignItems: 'center',
     backgroundColor: themeColors.white,

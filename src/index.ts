@@ -210,11 +210,13 @@ export function getBatchOperationsV1({
   reliantGUID,
   programGUID,
   listOfOperations,
+  shouldContinueOnError,
 }: BatchOperationsV1ParamType) {
   return CompassLibraryReactNativeWrapper.getBatchOperationsV1({
     reliantGUID,
     programGUID,
     listOfOperations,
+    shouldContinueOnError,
   });
 }
 
@@ -479,32 +481,65 @@ export enum FormFactorStatus {
 export interface BatchOperationsV1ParamType {
   reliantGUID: string;
   programGUID: string;
-  listOfOperations: BatchOperationsSchema;
+  listOfOperations: BatchOperationsRequestSchema;
+  shouldContinueOnError: boolean;
 }
 
-export interface BatchOperationsSchema {
-  registrationData?: BasicRegistrationDifferentProgram;
-  basicRegistrationDifferentProgram?: BasicRegistrationDifferentProgram;
-  consumerDeviceNumber?: BasicRegistrationDifferentProgram;
+export interface BatchOperationsV1ResultType {
+  executedList: BatchOperationsResponseSchema[];
+  skippedList: BatchOperationsResponseSchema[];
+  abortedList: BatchOperationsResponseSchema[];
+}
+
+export interface BatchOperationsResponseSchema {
+  registrationData?: RegistrationDataResultType;
+  writePasscode?: WritePasscodeResultType;
+  readProgramSpace?: ReadProgramSpaceResultType;
+  verifyPasscode?: VerifyPasscodeResultType;
+  writeProgramSpace?: WriteProgramSpaceResultType;
+  basicRegistrationDifferentProgram?: any;
+  consumerDeviceNumber?: any;
+  updateCardProfile?: any;
+  svaList?: any;
+  svaOperation?: any;
+  readSVA?: any;
+  createFinancialSva?: any;
+  createEVoucherSva?: any;
+  writeApplicationDataRecord?: any;
+  readApplicationDataBlob?: any;
+  writeApplicationDataBlob?: any;
+  readAppDataChunk?: any;
+}
+
+export interface BatchOperationsRequestSchema {
+  basicRegistrationDifferentProgram?: BasicBatchOperation;
   updateCardProfile?: UpdateCardProfile;
   writePasscode?: UpdateCardProfile;
   verifyPasscode?: VerifyPasscode;
-  writeProgramSpace?: WriteProgramSpace;
-  svaList?: BasicRegistrationDifferentProgram;
-  svaOperation?: PokedexSvaOperation;
-  readSVA?: ReadSVA;
+  svaOperation?: SvaOperation;
+  writeApplicationDataBlob?: WriteApplicationDataBlob;
+  writeApplicationDataRecord?: WriteApplicationDataRecord;
   createFinancialSva?: CreateFinancialSva;
   createEVoucherSva?: CreateEVoucherSva;
-  writeApplicationDataRecord?: WriteApplicationDataRecord;
-  readApplicationDataBlob?: BasicRegistrationDifferentProgram;
-  writeApplicationDataBlob?: WriteApplicationDataBlob;
+  writeProgramSpace?: WriteProgramSpace;
+  consumerDeviceNumber?: BasicBatchOperation;
+  registrationData?: BasicBatchOperation;
+  readApplicationDataBlob?: BasicBatchOperation;
   readAppDataChunk?: ReadAppDataChunk;
-  readProgramSpace?: BasicRegistrationDifferentProgram;
+  readSVA?: ReadSVA;
+  svaList?: BasicBatchOperation;
+  readProgramSpace?: BacthCardReadProgramSpace;
 }
 
-export interface BasicRegistrationDifferentProgram {
+export interface BasicBatchOperation {
   programGUID: string;
   name: string;
+}
+
+export interface BacthCardReadProgramSpace {
+  programGUID: string;
+  name: string;
+  decryptData: boolean;
 }
 
 export interface CreateEVoucherSva {
@@ -548,7 +583,7 @@ export interface ReadSVA {
   name: string;
 }
 
-export interface PokedexSvaOperation {
+export interface SvaOperation {
   svaOperation: SvaOperationSvaOperation;
   programGUID: string;
   name: string;

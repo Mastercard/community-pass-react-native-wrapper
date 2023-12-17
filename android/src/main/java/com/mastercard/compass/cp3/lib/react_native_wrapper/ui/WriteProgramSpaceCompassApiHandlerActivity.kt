@@ -36,8 +36,7 @@ class WriteProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<Stri
 
     suspend fun performSharedSpaceKeyExchange() = withContext(Dispatchers.IO) {
       val keyPair = helper.getSharedSpaceKeyPair()
-      val keyExchangeResponse =
-        sharedSpaceApi.performKeyExchange(helper.getInstanceId()!!, keyPair.public)
+      val keyExchangeResponse = sharedSpaceApi.performKeyExchange(helper.getInstanceId()!!, keyPair.public)
       when (keyExchangeResponse.kernelEncPublicKey == null) {
         true -> Timber.tag(TAG).e(keyExchangeResponse.errorCode.toString())
         false -> helper.saveKernelSharedSpaceKey(keyExchangeResponse.kernelEncPublicKey!!)
@@ -67,12 +66,12 @@ class WriteProgramSpaceCompassApiHandlerActivity: CompassApiHandlerActivity<Stri
 
       compassApiActivityResult.launch(intent)
     } else if (response is SharedSpaceValidationEncryptionResponse.Error) {
-      val errorMessage = when (response.error) {
-        SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA -> "Error fetching schema"
-        SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG -> "Error empty schema"
-        SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED -> "Error encryption service required"
-        SharedSpaceValidationEncryptionError.SCHEMA_PROCESSOR_ERROR -> "Error schema processor"
-      }
+        val errorMessage = when (response.error) {
+          SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA -> "Error fetching schema"
+          SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG -> "Error empty schema"
+          SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED -> "Error encryption service required"
+          SharedSpaceValidationEncryptionError.SCHEMA_PROCESSOR_ERROR -> "Error schema processor"
+        }
       Timber.tag(TAG).e(errorMessage)
       val intent = Intent().apply {
         putExtra(Key.ERROR_CODE, response.error ?: ErrorCode.UNKNOWN)

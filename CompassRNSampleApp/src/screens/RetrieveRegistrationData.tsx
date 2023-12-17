@@ -22,7 +22,6 @@ const { width: WIDTH } = Dimensions.get('screen');
 const RetrieveRegistrationData = ({ route, navigation }: any) => {
   const { navOptions } = route?.params || {};
   const [readCardError, setReadCardError] = useState('');
-  const [rID, setRID] = useState('');
 
   const [loading, setLoading] = useState(false);
 
@@ -30,26 +29,26 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
     switch (navOptions) {
       case NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE:
         navigation.navigate(screens.WRITE_PROGRAM_SPACE, {
-          rID: rID,
+          rID: response.rID,
           navOptions: NAVIGATION_OPTIONS.WRITE_PROGRAM_SPACE,
         });
         return;
       case NAVIGATION_OPTIONS.READ_PROGRAM_SPACE:
         navigation.navigate(screens.READ_PROGRAM_SPACE, {
-          rID: rID,
+          rID: response.rID,
           navOptions: NAVIGATION_OPTIONS.READ_PROGRAM_SPACE,
         });
         return;
       case NAVIGATION_OPTIONS.AUTHENTICATE_USER:
         if (response.authMethods.includes(AuthType.BIO)) {
           navigation.navigate(screens.AUTHENTICATE_BIOMETRIC_USER, {
-            rID: rID,
+            rID: response.rID,
             modalities: response.modalityType,
             navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_USER,
           });
         } else {
           navigation.navigate(screens.AUTHENICATE_PASSCODE_USER, {
-            rID: rID,
+            rID: response.rID,
             navOptions: NAVIGATION_OPTIONS.AUTHENTICATE_USER,
           });
         }
@@ -67,7 +66,6 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
     })
       .then((res: RegistrationDataResultType) => {
         console.log(JSON.stringify(res, null, 2));
-        setRID(res.rID);
         setLoading(false);
         setReadCardError('');
         handleNextNavigation(res);
@@ -107,7 +105,7 @@ const RetrieveRegistrationData = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     padding: 20,
     backgroundColor: themeColors.white,
   },
