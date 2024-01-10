@@ -49,7 +49,7 @@ const WriteSuccessful = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     padding: 20,
     backgroundColor: themeColors.white,
   },
@@ -71,8 +71,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   card: {
+    width: '100%',
+    maxWidth: WIDTH,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 20,
   },
   label: {
     fontWeight: '600',
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
   },
   value: {
     color: themeColors.black,
-    fontSize: 16,
+    fontSize: 13,
   },
   title: {
     fontSize: 20,

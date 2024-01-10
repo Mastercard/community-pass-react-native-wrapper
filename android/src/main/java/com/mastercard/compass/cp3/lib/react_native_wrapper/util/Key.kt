@@ -12,6 +12,7 @@ object Key {
     const val OVERWRITE_CARD = "OVERWRITE_CARD"
     const val PROGRAM_SPACE_DATA = "PROGRAM_SPACE_DATA"
     const val ENCRYPT_DATA = "ENCRYPT_DATA"
+    const val CACHE_HASHES_IF_IDENTIFIED = "CACHE_HASHES_IF_IDENTIFIED"
 
     // API RESPONSES
     const val DATA = "DATA"

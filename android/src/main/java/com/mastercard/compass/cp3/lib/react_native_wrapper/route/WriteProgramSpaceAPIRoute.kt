@@ -32,10 +32,11 @@ class WriteProgramSpaceAPIRoute(
     val jsonData: String = writeProgramSpaceParams.getString("programSpaceData")!!
     val encryptData: Boolean = writeProgramSpaceParams.getBoolean("encryptData")
 
-    Timber.d("reliantGUID: $reliantGUID")
-    Timber.d("programGUID: $programGUID")
-    Timber.d("rID: $rID")
-    Timber.tag(TAG).d(encryptData.toString())
+    Timber.tag(TAG).d("reliantGUID: $reliantGUID")
+    Timber.tag(TAG).d("programGUID: $programGUID")
+    Timber.tag(TAG).d("rID: $rID")
+    Timber.tag(TAG).d("programSpaceData: $jsonData")
+    Timber.tag(TAG).d("encryptData: $encryptData")
 
     val intent = Intent(context, WriteProgramSpaceCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)
@@ -63,7 +64,7 @@ class WriteProgramSpaceAPIRoute(
           resultMap.putBoolean("isSuccess", true)
           promise.resolve(resultMap);
         } else {
-          promise.reject(ErrorCode.UNKNOWN.toString(), Throwable("Unknown error" ));
+          promise.reject(response.errorCode.toString(), Throwable("Unknown error" ));
         }
       }
       Activity.RESULT_CANCELED -> {

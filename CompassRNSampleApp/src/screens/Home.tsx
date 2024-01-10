@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
+  ScrollView,
 } from 'react-native';
 import {
   genericErrorMessages,
@@ -12,24 +13,28 @@ import {
   screenTitles,
   screens,
 } from '../assets/strings';
-// import { PROGRAM_GUID, RELIANT_APP_GUID } from '@env';
 import { themeColors } from '../assets/colors';
-// import {
-//   ErrorResultType,
-//   getBatchOperationsV1,
-// } from 'community-pass-react-native-wrapper';
-// import type { BatchOperationsV1ResultType } from 'lib/typescript';
 
 const Home = ({ navigation }: any) => {
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const [batchOperationsLoading, setBatchOperationsLoading] = useState(false);
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const [error, setError] = useState('');
 
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const handleBatchCardOperations = () => {
   //   setBatchOperationsLoading(true);
   //   getBatchOperationsV1({
   //     reliantGUID: RELIANT_APP_GUID,
   //     programGUID: PROGRAM_GUID,
+  //     shouldContinueOnError: true,
   //     listOfOperations: {
+  //       verifyPasscode: {
+  //         programGUID: PROGRAM_GUID,
+  //         passcode: '123456',
+  //         name: 'verifyPasscode',
+  //         shouldContinueOnVerificationFail: false,
+  //       },
   //       consumerDeviceNumber: {
   //         programGUID: PROGRAM_GUID,
   //         name: 'consumerDeviceNumber',
@@ -37,16 +42,43 @@ const Home = ({ navigation }: any) => {
   //       readProgramSpace: {
   //         programGUID: PROGRAM_GUID,
   //         name: 'readProgramSpace',
-  //       },
-  //       registrationData: {
-  //         programGUID: PROGRAM_GUID,
-  //         name: 'registrationData',
+  //         decryptData: true,
   //       },
   //     },
   //   })
   //     .then((res: BatchOperationsV1ResultType) => {
-  //       console.log(res.executedList);
-  //       console.log(res.skippedList);
+  //       res.executedList?.map((operation) => {
+  //         if (operation?.hasOwnProperty('readProgramSpace')) {
+  //           console.log(
+  //             JSON.parse(
+  //               operation.readProgramSpace?.programSpaceData ?? 'undefined'
+  //             ) as SharedSpaceDataSchema
+  //           );
+  //         } else if (operation?.hasOwnProperty('consumerDeviceNumber')) {
+  //           console.log(operation?.consumerDeviceNumber);
+  //         } else if (operation?.hasOwnProperty('registrationData')) {
+  //           console.log(operation?.registrationData);
+  //         } else if (operation?.hasOwnProperty('verifyPasscode')) {
+  //           console.log(operation?.verifyPasscode);
+  //         }
+  //       });
+
+  //       res.skippedList?.map((operation) => {
+  //         if (operation?.hasOwnProperty('readProgramSpace')) {
+  //         } else if (operation?.hasOwnProperty('consumerDeviceNumber')) {
+  //         } else if (operation?.hasOwnProperty('registrationData')) {
+  //         }
+  //       });
+  //       res.abortedList?.map((operation) => {
+  //         if (operation?.hasOwnProperty('readProgramSpace')) {
+  //           // console.log('Aborted List: ', res.abortedList);
+  //         } else if (operation?.hasOwnProperty('consumerDeviceNumber')) {
+  //           // console.log('Aborted List: ', res.abortedList);
+  //         } else if (operation?.hasOwnProperty('registrationData')) {
+  //           // console.log('Aborted List: ', res.abortedList);
+  //         }
+  //       });
+
   //       setBatchOperationsLoading(false);
   //       setError('');
   //     })
@@ -65,7 +97,7 @@ const Home = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TouchableOpacity
         style={styles.card}
         onPress={() => navigation.navigate(screens.PRE_TRANSACTIONS)}
@@ -91,7 +123,6 @@ const Home = ({ navigation }: any) => {
       <TouchableOpacity
         style={styles.card}
         onPress={() => showToast(screenTitles.ADMIN_TRANSACTIONS)}
-        // onPress={() => handleBatchCardOperations()}
       >
         <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
         <Text style={styles.cardTitle}>
@@ -101,7 +132,8 @@ const Home = ({ navigation }: any) => {
           {homeScreenStrings.ADMIN_TRANSACTTIONS_DESCRIPTION}
         </Text>
       </TouchableOpacity>
-    </View>
+      <View style={styles.bottomPadding} />
+    </ScrollView>
   );
 };
 
@@ -132,6 +164,9 @@ const styles = StyleSheet.create({
     color: themeColors.darkGray,
     marginBottom: 10,
     fontSize: 14,
+  },
+  bottomPadding: {
+    height: 15,
   },
 });
 

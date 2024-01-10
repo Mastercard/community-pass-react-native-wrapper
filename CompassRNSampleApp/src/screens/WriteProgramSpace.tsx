@@ -21,7 +21,7 @@ const { width: WIDTH } = Dimensions.get('screen');
 const sharedSpaceData: SharedSpaceDataSchema = data;
 
 const WriteProgramSpace = ({ route, navigation }: any) => {
-  const { rID } = route?.params || {};
+  const { rID: sharedRID } = route?.params || {};
   const [readCardError, setWriteCardError] = useState('');
   const [isWriteProgramSpaceLoading, setIsWriteProgramSpaceLoading] =
     useState(false);
@@ -37,9 +37,9 @@ const WriteProgramSpace = ({ route, navigation }: any) => {
     getWriteProgramSpace({
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
-      rID: rID,
+      rID: sharedRID,
       programSpaceData: JSON.stringify(sharedSpaceData),
-      encryptData: false,
+      encryptData: true,
     })
       .then((res: WriteProgramSpaceResultType) => {
         setIsWriteProgramSpaceLoading(false);
@@ -96,7 +96,7 @@ const WriteProgramSpace = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     padding: 20,
     backgroundColor: themeColors.white,
   },

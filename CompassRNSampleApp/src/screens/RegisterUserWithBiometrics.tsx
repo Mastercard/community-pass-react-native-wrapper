@@ -112,7 +112,7 @@ const RegisterUserWithBiometrics = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     padding: 20,
     backgroundColor: themeColors.white,
   },
