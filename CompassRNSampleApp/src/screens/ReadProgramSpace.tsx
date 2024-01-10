@@ -29,12 +29,12 @@ const ReadProgramSpace = ({ route, navigation }: any) => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
       rID: rID,
-      decryptData: false,
+      decryptData: true,
     })
       .then((res: ReadProgramSpaceResultType) => {
         setIsReadProgramSpaceLoading(false);
         setReadCardError('');
-        console.log(JSON.parse(res.programSpaceData));
+        console.log(res.programSpaceData);
         navigation.navigate(screens.PROGRAM_SPACE_DATA_DETAILS, {
           programSpaceData: res.programSpaceData,
         });

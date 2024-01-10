@@ -24,11 +24,6 @@ class ConsumerDeviceAPIRoute(private val context: ReactApplicationContext, priva
       val rID: String = writeProfileParams.getString("rID")!!
       val overwriteCard = writeProfileParams.getBoolean("overwriteCard")
 
-      // Log
-      Timber.d("reliantGUID: {$reliantGUID}")
-      Timber.d("programGUID: {$programGUID}")
-      Timber.d("rID: {$rID}")
-      Timber.d("overwriteCard: {$overwriteCard}")
       val intent = Intent(context, WriteProfileCompassApiHandlerActivity::class.java).apply {
           putExtra(Key.RELIANT_APP_GUID, reliantGUID)
           putExtra(Key.PROGRAM_GUID, programGUID)
@@ -56,7 +51,7 @@ class ConsumerDeviceAPIRoute(private val context: ReactApplicationContext, priva
         }
         Activity.RESULT_CANCELED -> {
           val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-          val message = data?.getStringExtra(Key.ERROR_MESSAGE)!!
+          val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: "Something went wrong."
           Timber.e("Error $code Message $message")
           promise.reject(code, Throwable(message))
         }

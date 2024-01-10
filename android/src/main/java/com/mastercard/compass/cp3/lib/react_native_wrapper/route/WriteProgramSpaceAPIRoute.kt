@@ -64,7 +64,7 @@ class WriteProgramSpaceAPIRoute(
           resultMap.putBoolean("isSuccess", true)
           promise.resolve(resultMap);
         } else {
-          promise.reject(ErrorCode.UNKNOWN.toString(), Throwable("Unknown error" ));
+          promise.reject(response.errorCode.toString(), Throwable("Unknown error" ));
         }
       }
       Activity.RESULT_CANCELED -> {

@@ -148,6 +148,22 @@ export function getUserVerification({
   });
 }
 
+export function getUserIdentification({
+  reliantGUID,
+  programGUID,
+  modalities,
+  formFactor,
+  cacheHashesIfIdentified,
+}: UserIdentificationParamType) {
+  return CompassLibraryReactNativeWrapper.getUserIdentification({
+    reliantGUID,
+    programGUID,
+    modalities,
+    formFactor,
+    cacheHashesIfIdentified,
+  });
+}
+
 export function getCreateSVA({
   reliantGUID,
   programGUID,
@@ -235,6 +251,14 @@ export interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
   modalities: Modality[];
+}
+
+export interface UserIdentificationParamType {
+  reliantGUID: string;
+  programGUID: string;
+  modalities: Modality[];
+  formFactor: FormFactor;
+  cacheHashesIfIdentified: boolean;
 }
 
 export interface SaveBiometricConsentParamType {

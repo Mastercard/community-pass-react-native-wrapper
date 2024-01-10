@@ -25,11 +25,6 @@ class ConsumerDevicePasscodeAPIRoute(private val context: ReactApplicationContex
       val rID: String = writePasscodeParams.getString("rID")!!
       val passcode: String = writePasscodeParams.getString("passcode")!!
 
-      // Log
-      Timber.d("reliantGUID: {$reliantGUID}")
-      Timber.d("programGUID: {$programGUID}")
-      Timber.d("rID: {$rID}")
-      Timber.d("passcode: {$passcode}")
       val intent = Intent(context, WritePasscodeCompassApiHandlerActivity::class.java).apply {
           putExtra(Key.RELIANT_APP_GUID, reliantGUID)
           putExtra(Key.PROGRAM_GUID, programGUID)
@@ -57,7 +52,7 @@ class ConsumerDevicePasscodeAPIRoute(private val context: ReactApplicationContex
         }
         Activity.RESULT_CANCELED -> {
           val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-          val message = data?.getStringExtra(Key.ERROR_MESSAGE)!!
+          val message = data?.getStringExtra(Key.ERROR_MESSAGE) ?: "Something went wrong"
           Timber.e("Error $code Message $message")
           promise.reject(code, Throwable(message))
         }

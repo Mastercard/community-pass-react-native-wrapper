@@ -123,7 +123,6 @@ const Home = ({ navigation }: any) => {
       <TouchableOpacity
         style={styles.card}
         onPress={() => showToast(screenTitles.ADMIN_TRANSACTIONS)}
-        // onPress={() => handleBatchCardOperations()}
       >
         <Text style={styles.sectionLabel}>{homeScreenStrings.SECTION}</Text>
         <Text style={styles.cardTitle}>

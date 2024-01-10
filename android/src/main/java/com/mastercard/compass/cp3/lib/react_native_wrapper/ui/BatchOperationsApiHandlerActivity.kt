@@ -10,7 +10,6 @@ class BatchOperationsApiHandlerActivity: CompassApiHandlerActivity<String>() {
   @RequiresApi(Build.VERSION_CODES.TIRAMISU)
   override suspend fun callCompassApi() {
     val reliantGUID: String = intent.getStringExtra(Key.RELIANT_APP_GUID)!!
-    val programGUID: String = intent.getStringExtra(Key.PROGRAM_GUID)!!
     val listOfOperations: ArrayList<OperationsV1>  = intent.extras!!.get(Key.LIST_OF_OPERATIONS)  as ArrayList<OperationsV1>
     val shouldContinueOnError: Boolean =  intent.getBooleanExtra(Key.SHOULD_CONTINUE_ON_ERROR, false)
 

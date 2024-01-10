@@ -207,7 +207,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "updateCardProfile") {
+      }
+
+      if (it.key == "updateCardProfile") {
         val requestData = GsonUtils.fromJson(it.value.toString(), UpdateCardProfileBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.UpdateCardProfile(
@@ -216,7 +218,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "writePasscode") {
+      }
+
+      if (it.key == "writePasscode") {
         val requestData = GsonUtils.fromJson(it.value.toString(), WritePasscodeBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.WritePasscode(
@@ -226,7 +230,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "verifyPasscode") {
+      }
+
+      if (it.key == "verifyPasscode") {
         val requestData = GsonUtils.fromJson(it.value.toString(), VerifyPasscodeBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.VerifyPasscode(
@@ -235,7 +241,9 @@ class BatchOperationsAPIRoute(
             shouldContinueOnVerificationFail = requestData.shouldContinueOnVerificationFail
           )
         )
-      } else if (it.key == "svaOperation") {
+      }
+
+      if (it.key == "svaOperation") {
         val requestData = GsonUtils.fromJson(it.value.toString(), SvaOperationBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.SvaOperation(
@@ -244,7 +252,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "writeApplicationDataBlob") {
+      }
+
+      if (it.key == "writeApplicationDataBlob") {
         val requestData = GsonUtils.fromJson(it.value.toString(), WriteApplicationDataBlobBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.WriteApplicationDataBlob(
@@ -253,7 +263,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "writeApplicationDataRecord") {
+      }
+
+      if (it.key == "writeApplicationDataRecord") {
         val requestData = GsonUtils.fromJson(it.value.toString(), WriteApplicationDataRecordBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.WriteApplicationDataRecord(
@@ -262,7 +274,9 @@ class BatchOperationsAPIRoute(
             ), programGUID = requestData.programGUID, name = requestData.name
           )
         )
-      } else if (it.key == "createFinancialSva") {
+      }
+
+      if (it.key == "createFinancialSva") {
         val requestData = GsonUtils.fromJson(it.value.toString(), CreateFinancialSvaBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.CreateFinancialSva(
@@ -271,7 +285,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "createEVoucherSva") {
+      }
+
+      if (it.key == "createEVoucherSva") {
         val requestData = GsonUtils.fromJson(it.value.toString(), CreateEVoucherSvaBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.CreateEVoucherSva(
@@ -280,7 +296,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "writeProgramSpace") {
+      }
+
+      if (it.key == "writeProgramSpace") {
         val requestData = GsonUtils.fromJson(it.value.toString(), WriteProgramSpaceBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.WriteProgramSpace(
@@ -290,7 +308,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "consumerDeviceNumber") {
+      }
+
+      if (it.key == "consumerDeviceNumber") {
         val requestData = GsonUtils.fromJson(it.value.toString(), ConsumerDeviceNumberBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.ConsumerDeviceNumber(
@@ -298,7 +318,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "registrationData") {
+      }
+
+      if (it.key == "registrationData") {
         val requestData = GsonUtils.fromJson(it.value.toString(), RegistrationDataBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.RegistrationData(
@@ -306,7 +328,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "readApplicationDataBlob") {
+      }
+
+      if (it.key == "readApplicationDataBlob") {
         val requestData =  GsonUtils.fromJson(it.value.toString(), ReadApplicationDataBlobBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.ReadApplicationDataBlob(
@@ -314,7 +338,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "readAppDataChunk") {
+      }
+
+      if (it.key == "readAppDataChunk") {
         val requestData = GsonUtils.fromJson(it.value.toString(), ReadAppDataChunkBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.ReadAppDataChunk(
@@ -323,7 +349,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "readSVA") {
+      }
+
+      if (it.key == "readSVA") {
         val requestData = GsonUtils.fromJson(it.value.toString(), ReadSVABatchOperation::class.java)
         operationList.add(
           element = OperationsV1.ReadSVA(
@@ -332,7 +360,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "svaList") {
+      }
+
+      if (it.key == "svaList") {
         val requestData = GsonUtils.fromJson(it.value.toString(), SvaListBatchOperation::class.java)
         operationList.add(
           element = OperationsV1.SvaList(
@@ -340,7 +370,9 @@ class BatchOperationsAPIRoute(
             name = requestData.name
           )
         )
-      } else if (it.key == "readProgramSpace") {
+      }
+
+      if (it.key == "readProgramSpace") {
         val requestData = GsonUtils.fromJson(it.value.toString(), ReadProgramSpaceBatchOperation::class.java)
         decryptProgramSpaceData = requestData.decryptData
         operationList.add(
