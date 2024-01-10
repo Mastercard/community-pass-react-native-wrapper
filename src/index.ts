@@ -1,4 +1,3 @@
-import type { BatchOperationsSchema } from 'CompassRNSampleApp/src/types/batchOperationDataTypes';
 import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
@@ -149,6 +148,22 @@ export function getUserVerification({
   });
 }
 
+export function getUserIdentification({
+  reliantGUID,
+  programGUID,
+  modalities,
+  formFactor,
+  cacheHashesIfIdentified,
+}: UserIdentificationParamType) {
+  return CompassLibraryReactNativeWrapper.getUserIdentification({
+    reliantGUID,
+    programGUID,
+    modalities,
+    formFactor,
+    cacheHashesIfIdentified,
+  });
+}
+
 export function getCreateSVA({
   reliantGUID,
   programGUID,
@@ -211,11 +226,13 @@ export function getBatchOperationsV1({
   reliantGUID,
   programGUID,
   listOfOperations,
+  shouldContinueOnError,
 }: BatchOperationsV1ParamType) {
   return CompassLibraryReactNativeWrapper.getBatchOperationsV1({
     reliantGUID,
     programGUID,
     listOfOperations,
+    shouldContinueOnError,
   });
 }
 
@@ -234,6 +251,14 @@ export interface UserVerificationParamType {
   reliantGUID: string;
   programGUID: string;
   modalities: Modality[];
+}
+
+export interface UserIdentificationParamType {
+  reliantGUID: string;
+  programGUID: string;
+  modalities: Modality[];
+  formFactor: FormFactor;
+  cacheHashesIfIdentified: boolean;
 }
 
 export interface SaveBiometricConsentParamType {
@@ -480,5 +505,155 @@ export enum FormFactorStatus {
 export interface BatchOperationsV1ParamType {
   reliantGUID: string;
   programGUID: string;
-  listOfOperations: BatchOperationsSchema;
+  listOfOperations: BatchOperationsRequestSchema;
+  shouldContinueOnError: boolean;
+}
+
+export interface BatchOperationsV1ResultType {
+  executedList: BatchOperationsResponseSchema[];
+  skippedList: BatchOperationsResponseSchema[];
+  abortedList: BatchOperationsResponseSchema[];
+}
+
+export interface BatchOperationsResponseSchema {
+  registrationData?: RegistrationDataResultType;
+  writePasscode?: WritePasscodeResultType;
+  readProgramSpace?: ReadProgramSpaceResultType;
+  verifyPasscode?: VerifyPasscodeResultType;
+  writeProgramSpace?: WriteProgramSpaceResultType;
+  basicRegistrationDifferentProgram?: any;
+  consumerDeviceNumber?: any;
+  updateCardProfile?: any;
+  svaList?: any;
+  svaOperation?: any;
+  readSVA?: any;
+  createFinancialSva?: any;
+  createEVoucherSva?: any;
+  writeApplicationDataRecord?: any;
+  readApplicationDataBlob?: any;
+  writeApplicationDataBlob?: any;
+  readAppDataChunk?: any;
+}
+
+export interface BatchOperationsRequestSchema {
+  basicRegistrationDifferentProgram?: BasicBatchOperation;
+  updateCardProfile?: UpdateCardProfile;
+  writePasscode?: UpdateCardProfile;
+  verifyPasscode?: VerifyPasscode;
+  svaOperation?: SvaOperation;
+  writeApplicationDataBlob?: WriteApplicationDataBlob;
+  writeApplicationDataRecord?: WriteApplicationDataRecord;
+  createFinancialSva?: CreateFinancialSva;
+  createEVoucherSva?: CreateEVoucherSva;
+  writeProgramSpace?: WriteProgramSpace;
+  consumerDeviceNumber?: BasicBatchOperation;
+  registrationData?: BasicBatchOperation;
+  readApplicationDataBlob?: BasicBatchOperation;
+  readAppDataChunk?: ReadAppDataChunk;
+  readSVA?: ReadSVA;
+  svaList?: BasicBatchOperation;
+  readProgramSpace?: BacthCardReadProgramSpace;
+}
+
+export interface BasicBatchOperation {
+  programGUID: string;
+  name: string;
+}
+
+export interface BacthCardReadProgramSpace {
+  programGUID: string;
+  name: string;
+  decryptData: boolean;
+}
+
+export interface CreateEVoucherSva {
+  sva: CreateEVoucherSvaSva;
+  programGUID: string;
+  name: string;
+}
+
+export interface CreateEVoucherSvaSva {
+  EVoucherSva: EVoucherSva;
+}
+
+export interface EVoucherSva {
+  unit: string;
+  eVoucherType: string;
+}
+
+export interface CreateFinancialSva {
+  sva: CreateFinancialSvaSva;
+  programGUID: string;
+  name: string;
+}
+
+export interface CreateFinancialSvaSva {
+  FinancialSVA: FinancialSVA;
+}
+
+export interface FinancialSVA {
+  unit: string;
+}
+
+export interface ReadAppDataChunk {
+  indexes: number[];
+  programGUID: string;
+  name: string;
+}
+
+export interface ReadSVA {
+  svaUnit: string;
+  programGUID: string;
+  name: string;
+}
+
+export interface SvaOperation {
+  svaOperation: SvaOperationSvaOperation;
+  programGUID: string;
+  name: string;
+}
+
+export interface SvaOperationSvaOperation {
+  unit: string;
+  amount: number;
+  operationType: string;
+}
+
+export interface UpdateCardProfile {
+  rid: string;
+  programGUID: string;
+  name: string;
+  passcode?: string;
+}
+
+export interface VerifyPasscode {
+  passcode: string;
+  programGUID: string;
+  name: string;
+  shouldContinueOnVerificationFail: boolean;
+}
+
+export interface WriteApplicationDataBlob {
+  dataBlob: string;
+  programGUID: string;
+  name: string;
+}
+
+export interface WriteApplicationDataRecord {
+  appDataRecord: AppDataRecord[];
+  programGUID: string;
+  name: string;
+}
+
+export interface AppDataRecord {
+  index: number;
+  chunk: string;
+  isShared: boolean;
+}
+
+export interface WriteProgramSpace {
+  rId: string;
+  data: string;
+  programGUID: string;
+  name: string;
 }

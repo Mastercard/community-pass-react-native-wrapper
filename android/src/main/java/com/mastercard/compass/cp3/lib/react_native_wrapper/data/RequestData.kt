@@ -25,7 +25,7 @@ data class ConsumerDeviceNumberBatchOperation(val programGUID: String, val name:
 
 data class ReadSVABatchOperation(val svaUnit: String, val programGUID: String, val name: String)
 
-data class ReadProgramSpaceBatchOperation(val programGUID: String, val name: String)
+data class ReadProgramSpaceBatchOperation(val programGUID: String, val name: String, val decryptData: Boolean)
 
 data class CreateFinancialSvaBatchOperation(val sva: Map<String, Map<String, String>>, val programGUID: String, val name: String)
 

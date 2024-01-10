@@ -13,6 +13,8 @@ import com.mastercard.compass.model.programspace.DataSchemaRequest
 import com.mastercard.compass.model.programspace.DataSchemaResponse
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.security.PublicKey
@@ -29,38 +31,49 @@ class SharedSpaceApi(
     const val TAG = "SharedSpaceApi"
   }
 
-  private lateinit var dataSchema: DataSchemaResponse
+  private var dataSchema: DataSchemaResponse? = null
 
-  fun performKeyExchange(instanceID: String, clientPublicKey: PublicKey): KeyExchangeResponse =
-    kernelConnection.exchangeKeys(KeyExchangeRequest(
-      reliantAppGuid = reliantGUID,
-      reliantAppInstanceId = instanceID,
-      clientPublicKey = clientPublicKey,
-      type = KeyExchange.PROGRAM_SPACE
-    ))
-
-  suspend fun validateEncryptData(input: String): SharedSpaceValidationEncryptionResponse {
-    dataSchema = fetchDataSchemaResponse()
-
-    if(dataSchema.responseStatus != ResponseStatus.SUCCESS){
-      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA,
-        dataSchema.message
+  suspend fun performKeyExchange(instanceID: String, clientPublicKey: PublicKey): KeyExchangeResponse = coroutineScope {
+    val deferred = async(Dispatchers.Default) {
+      kernelConnection.exchangeKeys(
+        KeyExchangeRequest(
+          reliantAppGuid = reliantGUID,
+          reliantAppInstanceId = instanceID,
+          clientPublicKey = clientPublicKey,
+          type = KeyExchange.PROGRAM_SPACE
+        )
       )
     }
-    if(dataSchema.schemaConfig == null){
-      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG)
+    return@coroutineScope deferred.await()
+  }
+
+  suspend fun validateEncryptData(input: String): SharedSpaceValidationEncryptionResponse {
+    if(dataSchema == null) dataSchema = fetchDataSchemaResponse()
+
+    if(dataSchema?.responseStatus != ResponseStatus.SUCCESS){
+      return SharedSpaceValidationEncryptionResponse.Error(
+        SharedSpaceValidationEncryptionError.ERROR_FETCHING_SCHEMA,
+        dataSchema?.message
+      )
     }
-    if(dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null){
-      return SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED)
+    if(dataSchema?.schemaConfig == null){
+      return SharedSpaceValidationEncryptionResponse.Error(
+        SharedSpaceValidationEncryptionError.EMPTY_SCHEMA_CONFIG
+      )
+    }
+    if(dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null){
+      return SharedSpaceValidationEncryptionResponse.Error(
+        SharedSpaceValidationEncryptionError.ENCRYPTION_SERVICE_REQUIRED
+      )
     }
 
-    val schemaValidationInput = when(dataSchema.schemaConfig!!.isDataValidationRequired){
-      true -> SchemaValidationInput(jsonSchema = dataSchema.schemaJson, jsonInput = input)
+    val schemaValidationInput = when(dataSchema?.schemaConfig!!.isDataValidationRequired){
+      true -> SchemaValidationInput(jsonSchema = dataSchema?.schemaJson, jsonInput = input)
       false -> SchemaValidationInput(jsonInput = input)
     }
 
     val schemaProcessor = SchemaProcessor.Builder(
-      schemaConfigurations = dataSchema.schemaConfig,
+      schemaConfigurations = dataSchema!!.schemaConfig,
       schemaValidationInput = schemaValidationInput,
       cryptoService = cryptoService,
       tokenService = integrityService
@@ -70,34 +83,37 @@ class SharedSpaceApi(
 
     return when(process.isProcessSuccess){
       true -> SharedSpaceValidationEncryptionResponse.Success(process.output!!)
-      false -> SharedSpaceValidationEncryptionResponse.Error(SharedSpaceValidationEncryptionError.SCHEMA_PROCESSOR_ERROR, process.errorMessage?.joinToString())
+      false -> SharedSpaceValidationEncryptionResponse.Error(
+        SharedSpaceValidationEncryptionError.SCHEMA_PROCESSOR_ERROR,
+        process.errorMessage?.joinToString()
+      )
     }
   }
 
-  suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse) : SharedSpaceValidationDecryptionResponse {
-    dataSchema = fetchDataSchemaResponse()
-    Timber.tag("ReadProgramSpaceAPIRoutesssss").d(dataSchema.toString())
+  suspend fun validateDecryptData(response: ReadProgramSpaceDataResponse, decryptData: Boolean) : SharedSpaceValidationDecryptionResponse {
+    if(dataSchema == null) dataSchema = fetchDataSchemaResponse()
 
     try {
-      if (dataSchema.responseStatus != ResponseStatus.SUCCESS) {
+      if (dataSchema?.responseStatus != ResponseStatus.SUCCESS) {
         return SharedSpaceValidationDecryptionResponse.Error(
           SharedSpaceValidationDecryptionError.ERROR_FETCHING_SCHEMA,
-          dataSchema.message
+          dataSchema?.message
         )
       }
       var data: String = integrityService.parseJWT(response.jwt)
       when {
-        dataSchema.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
-          return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_DECRYPTION_SERVICE_REQUIRED)
+        dataSchema?.schemaConfig?.isDataEncrypted == true && cryptoService == null -> {
+          return SharedSpaceValidationDecryptionResponse.Error(
+            SharedSpaceValidationDecryptionError.ERROR_DECRYPTION_SERVICE_REQUIRED
+          )
         }
 
-        dataSchema.schemaConfig?.isDataEncrypted == true -> {
+        dataSchema?.schemaConfig?.isDataEncrypted == true && decryptData -> {
           data = String(cryptoService!!.decrypt(data))
         }
       }
-      Timber.tag(TAG).d("validateDecryptData: $data")
 
-      return SharedSpaceValidationDecryptionResponse.Success(data)
+      return SharedSpaceValidationDecryptionResponse.Success(data = data)
     } catch (e: SignatureException) {
       return SharedSpaceValidationDecryptionResponse.Error(SharedSpaceValidationDecryptionError.ERROR_SIGNATURE_VALIDATION_FAILED)
     } catch (e: InvalidJWTException) {
@@ -110,9 +126,9 @@ class SharedSpaceApi(
 
   private suspend fun fetchDataSchemaResponse() = withContext(Dispatchers.IO){
     kernelConnection.getDataSchema(
-      DataSchemaRequest(
-        programGUID,
-        reliantGUID
+      dataSchemaRequest = DataSchemaRequest(
+        programGuid = programGUID,
+        reliantAppGuid = reliantGUID
       )
     )
   }

@@ -30,7 +30,7 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
   const [count, setCount] = useState('');
 
   const showAlert = (res: VerifyPasscodeResultType) => {
-    if (res.retryCount > 0 && res.status === true) {
+    if (res.status === true) {
       return Alert.alert(
         res.status
           ? authenticatePasscodeUserStrings.MATCH_FOUND_ALERT_TITLE
@@ -79,7 +79,6 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
         console.log(JSON.stringify(res, null, 2));
         setLoading(false);
         setCount(res.retryCount?.toString());
-
         showAlert(res);
       })
       .catch((e: ErrorResultType) => {
@@ -130,7 +129,7 @@ const AuthenticatePasscodeUser = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     padding: 20,
     backgroundColor: themeColors.white,
   },

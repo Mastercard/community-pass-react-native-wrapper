@@ -3,12 +3,29 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper
 import android.app.Activity
 import android.content.Intent
 import com.facebook.react.BuildConfig
-import com.facebook.react.bridge.*
-import com.mastercard.compass.cp3.lib.react_native_wrapper.route.*
+import com.facebook.react.bridge.ActivityEventListener
+import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactContextBaseJavaModule
+import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.ReadableMap
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.BatchOperationsAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.BiometricConsentAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.BlacklistFormFactorAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.ConsumerDeviceAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.ConsumerDevicePasscodeAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.CreateSvaAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.GetVerifyPasscodeAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.ReadProgramSpaceAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.ReadSvaAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.RegisterBasicUserAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.RegisterUserWithBiometricsAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.RetrieveRegistrationDataAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.SVAOperationAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.UserIdentificationAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.UserVerificationAPIRoute
+import com.mastercard.compass.cp3.lib.react_native_wrapper.route.WriteProgramSpaceAPIRoute
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCryptoService
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultTokenService
-import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpaceApi
-import com.mastercard.compass.kernel.client.service.KernelServiceConsumer
 import timber.log.Timber
 
 class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),
@@ -47,6 +64,9 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   private val userVerificationAPIRoute by lazy {
     UserVerificationAPIRoute(reactContext, currentActivity, helperObject)
   }
+  private val userIdentificationAPIRoute by lazy {
+    UserIdentificationAPIRoute(reactContext, currentActivity, helperObject)
+  }
   private val createSvaAPIRoute by lazy {
     CreateSvaAPIRoute(reactContext, currentActivity)
   }
@@ -59,9 +79,8 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   private val blacklistFormFactorAPIRoute by lazy {
     BlacklistFormFactorAPIRoute(reactContext, currentActivity)
   }
-
   private val batchOperationsAPIRoute by lazy {
-    BatchOperationsAPIRoute(reactContext, currentActivity, helperObject)
+    BatchOperationsAPIRoute(reactContext, currentActivity, helperObject, defaultCryptoService)
   }
   override fun getName(): String {
       return "CompassLibraryReactNativeWrapper"
@@ -145,6 +164,12 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
   }
 
   @ReactMethod
+  fun getUserIdentification(userIdentificationParams: ReadableMap, promise: Promise){
+    this.promise = promise
+    userIdentificationAPIRoute.startGetUserIdentificationIntent(userIdentificationParams)
+  }
+
+  @ReactMethod
   fun getCreateSVA(createSvaParams: ReadableMap, promise: Promise){
     this.promise = promise
     createSvaAPIRoute.startCreateSvaIntent(createSvaParams)
@@ -186,6 +211,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       in RetrieveRegistrationDataAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in GetVerifyPasscodeAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in UserVerificationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
+      in UserIdentificationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in CreateSvaAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in ReadSvaAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
       in SVAOperationAPIRoute.REQUEST_CODE_RANGE -> handleApiRouteResponse(requestCode, resultCode, data)
@@ -214,6 +240,7 @@ class CompassLibraryReactNativeWrapperModule(reactContext: ReactApplicationConte
       RetrieveRegistrationDataAPIRoute.GET_REGISTRATION_DATA_REQUEST_CODE -> retrieveRegistrationDataAPIRoute.handleGetRegistrationDataIntentResponse(resultCode, data, this.promise)
       GetVerifyPasscodeAPIRoute.GET_VERIFY_PASSCODE_REQUEST_CODE -> getVerifyPasscodeAPIRoute.handleGetVerifyPasscodeIntentResponse(resultCode, data, this.promise)
       UserVerificationAPIRoute.GET_USER_VERIFICATION_REQUEST_CODE -> userVerificationAPIRoute.handleGetUserVerificationIntentResponse(resultCode, data, promise)
+      UserIdentificationAPIRoute.USER_IDENTIFICATION_REQUEST_CODE -> userIdentificationAPIRoute.handleGetUserIdentificationIntentResponse(resultCode, data, promise)
       CreateSvaAPIRoute.GET_CREATE_SVA_REQUEST_CODE -> createSvaAPIRoute.handleGetCreateSvaIntentResponse(resultCode, data, promise)
       ReadSvaAPIRoute.GET_READ_SVA_REQUEST_CODE -> readSvaAPIRoute.handleGetReadSvaIntentResponse(resultCode, data, promise)
       SVAOperationAPIRoute.GET_SVA_OPERATION_REQUEST_CODE -> svaOperationAPIRoute.handleSvaOperationIntentResponse(resultCode, data, promise)
