@@ -1,6 +1,6 @@
 {
   "name": "community-pass-react-native-wrapper",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "test",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

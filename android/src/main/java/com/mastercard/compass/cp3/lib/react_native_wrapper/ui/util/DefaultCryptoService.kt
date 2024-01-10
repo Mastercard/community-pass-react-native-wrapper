@@ -3,6 +3,7 @@ package com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util
 
 import android.util.Base64
 import android.util.Log
+import com.mastercard.compass.cp3.lib.react_native_wrapper.BuildConfig
 import com.mastercard.compass.kernel.client.schemavalidator.CryptoService
 import com.mastercard.compass.cp3.lib.react_native_wrapper.CompassKernelUIController
 import java.lang.Exception
@@ -17,10 +18,10 @@ class DefaultCryptoService(private val helper: CompassKernelUIController.Compass
   }
 
   @Throws(InvalidKeyException::class, Exception::class)
-  override fun encrypt(data: ByteArray): ByteArray = performCipherOperation(data, 235, Cipher.ENCRYPT_MODE, helper.getKernelSharedSpaceKey()!!)
+  override fun encrypt(data: ByteArray): ByteArray = performCipherOperation(data, 245, Cipher.ENCRYPT_MODE, helper.getKernelSharedSpaceKey()!!)
 
   @Throws(InvalidKeyException::class, Exception::class)
-  fun decrypt(data: String): ByteArray = performCipherOperation(decodeBase64(data), 256, Cipher.DECRYPT_MODE, helper.getSharedSpaceKeyPair().private)
+  fun decrypt(data: String): ByteArray = performCipherOperation(decodeBase64(data), 256, Cipher.DECRYPT_MODE, helper.getBuildConfigRSAKeyPair(BuildConfig.CRYPTO_PUBLIC_KEY, BuildConfig.CRYPTO_PRIVATE_KEY).private)
 
   private fun performCipherOperation(data: ByteArray, blockSize: Int, mode: Int, key: Key): ByteArray {
     try {
@@ -42,6 +43,8 @@ class DefaultCryptoService(private val helper: CompassKernelUIController.Compass
         }
         resultBytes += cache
       }
+      Log.d("RNProgramSpaceDataSize", "Original JSON size: ${data.size} bytes")
+      Log.d("RNProgramSpaceDataSize", "Encrypted JSON size: ${resultBytes.size} bytes")
       return resultBytes
     } catch (e: InvalidKeyException){
       Log.e(TAG, "cipherOperations: Public Key passed does not match algorithm or parameters required for the operation", e)

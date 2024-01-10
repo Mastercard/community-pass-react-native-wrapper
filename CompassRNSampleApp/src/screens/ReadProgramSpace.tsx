@@ -29,12 +29,12 @@ const ReadProgramSpace = ({ route, navigation }: any) => {
       reliantGUID: RELIANT_APP_GUID,
       programGUID: PROGRAM_GUID,
       rID: rID,
-      decryptData: false,
+      decryptData: true,
     })
       .then((res: ReadProgramSpaceResultType) => {
         setIsReadProgramSpaceLoading(false);
         setReadCardError('');
-        console.log(JSON.parse(res.programSpaceData));
+        console.log(res.programSpaceData);
         navigation.navigate(screens.PROGRAM_SPACE_DATA_DETAILS, {
           programSpaceData: res.programSpaceData,
         });
@@ -74,7 +74,7 @@ const ReadProgramSpace = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: WIDTH,
+    maxWidth: WIDTH,
     padding: 20,
     backgroundColor: themeColors.white,
   },

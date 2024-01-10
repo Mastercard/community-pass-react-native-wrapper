@@ -12,26 +12,18 @@ import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultCrypto
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.DefaultTokenService
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpaceApi
 import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.SharedSpaceValidationDecryptionResponse
+import com.mastercard.compass.cp3.lib.react_native_wrapper.ui.util.performSharedSpaceKeyExchange
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.ErrorCode
 import com.mastercard.compass.cp3.lib.react_native_wrapper.util.Key
-import com.mastercard.compass.jwt.JwtConstants
 import com.mastercard.compass.kernel.client.service.KernelServiceConsumer
 import com.mastercard.compass.model.programspace.ReadProgramSpaceDataResponse
-import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.Jwts
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.NonCancellable.cancel
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.security.PublicKey
-import java.security.SignatureException
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
 class ReadProgramSpaceAPIRoute(
   private val context: ReactApplicationContext,
@@ -60,11 +52,6 @@ class ReadProgramSpaceAPIRoute(
     val rID: String = readProgramSpaceParams.getString("rID")!!
     decryptData = readProgramSpaceParams.getBoolean("decryptData")
 
-    Timber.d("reliantGUID: $reliantGUID")
-    Timber.d("programGUID: $programGUID")
-    Timber.d("rID: $rID")
-    Timber.d("decryptData: $decryptData")
-
     val intent = Intent(context, ReadProgramSpaceCompassApiHandlerActivity::class.java).apply {
       putExtra(Key.RELIANT_APP_GUID, reliantGUID)
       putExtra(Key.PROGRAM_GUID, programGUID)
@@ -77,74 +64,49 @@ class ReadProgramSpaceAPIRoute(
     currentActivity?.startActivityForResult(intent, READ_PROGRAM_SPACE_REQUEST_CODE)
   }
 
-  private fun parseJWT(jwt: String): String? {
-    try {
-      val data =
-        Jwts.parserBuilder().setSigningKey(kernelPublicKey).build().parseClaimsJws(jwt).body
-      return data[JwtConstants.JWT_PAYLOAD].toString()
-    } catch (e: SignatureException) {
-      Timber.tag(TAG).e(e, "parseJWT: Failed to validate JWT")
-    } catch (e: ExpiredJwtException) {
-      Timber.tag(TAG).e(e, "parseJWT: JWT expired")
-    } catch (e: Exception) {
-      Timber.tag(TAG).e(e, "parseJWT: Claims passed from Kernel are empty, null or invalid")
-    }
-    return  ""
-  }
 
   fun handleReadProgramSPaceIntentResponse(
     resultCode: Int,
     data: Intent?,
     promise: Promise
   ) {
-    when (resultCode) {
-      Activity.RESULT_OK -> {
-        val resultMap = Arguments.createMap()
-        val response: ReadProgramSpaceDataResponse = data?.extras?.get(Key.DATA) as ReadProgramSpaceDataResponse
-
-        var extractedData: String = parseJWT(response.jwt).toString()
-
-        if(decryptData){
-            extractedData = String(cryptoService!!.decrypt(extractedData))
-        }
-
-        resultMap.putString("programSpaceData", extractedData)
-        validateDecryption(response, promise, resultMap)
-
-//        Timber.tag(TAG).d(extractedData)
-
-//        resultMap.putString("programSpaceData", extractedData)
-//        promise.resolve(resultMap);
-      }
-      Activity.RESULT_CANCELED -> {
-        val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
-        val message = data?.getStringExtra(Key.ERROR_MESSAGE)!!
-
-        Timber.e("Error $code Message $message")
-        promise.reject(code, Throwable(message))
-      }
-    }
-  }
-
-private fun validateDecryption(data: ReadProgramSpaceDataResponse, promise: Promise, resultMap: ReadableMap) {
-    var res: SharedSpaceValidationDecryptionResponse? = null
     val scope = CustomScope()
+    scope.launch {
+      when (resultCode) {
+        Activity.RESULT_OK -> {
+          val resultMap = Arguments.createMap()
+          val response: ReadProgramSpaceDataResponse =
+            data?.extras?.get(Key.DATA) as ReadProgramSpaceDataResponse
 
-    try {
-        scope.launch {
-            Timber.tag("ReadProgramSpaceAPIRoutesssss").d("Called")
-            res = sharedSpaceApi.validateDecryptData(data)
+          if (decryptData && helperObject.getKernelSharedSpaceKey() == null) {
+            performSharedSpaceKeyExchange(
+              sharedSpaceApi = sharedSpaceApi,
+              helper = helperObject
+            )
+          }
+
+          val extractedData = sharedSpaceApi.validateDecryptData(
+            response = response,
+            decryptData = decryptData
+          ) as SharedSpaceValidationDecryptionResponse.Success
+
+
+
+
+          resultMap.putString("programSpaceData", extractedData.data)
+          promise.resolve(resultMap)
+          scope.onStop()
         }
-    } catch (error: Throwable) {
-      scope.coroutineContext.ensureActive()
-      Timber.tag("ReadProgramSpaceAPIRoutesssss").d("Error")
-      Timber.tag(TAG).d(error)
-      promise.reject("0", Throwable("Validation Failed"))
-    } finally {
-      scope.coroutineContext.ensureActive()
-      scope.onStop()
-      Timber.tag("ReadProgramSpaceAPIRoutesssss").d("Result: $res")
-      promise.resolve(resultMap);
+
+        Activity.RESULT_CANCELED -> {
+          val code = data?.getIntExtra(Key.ERROR_CODE, ErrorCode.UNKNOWN).toString()
+          val message = data?.getStringExtra(Key.ERROR_MESSAGE)!!
+
+          Timber.e("Error $code Message $message")
+          promise.reject(code, Throwable(message))
+          scope.onStop()
+        }
+      }
     }
   }
 }
@@ -153,11 +115,7 @@ class CustomScope : CoroutineScope {
   private var parentJob = Job()
 
   override val coroutineContext: CoroutineContext
-    get() = Dispatchers.IO + parentJob
-
-  fun onStart() {
-    parentJob = Job()
-  }
+    get() = Dispatchers.Main + parentJob
 
   fun onStop() {
     parentJob.cancel()
