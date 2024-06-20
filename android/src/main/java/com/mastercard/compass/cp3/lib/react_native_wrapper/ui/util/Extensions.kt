@@ -31,16 +31,18 @@ fun Date.toReadableString(): String {
 }
 
 
-fun populateModalityList (modalities: ArrayList<String>) : MutableList<Modality> {
-  val listOfModalities = mutableListOf<Modality>()
+fun populateModalityList(modalities: ArrayList<String>): MutableList<Modality> {
+    val listOfModalities = mutableListOf<Modality>()
 
-  modalities.forEach {
-    if(it == Key.FACE_MODALITY) listOfModalities.add(Modality.FACE)
-    if(it == Key.LEFT_PALM_MODALITY) listOfModalities.add(Modality.LEFT_PALM)
-    if(it == Key.RIGHT_PALM_MODALITY) listOfModalities.add(Modality.RIGHT_PALM)
-  }
+    modalities.forEach {
+        when (it) {
+            Key.FACE_MODALITY -> listOfModalities.add(Modality.FACE)
+            Key.LEFT_PALM_MODALITY -> listOfModalities.add(Modality.LEFT_PALM)
+            Key.RIGHT_PALM_MODALITY -> listOfModalities.add(Modality.RIGHT_PALM)
+        }
+    }
 
-  return listOfModalities
+    return listOfModalities
 }
 
 fun getFormFactor(value: String): FormFactor {
